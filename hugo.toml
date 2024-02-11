@@ -49,15 +49,6 @@ url = "/categories/develop"
 title = ""
 
 [[menu.main]]
-weight = 3
-identifier = "life"
-pre = ""
-post = ""
-name = "生活"
-url = "/categories/lifestyle/"
-title = ""
-
-[[menu.main]]
 weight = 4
 identifier = "tags"
 pre = ""
