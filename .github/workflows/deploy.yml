@@ -1,5 +1,4 @@
 name: GitHub Pages
-
 on:
   push:
     branches:
@@ -8,29 +7,26 @@ on:
       - cron: "0 8 * * *"
 
 jobs:
-  deploy:
-    runs-on: ubuntu-20.04
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+  build-and-deploy:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
-          submodules: true  # Fetch Hugo themes (true OR recursive)
-          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+          submodules: true
+          fetch-depth: 0
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.114.0'
-          # 是否启用 hugo extend
+          hugo-version: '0.122.0'
           extended: true
 
-      - name: Build
-        run: hugo --minify
+      - name: Build Hugo
+        run: hugo -b "https://tsuki126.github.io/" -e "production"
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/main' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
+          commit_message: ${{ github.event.head_commit.message }}
