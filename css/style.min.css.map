@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "style.min.css",
-	"sourceRoot": "/Users/systemd/Projects/github/blog/tsuki126.github.io",
+	"sourceRoot": "/home/runner/work/tsuki126.github.io/tsuki126.github.io",
 	"sources": [
 		"themes/LoveIt-0.2.11/assets/css/style.scss",
 		"themes/LoveIt-0.2.11/assets/css/_variables.scss",

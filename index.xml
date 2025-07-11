@@ -3,8 +3,8 @@
         <title>Tsuki126&#39;s Blog</title>
         <link>https://tsuki126.github.io/</link>
         <description>This is my cool site</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>876121239@qq.com (Tsuki126)</managingEditor>
-            <webMaster>876121239@qq.com (Tsuki126)</webMaster>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>tsukin126@gmail.com (Tsuki126)</managingEditor>
+            <webMaster>tsukin126@gmail.com (Tsuki126)</webMaster>
             <atom:link href="https://tsuki126.github.io/index.xml" rel="self" type="application/rss+xml" />
         </channel>
 </rss>
