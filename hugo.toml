@@ -1,98 +1,59 @@
 baseURL = "https://tsuki126.github.io/"
+theme = "hugo-bearblog"
 title = "Tsuki126"
+copyright = "Copyright © 2024, Tsuki126."
 languageCode = "zh-CN"
-defaultContentLanguage = "zh-cn"
-hasCJKLanguage = true
-theme = "PaperMod"
 
-[pagination]
-  pagerSize = 10
+enableRobotsTXT = true
+hasCJKLanguage = true
+
+[permalinks]
+  notes = "/notes/:slug/"
+  blog = "/blog/:slug/"
+  categories = "/categories/:slug/"
+  tags = "/tags/:slug/"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
 
 [params]
-  # 首页模式：home-info 展示个人介绍
-  homeInfoParams = { Title = "Hi, I'm Tsuki126 👋", Content = "Security Engineer · Write what I think\n\n聚焦 LLM/Agent 安全、RASP、应用与系统安全" }
-
-  # 社交图标
-  [[params.socialIcons]]
-    name = "github"
-    url = "https://github.com/Tsuki126"
-  [[params.socialIcons]]
-    name = "email"
-    url = "mailto:tsukin126@gmail.com"
-
-  # SEO
   description = "安全工程师的技术思考与实践笔记"
-  keywords = ["安全", "LLM安全", "AI Agent安全", "RASP", "应用安全"]
+  favicon = "images/avatar.png"
+  images = ["images/avatar.png"]
+  title = "Tsuki126"
+  dateFormat = "2006-01-02"
+  hideMadeWithLine = true
+  enablePostNavigator = true
 
-  # 主题
-  defaultTheme = "light"
-  showThemeToggle = true
-
-  # 搜索（Fuse.js）
-  fuse = true
-
-  # 文章功能
-  showReadingTime = true
-  showShareButtons = false
-  showPostNav = true
-  showBreadCrumbs = true
-  showCodeCopyButtons = true
-  showToc = true
-  TocOpen = false
-
-  # 隐藏默认 PaperMod footer
-  ShowFooterText = false
-
-[params.assets]
-  favicon = "/images/avatar.png"
+[markup]
+  [markup.highlight]
+    style = "friendly"
+    lineNos = true
+    lineNumbersInTable = false
+    codeFences = true
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
 
 [author]
   name = "Tsuki126"
   email = "tsukin126@gmail.com"
 
-# Markup
-[markup]
-  [markup.highlight]
-    style = "dracula"
-    lineNos = false
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
+[[menus.main]]
+  identifier = "notes"
+  name = "随笔"
+  url = "/notes/"
+  weight = 2
 
-# 菜单
-[menu]
-  [[menu.main]]
-    identifier = "home"
-    name = "首页"
-    url = "/"
-    weight = 1
-  [[menu.main]]
-    identifier = "security"
-    name = "安全"
-    url = "/categories/security/"
-    weight = 2
-  [[menu.main]]
-    identifier = "develop"
-    name = "开发"
-    url = "/categories/develop/"
-    weight = 3
-  [[menu.main]]
-    identifier = "archives"
-    name = "归档"
-    url = "/archives/"
-    weight = 4
-  [[menu.main]]
-    identifier = "tags"
-    name = "标签"
-    url = "/tags/"
-    weight = 5
-  [[menu.main]]
-    identifier = "search"
-    name = "搜索"
-    url = "/search/"
-    weight = 6
-  [[menu.main]]
-    identifier = "about"
-    name = "关于"
-    url = "/about/"
-    weight = 7
+[[menus.main]]
+  identifier = "blog"
+  name = "博客"
+  url = "/blog/"
+  weight = 3
+
+[[menus.main]]
+  identifier = "about"
+  name = "关于"
+  url = "/about/"
+  weight = 4
