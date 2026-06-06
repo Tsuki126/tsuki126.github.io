@@ -1,0 +1,56 @@
+{{ define "main" }}
+<content>
+  {{ if .Data.Singular }}
+  <h3 style="margin-bottom:0">{{ .Title }}</h3>
+  <small>
+    <a href="{{ .Page.Parent.Permalink }}">查看全部</a>
+  </small>
+  {{ else }}
+  <h3 style="margin-bottom:0">{{ .Title }}</h3>
+  {{ end }}
+
+  {{ if eq .Section "blog" }}
+  {{ with .Site.Taxonomies.categories }}
+  <p class="category-list">
+    {{ $first := true }}
+    {{ range . }}
+    {{ if gt .Count 0 }}
+    {{ if not $first }}<span class="sep">/</span>{{ end }}
+    <a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a>
+    {{ $first = false }}
+    {{ end }}
+    {{ end }}
+  </p>
+  {{ end }}
+  {{ end }}
+
+  {{ if eq .Section "notes" }}
+  <div class="notes-list">
+    {{ range .Pages.GroupByDate "2006" }}
+    <div class="note-year">{{ .Key }}</div>
+    {{ range .Pages }}
+    <div class="note-item">
+      <span class="note-meta">{{ .Date.Format "01-02" }}</span>
+      <a href="{{ .Permalink }}" class="note-title">{{ .Title }}</a>
+      <span class="note-body">{{ .Summary | plainify | truncate 55 }}</span>
+    </div>
+    {{ end }}
+    {{ else }}
+    <p>暂无随笔</p>
+    {{ end }}
+  </div>
+  {{ else }}
+  <div class="blog-list">
+    {{ range .Pages }}
+    <div class="blog-item">
+      <span class="blog-meta">{{ .Date.Format "2006-01-02" }}</span>
+      <a href="{{ .Permalink }}" class="blog-title">{{ .Title }}</a>
+      <span class="blog-body">{{ .Summary | plainify | truncate 55 }}</span>
+    </div>
+    {{ else }}
+    <p>暂无文章</p>
+    {{ end }}
+  </div>
+  {{ end }}
+</content>
+{{ end }}

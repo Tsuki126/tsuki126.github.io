@@ -1,0 +1,11 @@
+{{ define "main" }}
+<h3>{{ .Title }}</h3>
+<p class="note-date">
+  <time datetime='{{ .Date.Format "2006-01-02" }}'>
+    {{ .Date.Format (default "2006-01-02" .Site.Params.dateFormat) }}
+  </time>
+</p>
+<content>
+  {{ .Content }}
+</content>
+{{ end }}
