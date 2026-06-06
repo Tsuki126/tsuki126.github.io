@@ -1,0 +1,2 @@
+User-Agent: *
+Sitemap: https://tsuki126.github.io/sitemap.xml

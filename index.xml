@@ -1,10 +1,21 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Tsuki126&#39;s Blog</title>
-        <link>https://tsuki126.github.io/</link>
-        <description>This is my cool site</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>tsukin126@gmail.com (Tsuki126)</managingEditor>
-            <webMaster>tsukin126@gmail.com (Tsuki126)</webMaster>
-            <atom:link href="https://tsuki126.github.io/index.xml" rel="self" type="application/rss+xml" />
-        </channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tsuki126</title>
+    <link>https://tsuki126.github.io/</link>
+    <description>Recent content on Tsuki126</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <managingEditor>tsukin126@gmail.com (Tsuki126)</managingEditor>
+    <webMaster>tsukin126@gmail.com (Tsuki126)</webMaster>
+    <copyright>Copyright © 2024, Tsuki126.</copyright>
+    <atom:link href="https://tsuki126.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>关于</title>
+      <link>https://tsuki126.github.io/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><author>tsukin126@gmail.com (Tsuki126)</author>
+      <guid>https://tsuki126.github.io/about/</guid>
+      <description>安全工程师 · 北京 某某保险集团 · 数据安全 &amp; 云安全治理（2024.10 — 至今） 北京长亭科技 · 主机安全 &amp; 云原生安全（2022.07 — 2024.10</description>
+    </item>
+  </channel>
 </rss>
