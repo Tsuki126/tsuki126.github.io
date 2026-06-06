@@ -2,9 +2,14 @@
 /* 通用 */
 a { color: #2563eb; }
 a:hover { color: #1d4ed8; }
-body { line-height: 1.8; }
+body { line-height: 1.8; max-width: 900px; padding: 20px 40px; }
 pre { border-radius: 4px; }
 hr { border: none; border-top: 1px solid #e5e7eb; margin: 1.5em 0; }
+
+/* 大屏适配：放宽内容区至 960px */
+@media (min-width: 1200px) {
+    body { max-width: 960px; }
+}
 
 /* 方案A: 图片 + 分隔线 + 两段文案 */
 img[src*="cover"] {
