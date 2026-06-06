@@ -1,13 +1,38 @@
+
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://tsuki126.github.io/</loc>
+  </url><url>
+    <loc>https://tsuki126.github.io/categories/ai-security/</loc>
+  </url><url>
+    <loc>https://tsuki126.github.io/categories/ai-empowered-security/</loc>
+  </url><url>
     <loc>https://tsuki126.github.io/categories/</loc>
   </url><url>
     <loc>https://tsuki126.github.io/tags/</loc>
   </url><url>
-    <loc>https://tsuki126.github.io/</loc>
+    <loc>https://tsuki126.github.io/categories/host-security/</loc>
+  </url><url>
+    <loc>https://tsuki126.github.io/categories/cloud-security/</loc>
   </url><url>
     <loc>https://tsuki126.github.io/about/</loc>
+  </url><url>
+    <loc>https://tsuki126.github.io/blog/</loc>
+  </url><url>
+    <loc>https://tsuki126.github.io/categories/security-architecture/</loc>
+  </url><url>
+    <loc>https://tsuki126.github.io/categories/security-operations/</loc>
+  </url><url>
+    <loc>https://tsuki126.github.io/categories/container-security/</loc>
+  </url><url>
+    <loc>https://tsuki126.github.io/categories/application-security/</loc>
+  </url><url>
+    <loc>https://tsuki126.github.io/categories/network-security/</loc>
+  </url><url>
+    <loc>https://tsuki126.github.io/categories/identity-security/</loc>
+  </url><url>
+    <loc>https://tsuki126.github.io/notes/</loc>
   </url>
 </urlset>
