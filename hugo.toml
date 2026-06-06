@@ -1,83 +1,98 @@
 baseURL = "https://tsuki126.github.io/"
-
-# 更改使用 Hugo 构建网站时使用的默认主题
-theme = "LoveIt-0.2.11"
-
-# 网站标题
-title = "Tsuki126's Blog"
-
-# 网站语言, 仅在这里 CN 大写 ["en", "zh-CN", "fr", "pl", ...]# 副标题
+title = "Tsuki126"
 languageCode = "zh-CN"
-# 语言名称 ["English", "简体中文", "Français", "Polski", ...]
-languageName = "简体中文"
-# 是否包括中日韩文字
+defaultContentLanguage = "zh-cn"
 hasCJKLanguage = true
+theme = "PaperMod"
 
-# 作者配置
+[pagination]
+  pagerSize = 10
+
+[params]
+  # 首页模式：home-info 展示个人介绍
+  homeInfoParams = { Title = "Hi, I'm Tsuki126 👋", Content = "Security Engineer · Write what I think\n\n聚焦 LLM/Agent 安全、RASP、应用与系统安全" }
+
+  # 社交图标
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/Tsuki126"
+  [[params.socialIcons]]
+    name = "email"
+    url = "mailto:tsukin126@gmail.com"
+
+  # SEO
+  description = "安全工程师的技术思考与实践笔记"
+  keywords = ["安全", "LLM安全", "AI Agent安全", "RASP", "应用安全"]
+
+  # 主题
+  defaultTheme = "light"
+  showThemeToggle = true
+
+  # 搜索（Fuse.js）
+  fuse = true
+
+  # 文章功能
+  showReadingTime = true
+  showShareButtons = false
+  showPostNav = true
+  showBreadCrumbs = true
+  showCodeCopyButtons = true
+  showToc = true
+  TocOpen = false
+
+  # 隐藏默认 PaperMod footer
+  ShowFooterText = false
+
+[params.assets]
+  favicon = "/images/avatar.png"
+
 [author]
-name = "Tsuki126"
-email = "tsukin126@gmail.com"
-link = "https://tsuki126.github.io/"
+  name = "Tsuki126"
+  email = "tsukin126@gmail.com"
 
-# 菜单配置
-[menu]
-[[menu.main]]
-weight = 1
-identifier = "home"
-pre = ""
-post = ""
-name = "首页"
-url = "/"
-title = ""
-
-[[menu.main]]
-weight = 2
-identifier = "security"
-pre = ""
-post = ""
-name = "安全"
-url = "/categories/security"
-title = ""
-
-[[menu.main]]
-weight = 2
-identifier = "develop"
-pre = ""
-post = ""
-name = "开发"
-url = "/categories/develop"
-title = ""
-
-[[menu.main]]
-weight = 4
-identifier = "tags"
-pre = ""
-post = ""
-name = "标签"
-url = "/tags/"
-title = ""
-
-[[menu.main]]
-weight = 5
-identifier = "categories"
-pre = ""
-post = ""
-name = "分类"
-url = "/categories/"
-title = ""
-
-[[menu.main]]
-weight = 6
-identifier = "about"
-pre = ""
-post = ""
-name = "关于"
-url = "/about/"
-title = ""
-
-# Hugo 解析文档的配置
+# Markup
 [markup]
-# 语法高亮设置 (https://gohugo.io/content-management/syntax-highlighting)
-[markup.highlight]
-# false 是必要的设置 (https://github.com/dillonzq/LoveIt/issues/158)
-noClasses = false
+  [markup.highlight]
+    style = "dracula"
+    lineNos = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+# 菜单
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "首页"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    identifier = "security"
+    name = "安全"
+    url = "/categories/security/"
+    weight = 2
+  [[menu.main]]
+    identifier = "develop"
+    name = "开发"
+    url = "/categories/develop/"
+    weight = 3
+  [[menu.main]]
+    identifier = "archives"
+    name = "归档"
+    url = "/archives/"
+    weight = 4
+  [[menu.main]]
+    identifier = "tags"
+    name = "标签"
+    url = "/tags/"
+    weight = 5
+  [[menu.main]]
+    identifier = "search"
+    name = "搜索"
+    url = "/search/"
+    weight = 6
+  [[menu.main]]
+    identifier = "about"
+    name = "关于"
+    url = "/about/"
+    weight = 7
