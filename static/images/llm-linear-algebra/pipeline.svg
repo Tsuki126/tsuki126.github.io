@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 195">
+<style>
+    .t{font-family:STHeiti,Heiti TC,sans-serif;font-size:13px;font-weight:bold;fill:#1e293b;text-anchor:middle;dominant-baseline:central;}
+    .st{font-family:STHeiti,Heiti TC,sans-serif;font-size:10px;fill:#64748b;text-anchor:middle;dominant-baseline:central;}
+    .bx{fill:#fff;stroke:#2563eb;stroke-width:1.5;rx:6;ry:6;filter:url(#sd);}
+    .ln{stroke:#94a3b8;stroke-width:1.5;fill:none;}
+    .ah{fill:#94a3b8;}
+    .ds{stroke:#94a3b8;stroke-width:1;stroke-dasharray:3 2;fill:none;}
+    .nt{font-family:STHeiti,Heiti TC,sans-serif;font-size:11px;fill:#64748b;text-anchor:middle;dominant-baseline:central;}
+    .hl{font-family:STHeiti,Heiti TC,sans-serif;font-size:11px;fill:#2563eb;font-weight:bold;text-anchor:middle;dominant-baseline:central;}
+</style>
+<defs><filter id="sd"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.06"/></filter></defs>
+<text x="300" y="22" class="t" font-size="14">W 与 σ 的分工流程</text>
+<rect x="10" y="48" width="100" height="38" class="bx"/><text x="60" y="67" class="t" font-size="12">输入 x</text><line x1="110" y1="67" x2="130" y2="67" class="ln"/><polygon points="125,64 130,67 125,70" class="ah"/><rect x="130" y="48" width="100" height="38" class="bx"/><text x="180" y="61" class="t" font-size="12">W 线性变换</text><text x="180" y="76" class="st">改变特征</text><line x1="230" y1="67" x2="250" y2="67" class="ln"/><polygon points="245,64 250,67 245,70" class="ah"/><rect x="250" y="48" width="100" height="38" class="bx"/><text x="300" y="67" class="t" font-size="12">候选新特征</text><line x1="350" y1="67" x2="370" y2="67" class="ln"/><polygon points="365,64 370,67 365,70" class="ah"/><rect x="370" y="48" width="100" height="38" class="bx"/><text x="420" y="61" class="t" font-size="12">σ 非线性激活</text><text x="420" y="76" class="st">保留 + 过滤</text><line x1="470" y1="67" x2="490" y2="67" class="ln"/><polygon points="485,64 490,67 485,70" class="ah"/><rect x="490" y="48" width="100" height="38" class="bx"/><text x="540" y="67" class="t" font-size="12">输出 y</text><line x1="180" y1="86" x2="180" y2="108" class="ds"/><polygon points="178,106 180,111 182,106" class="ds"/><text x="180" y="122" class="nt">创造可能性：对所有输入一视同仁</text><line x1="420" y1="86" x2="420" y2="108" class="ds"/><polygon points="418,106 420,111 422,106" class="ds"/><text x="420" y="122" class="hl">做出选择：差异化保留 + 丢弃</text></svg>

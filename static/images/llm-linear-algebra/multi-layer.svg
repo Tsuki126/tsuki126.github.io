@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="576pt" height="201.6pt" viewBox="0 0 576 201.6" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-06-07T17:05:01.392425</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 201.6 
+L 576 201.6 
+L 576 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 31.636364 139.093333 
+L 98.290909 139.093333 
+L 98.290909 71.285333 
+L 31.636364 71.285333 
+z
+" clip-path="url(#p5fb3b3aedc)" style="fill: #ffffff; stroke: #9ca3af; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 118.8 139.093333 
+L 185.454545 139.093333 
+L 185.454545 71.285333 
+L 118.8 71.285333 
+z
+" clip-path="url(#p5fb3b3aedc)" style="fill: #ffffff; stroke: #2563eb; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 205.963636 139.093333 
+L 272.618182 139.093333 
+L 272.618182 71.285333 
+L 205.963636 71.285333 
+z
+" clip-path="url(#p5fb3b3aedc)" style="fill: #ffffff; stroke: #2563eb; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 293.127273 139.093333 
+L 359.781818 139.093333 
+L 359.781818 71.285333 
+L 293.127273 71.285333 
+z
+" clip-path="url(#p5fb3b3aedc)" style="fill: #ffffff; stroke: #9ca3af; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 380.290909 139.093333 
+L 446.945455 139.093333 
+L 446.945455 71.285333 
+L 380.290909 71.285333 
+z
+" clip-path="url(#p5fb3b3aedc)" style="fill: #ffffff; stroke: #2563eb; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 467.454545 139.093333 
+L 534.109091 139.093333 
+L 534.109091 71.285333 
+L 467.454545 71.285333 
+z
+" clip-path="url(#p5fb3b3aedc)" style="fill: #ffffff; stroke: #16a34a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 152.127273 139.093333 
+L 152.127273 164.521333 
+" clip-path="url(#p5fb3b3aedc)" style="fill: none; stroke-dasharray: 0.7,1.155; stroke-dashoffset: 0; stroke: #9ca3af; stroke-width: 0.7"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 239.290909 139.093333 
+L 239.290909 164.521333 
+" clip-path="url(#p5fb3b3aedc)" style="fill: none; stroke-dasharray: 0.7,1.155; stroke-dashoffset: 0; stroke: #9ca3af; stroke-width: 0.7"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 413.618182 139.093333 
+L 413.618182 164.521333 
+" clip-path="url(#p5fb3b3aedc)" style="fill: none; stroke-dasharray: 0.7,1.155; stroke-dashoffset: 0; stroke: #9ca3af; stroke-width: 0.7"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="64.963636" y="107.839333" transform="rotate(-0 64.963636 107.839333)">输入</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="152.127273" y="107.839333" transform="rotate(-0 152.127273 107.839333)">Layer 1</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="239.290909" y="107.839333" transform="rotate(-0 239.290909 107.839333)">Layer 2</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="326.454545" y="107.839333" transform="rotate(-0 326.454545 107.839333)">···</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="413.618182" y="107.839333" transform="rotate(-0 413.618182 107.839333)">Layer N</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="500.781818" y="107.839333" transform="rotate(-0 500.781818 107.839333)">输出</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 100.293124 105.189333 
+Q 107.266345 105.189333 112.562515 105.189333 
+" clip-path="url(#p5fb3b3aedc)" style="fill: none; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 106.962515 102.389333 
+L 112.562515 105.189333 
+L 106.962515 107.989333 
+z
+" clip-path="url(#p5fb3b3aedc)" style="fill: #9ca3af; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 187.45676 105.189333 
+Q 194.429982 105.189333 199.726152 105.189333 
+" clip-path="url(#p5fb3b3aedc)" style="fill: none; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 194.126152 102.389333 
+L 199.726152 105.189333 
+L 194.126152 107.989333 
+z
+" clip-path="url(#p5fb3b3aedc)" style="fill: #9ca3af; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 274.620397 105.189333 
+Q 281.593618 105.189333 286.889788 105.189333 
+" clip-path="url(#p5fb3b3aedc)" style="fill: none; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 281.289788 102.389333 
+L 286.889788 105.189333 
+L 281.289788 107.989333 
+z
+" clip-path="url(#p5fb3b3aedc)" style="fill: #9ca3af; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 361.784033 105.189333 
+Q 368.757254 105.189333 374.053424 105.189333 
+" clip-path="url(#p5fb3b3aedc)" style="fill: none; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 368.453424 102.389333 
+L 374.053424 105.189333 
+L 368.453424 107.989333 
+z
+" clip-path="url(#p5fb3b3aedc)" style="fill: #9ca3af; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 448.94767 105.189333 
+Q 455.920891 105.189333 461.217061 105.189333 
+" clip-path="url(#p5fb3b3aedc)" style="fill: none; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 455.617061 102.389333 
+L 461.217061 105.189333 
+L 455.617061 107.989333 
+z
+" clip-path="url(#p5fb3b3aedc)" style="fill: #9ca3af; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 9px; font-family: 'PingFang HK'; text-anchor: middle; fill: #2563eb" x="152.127273" y="175.409755" transform="rotate(-0 152.127273 175.409755)">粗筛轮廓</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 9px; font-family: 'PingFang HK'; text-anchor: middle; fill: #2563eb" x="239.290909" y="175.382333" transform="rotate(-0 239.290909 175.382333)">精雕细节</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 9px; font-family: 'PingFang HK'; text-anchor: middle; fill: #2563eb" x="413.618182" y="175.382333" transform="rotate(-0 413.618182 175.382333)">深层语义</text>
+   </g>
+   <g id="patch_13">
+    <path d="M 152.904284 43.032 
+Q 280.308813 43.032 407.713341 43.032 
+" clip-path="url(#p5fb3b3aedc)" style="fill: none; stroke: #ea580c; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 157.704284 45.432 
+L 152.904284 43.032 
+L 157.704284 40.632 
+z
+" clip-path="url(#p5fb3b3aedc)" style="fill: #ea580c; stroke: #ea580c; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 402.913341 40.632 
+L 407.713341 43.032 
+L 402.913341 45.432 
+z
+" clip-path="url(#p5fb3b3aedc)" style="fill: #ea580c; stroke: #ea580c; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 9px; font-family: 'PingFang HK'; text-anchor: middle; fill: #ea580c" x="280.309091" y="31.730667" transform="rotate(-0 280.309091 31.730667)">每层 W / σ 不同</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 13px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="288" y="16.08" transform="rotate(-0 288 16.08)">多层叠加：改变 → 筛选 → 改变 → 筛选 …</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p5fb3b3aedc">
+   <rect x="6" y="26.08" width="564" height="169.52"/>
+  </clipPath>
+ </defs>
+</svg>

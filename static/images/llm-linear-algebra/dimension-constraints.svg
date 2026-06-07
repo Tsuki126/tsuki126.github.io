@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="648pt" height="230.4pt" viewBox="0 0 648 230.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-06-07T17:08:39.500083</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 230.4 
+L 648 230.4 
+L 648 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 128.430492 67.835886 
+Q 139.503587 67.835886 149.682255 67.835886 
+" clip-path="url(#pbc4212febf)" style="fill: none; stroke: #9ca3af; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 146.482255 66.235886 
+L 149.682255 67.835886 
+L 146.482255 69.435886 
+z
+" clip-path="url(#pbc4212febf)" style="fill: #9ca3af; stroke: #9ca3af; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 250.459583 67.835886 
+Q 261.532678 67.835886 271.711346 67.835886 
+" clip-path="url(#pbc4212febf)" style="fill: none; stroke: #9ca3af; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 268.511346 66.235886 
+L 271.711346 67.835886 
+L 268.511346 69.435886 
+z
+" clip-path="url(#pbc4212febf)" style="fill: #9ca3af; stroke: #9ca3af; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 128.430492 155.058743 
+Q 139.503587 155.058743 149.682255 155.058743 
+" clip-path="url(#pbc4212febf)" style="fill: none; stroke: #9ca3af; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 146.482255 153.458743 
+L 149.682255 155.058743 
+L 146.482255 156.658743 
+z
+" clip-path="url(#pbc4212febf)" style="fill: #9ca3af; stroke: #9ca3af; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 250.459583 155.058743 
+Q 261.532678 155.058743 271.711346 155.058743 
+" clip-path="url(#pbc4212febf)" style="fill: none; stroke: #9ca3af; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 268.511346 153.458743 
+L 271.711346 155.058743 
+L 268.511346 156.658743 
+z
+" clip-path="url(#pbc4212febf)" style="fill: #9ca3af; stroke: #9ca3af; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 422.785455 86.443429 
+L 433.680909 86.443429 
+L 433.680909 68.998857 
+L 422.785455 68.998857 
+z
+" clip-path="url(#pbc4212febf)" style="fill: #2563eb; opacity: 0.35; stroke: #2563eb; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 422.785455 121.332571 
+L 597.112727 121.332571 
+L 597.112727 103.888 
+L 422.785455 103.888 
+z
+" clip-path="url(#pbc4212febf)" style="fill: #ea580c; opacity: 0.35; stroke: #ea580c; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 422.785455 156.221714 
+L 539.003636 156.221714 
+L 539.003636 138.777143 
+L 422.785455 138.777143 
+z
+" clip-path="url(#pbc4212febf)" style="fill: #7c3aed; opacity: 0.35; stroke: #7c3aed; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 33.454545 86.443429 
+L 126.429091 86.443429 
+L 126.429091 48.646857 
+L 33.454545 48.646857 
+z
+" clip-path="url(#pbc4212febf)" style="fill: #ffffff; stroke: #2563eb; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 155.483636 86.443429 
+L 248.458182 86.443429 
+L 248.458182 48.646857 
+L 155.483636 48.646857 
+z
+" clip-path="url(#pbc4212febf)" style="fill: #ffffff; stroke: #ea580c; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 277.512727 86.443429 
+L 370.487273 86.443429 
+L 370.487273 48.646857 
+L 277.512727 48.646857 
+z
+" clip-path="url(#pbc4212febf)" style="fill: #ffffff; stroke: #16a34a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 33.454545 173.666286 
+L 126.429091 173.666286 
+L 126.429091 135.869714 
+L 33.454545 135.869714 
+z
+" clip-path="url(#pbc4212febf)" style="fill: #ffffff; stroke: #2563eb; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 155.483636 173.666286 
+L 248.458182 173.666286 
+L 248.458182 135.869714 
+L 155.483636 135.869714 
+z
+" clip-path="url(#pbc4212febf)" style="fill: #ffffff; stroke: #ea580c; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 277.512727 173.666286 
+L 370.487273 173.666286 
+L 370.487273 135.869714 
+L 277.512727 135.869714 
+z
+" clip-path="url(#pbc4212febf)" style="fill: #ffffff; stroke: #16a34a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'PingFang HK'; text-anchor: start; fill: #1e293b" x="21.832727" y="39.924571" transform="rotate(-0 21.832727 39.924571)">A. 常规变换</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 7.5px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="79.941818" y="69.823386" transform="rotate(-0 79.941818 69.823386)">输入 768d</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 7.5px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="201.970909" y="69.823386" transform="rotate(-0 201.970909 69.823386)">W 768×768</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 7.5px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="324" y="69.823386" transform="rotate(-0 324 69.823386)">输出 768d</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'PingFang HK'; text-anchor: start; fill: #1e293b" x="21.832727" y="127.147429" transform="rotate(-0 21.832727 127.147429)">B. FFN 膨胀 → 压缩</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 7.5px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="79.941818" y="157.046243" transform="rotate(-0 79.941818 157.046243)">输入 768d</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 7.5px; font-family: 'PingFang HK'; fill: #1e293b" transform="translate(188.703526 153.028001)">膨胀 ×4</text>
+    <text style="font-weight: 700; font-size: 7.5px; font-family: 'PingFang HK'; fill: #1e293b" transform="translate(190.972276 161.064485)">3072d</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 7.5px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="324" y="157.050344" transform="rotate(-0 324 157.050344)">压缩 768d</text>
+   </g>
+   <g id="patch_15">
+    <path d="M 257.371886 119.933421 
+Q 229.479232 126.261615 209.442899 151.218807 
+" style="fill: none; stroke: #ea580c; stroke-width: 0.6; stroke-linecap: round"/>
+    <path d="M 212.287516 149.911844 
+L 209.442899 151.218807 
+L 210.104099 148.158936 
+" style="fill: none; stroke: #ea580c; stroke-width: 0.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 7px; font-family: 'PingFang HK'; text-anchor: middle; fill: #ea580c" x="294.945455" y="121.332571" transform="rotate(-0 294.945455 121.332571)">类似 CPU 的"草稿纸"</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'PingFang HK'; text-anchor: start; fill: #1e293b" x="411.163636" y="39.924571" transform="rotate(-0 411.163636 39.924571)">C. 维度规模</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'PingFang HK'; text-anchor: end; fill: #2563eb" x="411.163636" y="79.841143" transform="rotate(-0 411.163636 79.841143)">GPT-1</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 7.5px; font-family: 'PingFang HK'; text-anchor: start; fill: #9ca3af" x="438.329636" y="79.708643" transform="rotate(-0 438.329636 79.708643)">768d</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'PingFang HK'; text-anchor: end; fill: #ea580c" x="411.163636" y="114.730286" transform="rotate(-0 411.163636 114.730286)">GPT-3</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 7.5px; font-family: 'PingFang HK'; text-anchor: start; fill: #9ca3af" x="601.761455" y="114.597786" transform="rotate(-0 601.761455 114.597786)">12288d</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'PingFang HK'; text-anchor: end; fill: #7c3aed" x="411.163636" y="149.619429" transform="rotate(-0 411.163636 149.619429)">LLaMA</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 7.5px; font-family: 'PingFang HK'; text-anchor: start; fill: #9ca3af" x="543.652364" y="149.486929" transform="rotate(-0 543.652364 149.486929)">8192d</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 13px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="324" y="14.48" transform="rotate(-0 324 14.48)">线性变换的维度约束</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pbc4212febf">
+   <rect x="4.4" y="22.48" width="639.2" height="203.52"/>
+  </clipPath>
+ </defs>
+</svg>
