@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="396pt" height="324pt" viewBox="0 0 396 324" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-06-07T16:56:04.725143</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 324 
+L 396 324 
+L 396 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 102 282.7296 
+L 281.2 282.7296 
+L 281.2 232.7632 
+L 102 232.7632 
+z
+" clip-path="url(#pb8f3ba1625)" style="fill: #ffffff; stroke: #16a34a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 102 218.0672 
+L 281.2 218.0672 
+L 281.2 168.1008 
+L 102 168.1008 
+z
+" clip-path="url(#pb8f3ba1625)" style="fill: #ffffff; stroke: #2563eb; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 102 153.4048 
+L 281.2 153.4048 
+L 281.2 103.4384 
+L 102 103.4384 
+z
+" clip-path="url(#pb8f3ba1625)" style="fill: #ffffff; stroke: #ea580c; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 102 88.7424 
+L 281.2 88.7424 
+L 281.2 38.776 
+L 102 38.776 
+z
+" clip-path="url(#pb8f3ba1625)" style="fill: #ffffff; stroke: #7c3aed; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'PingFang HK'; text-anchor: end; fill: #16a34a" x="76.4" y="260.55782" transform="rotate(-0 76.4 260.55782)">输入层</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 9px; font-family: 'PingFang HK'; fill: #1e293b" transform="translate(168.151484 255.513148)">Embedding</text>
+    <text style="font-size: 9px; font-family: 'PingFang HK'; fill: #1e293b" transform="translate(150.353281 265.337492)">共现统计 · 词袋特征</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'PingFang HK'; text-anchor: end; fill: #2563eb" x="76.4" y="195.89542" transform="rotate(-0 76.4 195.89542)">浅层 1-2</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 9px; font-family: 'PingFang HK'; fill: #1e293b" transform="translate(150.353281 190.941029)">语法角色 · 句法结构</text>
+    <text style="font-size: 9px; font-family: 'PingFang HK'; fill: #1e293b" transform="translate(159.353281 200.584811)">词性 · 主谓关系</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'PingFang HK'; text-anchor: end; fill: #ea580c" x="76.4" y="131.242668" transform="rotate(-0 76.4 131.242668)">中层 3-6</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 9px; font-family: 'PingFang HK'; fill: #1e293b" transform="translate(154.853281 126.272442)">局部语义 · 上下文</text>
+    <text style="font-size: 9px; font-family: 'PingFang HK'; fill: #1e293b" transform="translate(159.353281 135.948286)">短语 · 指代消解</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'PingFang HK'; text-anchor: end; fill: #7c3aed" x="76.4" y="66.57062" transform="rotate(-0 76.4 66.57062)">深层</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 9px; font-family: 'PingFang HK'; fill: #1e293b" transform="translate(160.1 61.629448)">篇章级抽象语义</text>
+    <text style="font-size: 9px; font-family: 'PingFang HK'; fill: #1e293b" transform="translate(154.106562 71.283354)">主题 · 意图 · 推理</text>
+   </g>
+   <g id="patch_6">
+    <path d="M 191.6 230.764745 
+Q 191.6 225.415718 191.6 221.743742 
+" clip-path="url(#pb8f3ba1625)" style="fill: none; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 188.8 227.343742 
+L 191.6 221.743742 
+L 194.4 227.343742 
+z
+" clip-path="url(#pb8f3ba1625)" style="fill: #9ca3af; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 191.6 166.102345 
+Q 191.6 160.753318 191.6 157.081342 
+" clip-path="url(#pb8f3ba1625)" style="fill: none; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 188.8 162.681342 
+L 191.6 157.081342 
+L 194.4 162.681342 
+z
+" clip-path="url(#pb8f3ba1625)" style="fill: #9ca3af; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 191.6 101.439945 
+Q 191.6 96.090918 191.6 92.418942 
+" clip-path="url(#pb8f3ba1625)" style="fill: none; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 188.8 98.018942 
+L 191.6 92.418942 
+L 194.4 98.018942 
+z
+" clip-path="url(#pb8f3ba1625)" style="fill: #9ca3af; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 326 280.730652 
+Q 326 160.751994 326 42.450388 
+" clip-path="url(#pb8f3ba1625)" style="fill: none; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 323.2 48.050388 
+L 326 42.450388 
+L 328.8 48.050388 
+z
+" clip-path="url(#pb8f3ba1625)" style="fill: #9ca3af; stroke: #9ca3af; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 8.5px; font-family: 'PingFang HK'; fill: #9ca3af" transform="translate(345.2 158.455941)">抽象程度</text>
+    <text style="font-size: 8.5px; font-family: 'PingFang HK'; fill: #9ca3af" transform="translate(345.2 167.563956)">递增</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 13px; font-family: 'PingFang HK'; text-anchor: middle; fill: #1e293b" x="198" y="16.08" transform="rotate(-0 198 16.08)">不同层数编码的信息层级</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pb8f3ba1625">
+   <rect x="6" y="24.08" width="384" height="293.92"/>
+  </clipPath>
+ </defs>
+</svg>

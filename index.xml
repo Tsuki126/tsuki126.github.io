@@ -12,7 +12,16 @@
 			<copyright>Copyright © 2024, Tsuki126.</copyright>
 		
 		
+			<lastBuildDate>Sun, 07 Jun 2026 00:00:00 +0000</lastBuildDate>
+		
 			<atom:link href="https://tsuki126.github.io/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>LLM 数学基础：线性代数</title>
+				<link>https://tsuki126.github.io/blog/llm-linear-algebra/</link>
+				<pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://tsuki126.github.io/blog/llm-linear-algebra/</guid>
+				<description>&lt;blockquote&gt;&#xA;&lt;p&gt;理解 LLM 只需要三个线性代数概念：&lt;strong&gt;向量（表示语义）→ 线性变换（混合特征）→ 非线性激活（筛选特征）&lt;/strong&gt;。&#xA;每个概念先用二维几何建立直觉，再升维到 768 维的 LLM 世界。&lt;/p&gt;</description>
+			</item>
 			<item>
 				<title>关于</title>
 				<link>https://tsuki126.github.io/about/</link>

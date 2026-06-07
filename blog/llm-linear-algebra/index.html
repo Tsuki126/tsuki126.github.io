@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://tsuki126.github.io/images/avatar.png" />
+<title>LLM 数学基础：线性代数 | Tsuki126</title>
+<meta name="title" content="LLM 数学基础：线性代数" />
+<meta name="description" content="理解 LLM 只需要三个线性代数概念：向量编码语义 → 线性变换重组特征 → 非线性激活筛选信息。用二维几何建立直觉，再升维到 768 维的 LLM 世界。" />
+<meta name="keywords" content="LLM 数学基础," />
+
+
+<meta property="og:url" content="https://tsuki126.github.io/blog/llm-linear-algebra/">
+	<meta property="og:site_name" content="Tsuki126">
+	<meta property="og:title" content="LLM 数学基础：线性代数">
+	<meta property="og:description" content="理解 LLM 只需要三个线性代数概念：向量编码语义 → 线性变换重组特征 → 非线性激活筛选信息。用二维几何建立直觉，再升维到 768 维的 LLM 世界。">
+	<meta property="og:locale" content="zh_CN">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="blog">
+		<meta property="article:published_time" content="2026-06-07T00:00:00+00:00">
+		<meta property="article:modified_time" content="2026-06-07T00:00:00+00:00">
+		<meta property="article:tag" content="LLM 数学基础">
+		<meta property="og:image" content="https://tsuki126.github.io/images/avatar.png">
+
+
+
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://tsuki126.github.io/images/avatar.png">
+	<meta name="twitter:title" content="LLM 数学基础：线性代数">
+	<meta name="twitter:description" content="理解 LLM 只需要三个线性代数概念：向量编码语义 → 线性变换重组特征 → 非线性激活筛选信息。用二维几何建立直觉，再升维到 768 维的 LLM 世界。">
+
+
+
+
+	<meta itemprop="name" content="LLM 数学基础：线性代数">
+	<meta itemprop="description" content="理解 LLM 只需要三个线性代数概念：向量编码语义 → 线性变换重组特征 → 非线性激活筛选信息。用二维几何建立直觉，再升维到 768 维的 LLM 世界。">
+	<meta itemprop="datePublished" content="2026-06-07T00:00:00+00:00">
+	<meta itemprop="dateModified" content="2026-06-07T00:00:00+00:00">
+	<meta itemprop="wordCount" content="3570">
+	<meta itemprop="image" content="https://tsuki126.github.io/images/avatar.png">
+	<meta itemprop="keywords" content="LLM 数学基础">
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  :root {
+    --width: 720px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: Verdana, sans-serif;
+    --font-scale: 1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  time {
+    font-family: monospace;
+    font-style: normal;
+    font-size: 15px;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--blockquote-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  .highlight pre,
+  .code pre {
+    min-width: 100%;
+    width: max-content;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: var(--visited-color);
+  }
+
+</style>
+<style>
+ 
+a { color: #2563eb; }
+a:hover { color: #1d4ed8; }
+body { line-height: 1.8; max-width: 900px; padding: 20px 40px; }
+pre { border-radius: 4px; }
+hr { border: none; border-top: 1px solid #e5e7eb; margin: 1.5em 0; }
+
+ 
+@media (min-width: 1200px) {
+    body { max-width: 960px; }
+}
+
+ 
+img[src*="cover"] {
+    width: 100%;
+    border-radius: 6px;
+}
+
+ 
+footer {
+    padding: 40px 0 20px;
+    font-size: 0.85em;
+    color: #999;
+}
+
+ 
+
+ 
+.category-list {
+    margin: 0.5em 0 0.8em;
+    line-height: 1.6;
+}
+.category-list a {
+    color: #374151;
+    text-decoration: none;
+    font-size: 0.88em;
+}
+.category-list a:hover {
+    color: #2563eb;
+}
+.category-list .sep {
+    color: #d1d5db;
+    font-size: 0.7em;
+    margin: 0 6px;
+}
+
+ 
+.blog-list {
+    margin-top: 1em;
+}
+.blog-item {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #eee;
+    line-height: 1.6;
+}
+.blog-item:last-child {
+    border-bottom: none;
+}
+.blog-meta {
+    font-size: 0.85em;
+    color: #999;
+    flex-shrink: 0;
+}
+.blog-title {
+    font-size: 0.85em;
+    color: #2563eb;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.blog-title:hover {
+    color: #1d4ed8;
+}
+.blog-body {
+    font-size: 0.85em;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+    max-width: 360px;
+}
+
+ 
+.notes-list {
+    margin-top: 1em;
+}
+.note-year {
+    font-weight: bold;
+    font-size: 0.95em;
+    margin: 1.2em 0 0.4em;
+    color: #222;
+}
+.note-item {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #eee;
+    line-height: 1.6;
+}
+.note-item:last-child {
+    border-bottom: none;
+}
+.note-meta {
+    font-size: 0.85em;
+    color: #999;
+    flex-shrink: 0;
+}
+.note-title {
+    font-size: 0.85em;
+    color: #2563eb;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.note-title:hover {
+    color: #1d4ed8;
+}
+.note-body {
+    font-size: 0.85em;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+    max-width: 360px;
+}
+
+ 
+.note-date {
+    font-size: 0.85em;
+    color: #999;
+    margin-top: 0;
+}
+
+ 
+.about-page {
+    margin: 2em 0;
+}
+.about-page .about-header {
+    margin-bottom: 1.5em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #e5e7eb;
+}
+.about-page .about-header p {
+    margin: 0;
+}
+.about-page .about-exp p {
+    margin: 0.3em 0;
+}
+.about-page .about-exp p + p {
+    margin-top: 1em;
+}
+.about-page .about-contact {
+    margin-top: 1.5em;
+    padding-top: 1em;
+    border-top: 1px solid #e5e7eb;
+    font-size: 0.9em;
+    color: #666;
+}
+.about-page .about-contact code {
+    font-size: 0.85em;
+    background: #f5f5f5;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+ 
+@media (max-width: 600px) {
+    .blog-body, .note-body {
+        display: none;
+    }
+    .blog-item, .note-item {
+        gap: 8px;
+    }
+}
+</style></head>
+
+<body>
+  <header><a href="/" class="title">
+  <h2>Tsuki126</h2>
+</a>
+<nav>
+<a href="/">首页</a>
+
+<a href="/notes/">随笔</a>
+
+<a href="/blog/">博客</a>
+
+<a href="/about/">关于</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>LLM 数学基础：线性代数</h1>
+<p>
+  <i>
+    <time datetime='2026-06-07'>
+      2026-06-07
+    </time>
+  </i>
+</p>
+
+<content>
+  <blockquote>
+<p>理解 LLM 只需要三个线性代数概念：<strong>向量（表示语义）→ 线性变换（混合特征）→ 非线性激活（筛选特征）</strong>。
+每个概念先用二维几何建立直觉，再升维到 768 维的 LLM 世界。</p>
+</blockquote>
+<hr>
+<h2 id="1-向量把词变成数字">1. 向量：把词变成数字</h2>
+<h3 id="从二维坐标说起">从二维坐标说起</h3>
+<p>向量 $(2, 1)$ 就是二维平面的一个点：$x$ 方向走 $2$，$y$ 方向走 $1$。</p>
+<p>$$
+(2, 1) = 2 \times \begin{pmatrix}1 \cr 0\end{pmatrix} + 1 \times \begin{pmatrix}0 \cr 1\end{pmatrix}
+$$</p>
+<p>$\begin{pmatrix}1 \cr 0\end{pmatrix}$ 和 $\begin{pmatrix}0 \cr 1\end{pmatrix}$ 叫<strong>基向量（basis vectors）</strong>——坐标系的&quot;尺子&quot;。任何二维向量都是这两个基向量的<strong>线性组合</strong>（各自缩放后相加）。</p>
+<img src="/images/llm-linear-algebra/vector-2d.svg" alt="向量 (2,1) 由基向量 (1,0) 和 (0,1) 线性组合而成，蓝色箭头为主向量，绿色为基向量" width="45%">
+<h3 id="升维从-2d-到-768d">升维：从 2D 到 768D</h3>
+<p>把&quot;2 维 → 两个基向量&quot;的规律推广到 $d$ 维：一个 $d$ 维向量就是 $d$ 个基向量的线性组合。GPT-1 用了 768 个基向量，LLaMA 用了 4096 个——<strong>每个词被映射成高维空间里的一个坐标点</strong>。</p>
+<p>把&quot;猫&quot;变成 768 维的数字，经过三步：</p>
+<img src="/images/llm-linear-algebra/embedding-process.svg" alt="将文本转化为词向量的三步流程：Token 化 → 查词表 ID → 查 Embedding 矩阵 → 词向量" width="90%">
+<p>最终每个词都对应一个高维数字列表——<strong>向量</strong>。</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">词</th>
+					<th style="text-align: center">前 5 维（示意）</th>
+					<th style="text-align: center">与「猫」的余弦相似度</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center">猫</td>
+					<td style="text-align: center"><code>[0.23, -0.51, 0.82, 0.07, -0.12]</code></td>
+					<td style="text-align: center">1.0（自身）</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">狗</td>
+					<td style="text-align: center"><code>[0.19, -0.48, 0.75, 0.11, -0.08]</code></td>
+					<td style="text-align: center">≈ 0.96（相近）</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">编程</td>
+					<td style="text-align: center"><code>[0.81, 0.34, -0.22, 0.65, 0.43]</code></td>
+					<td style="text-align: center">≈ 0.10（无关）</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>语义相近的词，向量也靠近</strong>——&ldquo;猫&quot;和&quot;狗&quot;在各维度的数值几乎一致，而&quot;编程&quot;则截然不同。这就是&quot;语义空间&rdquo;：词义被编码成了几何位置。</p>
+<p><strong>常见误解</strong>：768 维中的第 $i$ 维不可独立解释——不是&quot;可爱程度&quot;或&quot;动物性&quot;，而是训练自动发现的抽象特征混合体。向量整体编码语义关系，单个维度无独立意义。</p>
+<blockquote>
+<p>贯穿全文的线索：向量 = 词在语义空间中的位置坐标。</p>
+</blockquote>
+<h3 id="但初始-embedding-不是完整语义">但初始 Embedding 不是完整语义</h3>
+<p>初始 Embedding 查到的只是<strong>这个词的&quot;平均含义&quot;</strong>——&ldquo;猫&quot;在所有语料中跟谁一起出现。但&quot;猫抓老鼠&quot;和&quot;猫在睡觉&quot;里的&quot;猫&quot;含义不同。<strong>词义需要随上下文变化</strong>——这正是下一节要讨论的内容。</p>
+<hr>
+<h2 id="2-线性变换混合与重组">2. 线性变换：混合与重组</h2>
+<h3 id="为什么需要变换">为什么需要变换</h3>
+<p>&ldquo;猫&quot;在&quot;猫抓____&ldquo;和&quot;猫喵____&ldquo;中，后续词完全不同。模型需要一种机制：<strong>根据输入的上下文，调整每个词的向量表示</strong>。</p>
+<p>线性变换就是这样一种机制。它的数学形式是：</p>
+<p>$$
+\mathbf{y} = \mathbf{W}\mathbf{x}
+$$</p>
+<p>输入向量 $\mathbf{x}$ 经过矩阵 $\mathbf{W}$ 的处理，变成输出向量 $\mathbf{y}$。矩阵 $\mathbf{W}$ 就是<strong>变换规则</strong>——所有参数通过训练自动学习。</p>
+<h3 id="矩阵向量特征的加权混合">矩阵×向量：特征的加权混合</h3>
+<p>以 $d=3$ 为例展开：</p>
+<div>
+$$
+\mathbf{y} = \mathbf{W}\mathbf{x}
+\quad\Longrightarrow\quad
+\begin{pmatrix}
+y_1 \cr y_2 \cr y_3
+\end{pmatrix}
+=
+\begin{pmatrix}
+w_{11} & w_{12} & w_{13} \cr
+w_{21} & w_{22} & w_{23} \cr
+w_{31} & w_{32} & w_{33}
+\end{pmatrix}
+\begin{pmatrix}
+x_1 \cr x_2 \cr x_3
+\end{pmatrix}
+$$
+</div>
+<p>看第一行：$y_1 = w_{11}x_1 + w_{12}x_2 + w_{13}x_3$</p>
+<p><strong>输出的每个分量，都是所有输入分量的加权和</strong>。原来 $x_1$ 算&quot;温度&rdquo;、$x_2$ 算&quot;湿度&rdquo;——变换后 $y_1$ 里既有温度又有湿度：<strong>特征边界被打碎、信息被重新混合</strong>。</p>
+<img src="/images/llm-linear-algebra/linear-transform.svg" alt="线性变换前后对比：左侧为原始网格和向量，右侧为经过矩阵 W 变换后网格扭曲、向量方向长度改变" width="80%">
+<h3 id="三种基本变换d2-为例">三种基本变换（$d=2$ 为例）</h3>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">变换</th>
+					<th style="text-align: center">矩阵 $\mathbf{W}$</th>
+					<th style="text-align: center">输入 $(1,2)$ → 输出</th>
+					<th style="text-align: center">特征</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center">纯旋转</td>
+					<td style="text-align: center">$\begin{pmatrix}0 &amp; -1 \cr 1 &amp; 0\end{pmatrix}$</td>
+					<td style="text-align: center">$(-2, 1)$</td>
+					<td style="text-align: center">方向变，长度不变</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">纯缩放</td>
+					<td style="text-align: center">$\begin{pmatrix}3 &amp; 0 \cr 0 &amp; 0.5\end{pmatrix}$</td>
+					<td style="text-align: center">$(3, 1)$</td>
+					<td style="text-align: center">各维度独立拉伸</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">旋转+缩放</td>
+					<td style="text-align: center">$\begin{pmatrix}2 &amp; -1 \cr 1 &amp; 1\end{pmatrix}$</td>
+					<td style="text-align: center">$(0, 3)$</td>
+					<td style="text-align: center">两者同时，LLM 中最常见</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="偏置-b打破原点约束">偏置 b：打破原点约束</h3>
+<p>$\mathbf{W}$ 有一个限制：它必须经过原点（$\mathbf{W}\mathbf{0} = \mathbf{0}$）。但很多时候我们需要变换后有偏移——比如让所有向量整体右移。加一个<strong>偏置（bias）向量 $\mathbf{b}$</strong> 就能做到：</p>
+<p>$$
+\mathbf{y} = \mathbf{W}\mathbf{x} + \mathbf{b}
+$$</p>
+<p>几何上：$\mathbf{W}$ 做旋转+缩放，$\mathbf{b}$ 做平移。先旋转缩放，再平移，原点不再固定。</p>
+<p>三者协同的结构已经浮现：<strong>$\mathbf{W}$ 决定方向，$\mathbf{b}$ 决定位置，$\sigma$ 决定形状</strong>（$\sigma$ 将在下一节介绍）。</p>
+<h3 id="关键约束为什么需要非线性">关键约束：为什么需要非线性</h3>
+<p>线性变换对所有输入<strong>一视同仁</strong>——这是它最大的局限：</p>
+<ol>
+<li><strong>规则固定</strong>：一个 $\mathbf{W}$ 只有 $d^2$ 个参数，一旦确定，所有向量按同一套规则被旋转+缩放，无法对某个向量&quot;特殊对待&rdquo;</li>
+<li><strong>不能过滤</strong>：负值照样通过，噪声不会自动消失——线性变换只混合，不筛选</li>
+</ol>
+<p>变换很强大，但<strong>不能差异化</strong>。要打破这个限制，必须引入非线性。</p>
+<blockquote>
+<p>贯穿全文的线索：线性变换 = 混合输入维度 → 创造候选新特征，但无法差异化。</p>
+</blockquote>
+<hr>
+<h2 id="3-非线性激活筛选与保留">3. 非线性激活：筛选与保留</h2>
+<h3 id="没有非线性深层网络就是虚设">没有非线性，深层网络就是虚设</h3>
+<p>如果只有线性变换，叠加多层也毫无意义：</p>
+<p>$$
+\mathbf{W}_2(\mathbf{W}_1\mathbf{x}) = (\mathbf{W}_2\mathbf{W}_1)\mathbf{x}
+$$</p>
+<p>两层线性叠加等价于一个单层线性变换。再多层数也跟一层没区别。<strong>没有非线性，层数就是噱头。</strong></p>
+<h3 id="relu砍掉负数">ReLU：砍掉负数</h3>
+<p>非线性激活函数的核心职责是<strong>筛选</strong>：检查每个候选特征，有用的留下，没用的扔掉。</p>
+<p>最简单的例子——ReLU：</p>
+<p>$$
+\text{ReLU}(x) = \max(0, x)
+$$</p>
+<img src="/images/llm-linear-algebra/relu.svg" alt="ReLU 激活函数曲线，负值归零正值保留，虚线为 GELU 对比" width="65%">
+<p>正值保留原样，负值直接归零。GPT 系列用的是更平滑的 <strong>GELU</strong>（图中橙色虚线）：负值按概率衰减，不是一刀切砍到零，保留部分&quot;可能有用&quot;的信息。</p>
+<h3 id="w-与-σ-的分工协作">W 与 σ 的分工协作</h3>
+<p>从两个视角理解，结论是同一个：</p>
+<p><strong>特征视角</strong>：$\mathbf{W}$ 对所有特征加权求和（混合重组），但<strong>不能过滤</strong>——负值照样通过。$\sigma$ 逐一审查每个特征值，正值保留、负值砍掉——<strong>过滤是 $\sigma$ 独有的能力</strong>。</p>
+<p><strong>几何视角</strong>：$\mathbf{W}$ 对空间做统一变形（所有点按同一套规则旋转+缩放）。$\sigma$ 对空间做差异化折叠——ReLU 把负半轴折叠到零轴上，GELU 更柔和（衰减而非归零）。<strong>统一变形做&quot;调度&rdquo;，差异化折叠做&quot;选择&quot;。</strong></p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">角色</th>
+					<th style="text-align: center">做什么</th>
+					<th style="text-align: center">结果</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center">$\mathbf{W}$（线性）</td>
+					<td style="text-align: center">混合重组所有输入维度</td>
+					<td style="text-align: center"><strong>创造</strong>候选新特征</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">$\sigma$（非线性）</td>
+					<td style="text-align: center">逐一审查每个候选值</td>
+					<td style="text-align: center"><strong>筛选</strong>，保留有用、丢弃无用</td>
+			</tr>
+	</tbody>
+</table>
+<p>完整的一层：</p>
+<p>$$
+\mathbf{y} = \sigma(\mathbf{W}\mathbf{x} + \mathbf{b})
+$$</p>
+<blockquote>
+<p>贯穿全文的线索：非线性激活 = 筛选特征 → 有用的留下，无用的砍掉。</p>
+</blockquote>
+<hr>
+<h2 id="4-多层叠加从粗略轮廓到深层语义">4. 多层叠加：从粗略轮廓到深层语义</h2>
+<h3 id="改变筛选-的交替循环">改变→筛选 的交替循环</h3>
+<p>单层能力有限（一次&quot;混合+筛选&quot;）。多层网络把 $\mathbf{W} \to \sigma$ 交替堆叠：</p>
+<img src="/images/llm-linear-algebra/multi-layer.svg" alt="多层网络叠加图：输入经过 Layer 1 到 Layer N 逐层处理，从粗筛轮廓到深层语义" width="90%">
+<p>每层的 $\mathbf{W}$ 不同，&ldquo;混合&quot;的方向就不同；每层的 $\sigma$ 学到的&quot;什么有用&quot;也不同，筛选标准逐层变化。<strong>输入经过逐层加工，从粗糙的&quot;轮廓&quot;变成精细的&quot;语义&rdquo;。</strong></p>
+<p>不同层数编码的信息层级：</p>
+<img src="/images/llm-linear-algebra/layer-hierarchy.svg" alt="不同层数编码的信息层级图：输入层共现统计 → 浅层语法角色 → 中层局部语义 → 深层抽象语义" width="65%">
+<h3 id="维度约束">维度约束</h3>
+<p>LLM 的每一层有个基本约束：<strong>输入输出维度必须一致</strong>。原因很简单——层与层是串行堆叠的，如果上一层输出 768 维、下一层却只能接收 512 维，就没法衔接。这就是&quot;维度约束&quot;：所有线性变换的进出维度必须对齐。</p>
+<div>
+$$
+\text{Layer N: } 768 \longrightarrow [\mathbf{W} \to \sigma] \longrightarrow 768 \quad\Longrightarrow\quad \text{Layer N+1: } 768 \longrightarrow [\mathbf{W} \to \sigma] \longrightarrow 768
+$$
+</div>
+<p>像标准 Lego 积木，每块规格一样才能层层堆叠。</p>
+<p><strong>唯一特例：FFN 的&quot;打草稿&quot;</strong></p>
+<p>前馈网络（FFN）用一个巧妙的技巧打破了这个&quot;不变&quot;：<strong>先膨胀，再压缩</strong>。</p>
+<p>$$
+768 \xrightarrow{\text{膨胀 ×4}} 3072 \xrightarrow{\text{压缩}} 768
+$$</p>
+<p>第一步把 768 维向量映射到 3072 维——一个更大的空间，相当于给模型一张&quot;草稿纸&quot;，可以试探更多特征组合。算出结果后再压缩回 768 维，传递给下一层。</p>
+<p><strong>为什么不全程用高维？</strong> 计算成本。768×768 的矩阵乘法约 59 万次浮点运算，3072×3072 约 943 万次——近 16 倍。只在 FFN 短暂膨胀是最划算的折中。从 GPT-1（768）到 GPT-3（12288）再到 LLaMA（4096/8192），维度规模不断增长，但膨胀-压缩的设计始终如一。</p>
+<img src="/images/llm-linear-algebra/dimension-constraints.svg" alt="维度约束示意图：常规变换维度不变，FFN 先膨胀后压缩，以及各模型维度规模对比" width="85%">
+<blockquote>
+<p>贯穿全文的线索：多层叠加 = 改变 → 筛选 → 改变 → 筛选 → 逐层提纯语义。</p>
+</blockquote>
+<hr>
+<h2 id="5-点积衡量语义有多对齐">5. 点积：衡量语义有多&quot;对齐&quot;</h2>
+<h3 id="两个向量的对齐程度">两个向量的对齐程度</h3>
+<p>点积是衡量两个向量方向一致程度的运算：</p>
+<p>$$
+\mathbf{a} \cdot \mathbf{b} = | \mathbf{a} | | \mathbf{b} | \cos\theta
+$$</p>
+<img src="/images/llm-linear-algebra/dot-product.svg" alt="点积的几何含义：两个向量 a 和 b 的夹角 θ 决定点积大小" width="45%">
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">$\theta$</th>
+					<th style="text-align: center">$\cos\theta$</th>
+					<th style="text-align: center">含义</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center">$0^\circ$</td>
+					<td style="text-align: center">$1$</td>
+					<td style="text-align: center">方向一致，点积最大</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">$90^\circ$</td>
+					<td style="text-align: center">$0$</td>
+					<td style="text-align: center">正交，无关</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">$180^\circ$</td>
+					<td style="text-align: center">$-1$</td>
+					<td style="text-align: center">方向相反，点积最小</td>
+			</tr>
+	</tbody>
+</table>
+<p>推广到 $d$ 维：$\displaystyle \mathbf{a} \cdot \mathbf{b} = \sum_{i=1}^d a_i b_i$，几何含义不变。</p>
+<h3 id="连接注意力机制">连接注意力机制</h3>
+<p>把上述概念串起来：<strong>向量</strong>编码位置 → <strong>线性变换 + 偏置</strong>调整表示 → <strong>非线性激活</strong>筛选信息。那么模型如何&quot;知道一个词跟周围哪些词有关&quot;？靠点积。</p>
+<p>自注意力机制的核心就是点积矩阵 $\mathbf{Q}\mathbf{K}^{\mathsf T}$：<strong>计算每个位置和所有其他位置之间的&quot;对齐分数&quot;</strong>。分数高的位置贡献大，分数低的贡献小。</p>
+<p>用代码把直觉落到实处：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#007020;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">numpy</span> <span style="color:#007020;font-weight:bold">as</span> <span style="color:#0e84b5;font-weight:bold">np</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#60a0b0;font-style:italic"># 两个语义相近的向量，点积高</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>cat  <span style="color:#666">=</span> np<span style="color:#666">.</span>array([<span style="color:#40a070">0.23</span>, <span style="color:#666">-</span><span style="color:#40a070">0.51</span>, <span style="color:#40a070">0.82</span>, <span style="color:#40a070">0.07</span>])
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>dog  <span style="color:#666">=</span> np<span style="color:#666">.</span>array([<span style="color:#40a070">0.19</span>, <span style="color:#666">-</span><span style="color:#40a070">0.48</span>, <span style="color:#40a070">0.75</span>, <span style="color:#40a070">0.11</span>])
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>np<span style="color:#666">.</span>dot(cat, dog)  <span style="color:#60a0b0;font-style:italic"># ≈ 0.65（语义相关）</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span><span style="color:#60a0b0;font-style:italic"># 两个无关的向量，点积低</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>code <span style="color:#666">=</span> np<span style="color:#666">.</span>array([<span style="color:#40a070">0.81</span>,  <span style="color:#40a070">0.34</span>, <span style="color:#666">-</span><span style="color:#40a070">0.22</span>, <span style="color:#40a070">0.65</span>])
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>np<span style="color:#666">.</span>dot(cat, code)  <span style="color:#60a0b0;font-style:italic"># ≈ 0.02（语义无关）</span>
+</span></span></code></pre></div><blockquote>
+<p>点积大 → 语义相关，点积小 → 语义无关。</p>
+</blockquote>
+<hr>
+<h2 id="核心概念速查">核心概念速查</h2>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">概念</th>
+					<th style="text-align: center">一句话直觉</th>
+					<th style="text-align: center">LLM 里的角色</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center">向量</td>
+					<td style="text-align: center">空间中的坐标点</td>
+					<td style="text-align: center">词的语义位置编码</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">线性变换</td>
+					<td style="text-align: center">混合所有输入维度，创造新特征</td>
+					<td style="text-align: center">根据上下文统一调整表示</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">偏置 b</td>
+					<td style="text-align: center">空间平移，打破原点约束</td>
+					<td style="text-align: center">调整变换的基准位置</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">非线性激活</td>
+					<td style="text-align: center">逐个检查候选，留下有用、砍掉无用</td>
+					<td style="text-align: center">差异化筛选，打破线性局限</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">多层叠加</td>
+					<td style="text-align: center">改变→筛选交替循环</td>
+					<td style="text-align: center">从轮廓到语义，逐层提纯</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">点积</td>
+					<td style="text-align: center">衡量两个向量的对齐程度</td>
+					<td style="text-align: center">关联度打分，注意力机制的基础</td>
+			</tr>
+	</tbody>
+</table>
+
+</content>
+
+<div style="font-size:0.8em;display:flex;gap:16px;justify-content:center;">
+  <p>
+    
+        <strike>
+          &lt;&lt; Previous Post</strike>
+            
+  </p>
+  <p>|</p>
+  <p>
+    
+    <strike>Next Post >></strike>
+    
+  </p>
+</div>
+
+
+<p>
+  
+  <a href="https://tsuki126.github.io/tags/llm-%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">#LLM 数学基础</a>
+  
+</p>
+
+  </main>
+  <footer>© 2026 Tsuki126 · <a href="https://github.com/Tsuki126">GitHub</a></footer>
+
+  
+</body>
+
+</html>

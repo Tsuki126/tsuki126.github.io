@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>博客 on Tsuki126</title>
-		<link>https://tsuki126.github.io/blog/</link>
-		<description>Recent content in 博客 on Tsuki126</description>
+		<title>LLM 数学基础 on Tsuki126</title>
+		<link>https://tsuki126.github.io/tags/llm-%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/</link>
+		<description>Recent content in LLM 数学基础 on Tsuki126</description>
 		<generator>Hugo</generator>
 		<language>zh-CN</language>
 		
@@ -14,7 +14,7 @@
 		
 			<lastBuildDate>Sun, 07 Jun 2026 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="https://tsuki126.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://tsuki126.github.io/tags/llm-%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>LLM 数学基础：线性代数</title>
 				<link>https://tsuki126.github.io/blog/llm-linear-algebra/</link>

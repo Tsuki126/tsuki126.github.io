@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 165">
+<style>
+    .t{font-family:STHeiti,Heiti TC,sans-serif;font-size:13px;font-weight:bold;fill:#1e293b;text-anchor:middle;dominant-baseline:central;}
+    .st{font-family:STHeiti,Heiti TC,sans-serif;font-size:10px;fill:#64748b;text-anchor:middle;dominant-baseline:central;}
+    .bx{fill:#fff;stroke:#2563eb;stroke-width:1.5;rx:6;ry:6;filter:url(#sd);}
+    .ln{stroke:#94a3b8;stroke-width:1.5;fill:none;}
+    .ah{fill:#94a3b8;}
+    .ds{stroke:#94a3b8;stroke-width:1;stroke-dasharray:3 2;fill:none;}
+    .hl{font-family:STHeiti,Heiti TC,sans-serif;font-size:11px;fill:#2563eb;font-weight:bold;text-anchor:middle;dominant-baseline:central;}
+    .el{font-family:STHeiti,Heiti TC,sans-serif;font-size:10px;fill:#64748b;text-anchor:middle;dominant-baseline:central;}
+</style>
+<defs><filter id="sd"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity="0.06"/></filter></defs>
+<text x="260" y="20" class="t" font-size="14">多层网络：改变 → 筛选 交替循环</text>
+<rect x="50" y="42" width="90" height="40" class="bx"/><text x="95" y="58" class="t" font-size="12">Layer 1</text><text x="95" y="75" class="st">W1 → σ</text><rect x="165" y="42" width="90" height="40" class="bx"/><text x="210" y="58" class="t" font-size="12">Layer 2</text><text x="210" y="75" class="st">W2 → σ</text><rect x="265" y="42" width="90" height="40" class="bx"/><text x="310" y="64" class="t" font-size="18">...</text><rect x="380" y="42" width="90" height="40" class="bx"/><text x="425" y="58" class="t" font-size="12">Layer N</text><text x="425" y="75" class="st">WN → σ</text><line x1="20" y1="62" x2="50" y2="62" class="ln"/><polygon points="45,59 50,62 45,65" class="ah"/><text x="20" y="76" class="el">输入</text><line x1="140" y1="62" x2="165" y2="62" class="ln"/><polygon points="160,59 165,62 160,65" class="ah"/><line x1="255" y1="62" x2="265" y2="62" class="ln"/><polygon points="260,59 265,62 260,65" class="ah"/><line x1="355" y1="62" x2="380" y2="62" class="ln"/><polygon points="375,59 380,62 375,65" class="ah"/><line x1="470" y1="62" x2="500" y2="62" class="ln"/><polygon points="495,59 500,62 495,65" class="ah"/><text x="500" y="76" class="el">输出</text><line x1="95" y1="82" x2="95" y2="108" class="ds"/><polygon points="93,106 95,111 97,106" class="ds"/><text x="95" y="122" class="hl">⇣ 粗筛轮廓</text><line x1="210" y1="82" x2="210" y2="108" class="ds"/><polygon points="208,106 210,111 212,106" class="ds"/><text x="210" y="122" class="hl">⇣ 精雕细节</text><line x1="425" y1="82" x2="425" y2="108" class="ds"/><polygon points="423,106 425,111 427,106" class="ds"/><text x="425" y="122" class="hl">⇣ 深层语义</text></svg>

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="432pt" height="324pt" viewBox="0 0 432 324" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-06-07T17:02:15.683585</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 324 
+L 432 324 
+L 432 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 42.92 279.64 
+L 422.4 279.64 
+L 422.4 28.11875 
+L 42.92 28.11875 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 42.92 279.64 
+L 232.66 279.64 
+L 232.66 28.11875 
+L 42.92 28.11875 
+z
+" clip-path="url(#p19314e95ec)" style="fill: #ea580c; opacity: 0.06; stroke: #ea580c; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 232.66 279.64 
+L 422.4 279.64 
+L 422.4 28.11875 
+L 232.66 28.11875 
+z
+" clip-path="url(#p19314e95ec)" style="fill: #2563eb; opacity: 0.06; stroke: #2563eb; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 42.92 253.842949 
+L 422.4 253.842949 
+" clip-path="url(#p19314e95ec)" style="fill: none; stroke: #9ca3af; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 232.66 279.64 
+L 232.66 28.11875 
+" clip-path="url(#p19314e95ec)" style="fill: none; stroke: #9ca3af; stroke-linecap: square"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_3">
+      <defs>
+       <path id="m54933c577c" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m54933c577c" x="70.025714" y="279.64" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 12px; font-family: 'PingFang HK'; text-anchor: middle" x="70.025714" y="295.375625" transform="rotate(-0 70.025714 295.375625)">−3</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m54933c577c" x="124.237143" y="279.64" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 12px; font-family: 'PingFang HK'; text-anchor: middle" x="124.237143" y="295.375625" transform="rotate(-0 124.237143 295.375625)">−2</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#m54933c577c" x="178.448571" y="279.64" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 12px; font-family: 'PingFang HK'; text-anchor: middle" x="178.448571" y="295.375625" transform="rotate(-0 178.448571 295.375625)">−1</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m54933c577c" x="232.66" y="279.64" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 12px; font-family: 'PingFang HK'; text-anchor: middle" x="232.66" y="295.375625" transform="rotate(-0 232.66 295.375625)">0</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_7">
+      <g>
+       <use xlink:href="#m54933c577c" x="286.871429" y="279.64" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 12px; font-family: 'PingFang HK'; text-anchor: middle" x="286.871429" y="295.375625" transform="rotate(-0 286.871429 295.375625)">1</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m54933c577c" x="341.082857" y="279.64" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 12px; font-family: 'PingFang HK'; text-anchor: middle" x="341.082857" y="295.375625" transform="rotate(-0 341.082857 295.375625)">2</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_9">
+      <g>
+       <use xlink:href="#m54933c577c" x="395.294286" y="279.64" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 12px; font-family: 'PingFang HK'; text-anchor: middle" x="395.294286" y="295.375625" transform="rotate(-0 395.294286 295.375625)">3</text>
+     </g>
+    </g>
+    <g id="text_8">
+     <!-- $x$ -->
+     <g transform="translate(228.46 311.942813)">
+      <text>
+       <tspan x="0" y="-0.34375" style="font-style: oblique; font-size: 14px; font-family: 'DejaVu Sans'">x</tspan>
+      </text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_10">
+      <defs>
+       <path id="m47189a7770" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m47189a7770" x="42.92" y="253.842949" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 12px; font-family: 'PingFang HK'; text-anchor: end" x="35.92" y="258.210761" transform="rotate(-0 35.92 258.210761)">0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_11">
+      <g>
+       <use xlink:href="#m47189a7770" x="42.92" y="189.350321" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 12px; font-family: 'PingFang HK'; text-anchor: end" x="35.92" y="193.718133" transform="rotate(-0 35.92 193.718133)">1</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m47189a7770" x="42.92" y="124.857692" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 12px; font-family: 'PingFang HK'; text-anchor: end" x="35.92" y="129.225505" transform="rotate(-0 35.92 129.225505)">2</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_13">
+      <g>
+       <use xlink:href="#m47189a7770" x="42.92" y="60.365064" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 12px; font-family: 'PingFang HK'; text-anchor: end" x="35.92" y="64.732877" transform="rotate(-0 35.92 64.732877)">3</text>
+     </g>
+    </g>
+    <g id="text_13">
+     <!-- $\sigma(x)$ -->
+     <g transform="translate(21.948438 167.949375) rotate(-90)">
+      <text>
+       <tspan x="0" y="-0.375" style="font-style: oblique; font-size: 14px; font-family: 'DejaVu Sans'">σ</tspan>
+       <tspan x="14.334961" y="-0.375" style="font-style: oblique; font-size: 14px; font-family: 'DejaVu Sans'">x</tspan>
+       <tspan x="8.873047" y="-0.375" style="font-size: 14px; font-family: 'DejaVu Sans'">(</tspan>
+       <tspan x="22.620117" y="-0.375" style="font-size: 14px; font-family: 'DejaVu Sans'">)</tspan>
+      </text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_14">
+    <path d="M 330.240571 253.842949 
+L 330.240571 137.756218 
+" clip-path="url(#p19314e95ec)" style="fill: none; stroke-dasharray: 0.8,1.32; stroke-dashoffset: 0; stroke: #9ca3af; stroke-width: 0.8"/>
+   </g>
+   <g id="line2d_15">
+    <path d="M 232.66 137.756218 
+L 330.240571 137.756218 
+" clip-path="url(#p19314e95ec)" style="fill: none; stroke-dasharray: 0.8,1.32; stroke-dashoffset: 0; stroke: #9ca3af; stroke-width: 0.8"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 42.92 279.64 
+L 42.92 28.11875 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 42.92 279.64 
+L 422.4 279.64 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_16">
+    <path d="M 42.92 253.895459 
+L 69.13033 254.091669 
+L 85.464304 254.422854 
+L 98.37954 254.901275 
+L 109.395475 255.527831 
+L 119.651692 256.337289 
+L 129.528048 257.346914 
+L 139.404404 258.579731 
+L 151.55992 260.338739 
+L 172.072352 263.347539 
+L 179.28969 264.156504 
+L 185.367447 264.617191 
+L 190.685485 264.7979 
+L 195.623664 264.736657 
+L 200.181982 264.450999 
+L 204.36044 263.970779 
+L 208.538899 263.260287 
+L 212.337497 262.398509 
+L 216.136096 261.317921 
+L 219.934695 260.007522 
+L 223.733293 258.458294 
+L 227.531892 256.663393 
+L 231.33049 254.618301 
+L 235.129089 252.320919 
+L 238.927688 249.771619 
+L 243.106146 246.679875 
+L 247.284605 243.293899 
+L 251.463063 239.624124 
+L 256.021381 235.312979 
+L 260.5797 230.701332 
+L 265.517878 225.394567 
+L 270.835916 219.356452 
+L 276.913674 212.102769 
+L 283.751151 203.576373 
+L 292.108068 192.767716 
+L 303.503864 177.623955 
+L 331.993353 139.623985 
+L 344.528729 123.357395 
+L 357.064104 107.454694 
+L 370.739059 90.469472 
+L 387.073033 70.549123 
+L 409.104905 44.054373 
+L 422.4 28.17126 
+L 422.4 28.17126 
+" clip-path="url(#p19314e95ec)" style="fill: none; stroke-dasharray: 9.25,4; stroke-dashoffset: 0; stroke: #ea580c; stroke-width: 2.5"/>
+   </g>
+   <g id="text_14">
+    <g id="patch_7">
+     <path d="M 121.342857 91.141803 
+L 181.342857 91.141803 
+Q 184.342857 91.141803 184.342857 88.141803 
+L 184.342857 68.058365 
+Q 184.342857 65.058365 181.342857 65.058365 
+L 121.342857 65.058365 
+Q 118.342857 65.058365 118.342857 68.058365 
+L 118.342857 88.141803 
+Q 118.342857 91.141803 121.342857 91.141803 
+z
+" style="fill: #ffffff; opacity: 0.8; stroke: #ea580c; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 10px; font-family: 'PingFang HK'; fill: #ea580c" transform="translate(130.01317 75.338053)">负值 → 0</text>
+    <text style="font-size: 10px; font-family: 'PingFang HK'; fill: #ea580c" transform="translate(121.342857 86.162115)">（信息丢弃）</text>
+   </g>
+   <g id="text_15">
+    <g id="patch_8">
+     <path d="M 311.082857 91.141803 
+L 371.082857 91.141803 
+Q 374.082857 91.141803 374.082857 88.141803 
+L 374.082857 68.069615 
+Q 374.082857 65.069615 371.082857 65.069615 
+L 311.082857 65.069615 
+Q 308.082857 65.069615 308.082857 68.069615 
+L 308.082857 88.141803 
+Q 308.082857 91.141803 311.082857 91.141803 
+z
+" style="fill: #ffffff; opacity: 0.8; stroke: #2563eb; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 10px; font-family: 'PingFang HK'; fill: #2563eb" transform="translate(321.082857 75.349303)">正值保留</text>
+    <text style="font-size: 10px; font-family: 'PingFang HK'; fill: #2563eb" transform="translate(311.082857 86.162115)">（信息通过）</text>
+   </g>
+   <g id="text_16">
+    <!-- $y=x$ -->
+    <g style="fill: #2563eb" transform="translate(268.140286 128.082324)">
+     <text>
+      <tspan x="0" y="-0.984375" style="font-style: oblique; font-size: 11px; font-family: 'DejaVu Sans'; fill: #2563eb">y</tspan>
+      <tspan x="20.012695" y="-0.984375" style="font-style: oblique; font-size: 11px; font-family: 'DejaVu Sans'; fill: #2563eb">x</tspan>
+      <tspan x="8.652832" y="-0.984375" style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #2563eb">=</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 14px; font-family: 'PingFang HK'; text-anchor: middle" x="232.66" y="20.11875" transform="rotate(-0 232.66 20.11875)">激活函数：筛选候选特征</text>
+   </g>
+   <g id="line2d_17">
+    <path d="M 42.92 253.842949 
+L 232.47007 253.842949 
+L 232.84993 253.616999 
+L 422.4 28.11875 
+L 422.4 28.11875 
+" clip-path="url(#p19314e95ec)" style="fill: none; stroke: #2563eb; stroke-width: 3.5; stroke-linecap: square"/>
+   </g>
+   <g id="legend_1">
+    <g id="patch_9">
+     <path d="M 51.32 71.94125 
+L 121.964375 71.94125 
+Q 124.364375 71.94125 124.364375 69.54125 
+L 124.364375 36.51875 
+Q 124.364375 34.11875 121.964375 34.11875 
+L 51.32 34.11875 
+Q 48.92 34.11875 48.92 36.51875 
+L 48.92 69.54125 
+Q 48.92 71.94125 51.32 71.94125 
+z
+" style="fill: #ffffff; opacity: 0.8; stroke: #cccccc; stroke-linejoin: miter"/>
+    </g>
+    <g id="line2d_18">
+     <path d="M 53.72 43.454375 
+L 65.72 43.454375 
+L 77.72 43.454375 
+" style="fill: none; stroke: #2563eb; stroke-width: 3.5; stroke-linecap: square"/>
+    </g>
+    <g id="text_18">
+     <text style="font-size: 12px; font-family: 'PingFang HK'; text-anchor: start" x="87.32" y="47.654375" transform="rotate(-0 87.32 47.654375)">ReLU</text>
+    </g>
+    <g id="line2d_19">
+     <path d="M 53.72 60.565625 
+L 65.72 60.565625 
+L 77.72 60.565625 
+" style="fill: none; stroke-dasharray: 9.25,4; stroke-dashoffset: 0; stroke: #ea580c; stroke-width: 2.5"/>
+    </g>
+    <g id="text_19">
+     <text style="font-size: 12px; font-family: 'PingFang HK'; text-anchor: start" x="87.32" y="64.765625" transform="rotate(-0 87.32 64.765625)">GELU</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p19314e95ec">
+   <rect x="42.92" y="28.11875" width="379.48" height="251.52125"/>
+  </clipPath>
+ </defs>
+</svg>
