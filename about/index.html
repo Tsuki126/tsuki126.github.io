@@ -208,6 +208,14 @@
   }
 
 </style>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" onload="mermaid.initialize({startOnLoad: true, theme: 'default'});"></script>
+
 <style>
  
 a { color: #2563eb; }
@@ -226,6 +234,55 @@ img[src*="cover"] {
     width: 100%;
     border-radius: 6px;
 }
+
+ 
+main img {
+    display: block;
+    height: auto;
+    margin: 1.4em auto;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    max-width: 100%;
+}
+ 
+
+ 
+.mermaid {
+    text-align: center;
+    margin: 1.5em 0;
+    overflow-x: auto;
+}
+.language-mermaid {
+    display: none;
+}
+@media (prefers-color-scheme: dark) {
+    main img[src$=".svg"] { filter: invert(0.9) hue-rotate(180deg); }
+}
+
+ 
+main code { white-space: nowrap; }
+
+ 
+main table {
+    border-collapse: collapse;
+    margin: 1.5em auto;
+    font-size: 0.92em;
+    min-width: 55%;
+    display: table;
+}
+main th, main td {
+    border: 1px solid #e5e7eb;
+    padding: 8px 14px;
+    text-align: left;
+}
+main th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #1e293b;
+}
+main tr:nth-child(even) { background: #fafbfc; }
+main tr:hover { background: #f1f5f9; }
 
  
 footer {

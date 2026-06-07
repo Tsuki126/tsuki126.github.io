@@ -39,7 +39,7 @@
 	<meta itemprop="description" content="理解 LLM 只需要三个线性代数概念：向量编码语义 → 线性变换重组特征 → 非线性激活筛选信息。用二维几何建立直觉，再升维到 768 维的 LLM 世界。">
 	<meta itemprop="datePublished" content="2026-06-07T00:00:00+00:00">
 	<meta itemprop="dateModified" content="2026-06-07T00:00:00+00:00">
-	<meta itemprop="wordCount" content="3570">
+	<meta itemprop="wordCount" content="3573">
 	<meta itemprop="image" content="https://tsuki126.github.io/images/avatar.png">
 	<meta itemprop="keywords" content="LLM 数学基础">
 <meta name="referrer" content="no-referrer-when-downgrade" />
@@ -203,6 +203,14 @@
   }
 
 </style>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" onload="mermaid.initialize({startOnLoad: true, theme: 'default'});"></script>
+
 <style>
  
 a { color: #2563eb; }
@@ -221,6 +229,55 @@ img[src*="cover"] {
     width: 100%;
     border-radius: 6px;
 }
+
+ 
+main img {
+    display: block;
+    height: auto;
+    margin: 1.4em auto;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    max-width: 100%;
+}
+ 
+
+ 
+.mermaid {
+    text-align: center;
+    margin: 1.5em 0;
+    overflow-x: auto;
+}
+.language-mermaid {
+    display: none;
+}
+@media (prefers-color-scheme: dark) {
+    main img[src$=".svg"] { filter: invert(0.9) hue-rotate(180deg); }
+}
+
+ 
+main code { white-space: nowrap; }
+
+ 
+main table {
+    border-collapse: collapse;
+    margin: 1.5em auto;
+    font-size: 0.92em;
+    min-width: 55%;
+    display: table;
+}
+main th, main td {
+    border: 1px solid #e5e7eb;
+    padding: 8px 14px;
+    text-align: left;
+}
+main th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #1e293b;
+}
+main tr:nth-child(even) { background: #fafbfc; }
+main tr:hover { background: #f1f5f9; }
 
  
 footer {
@@ -425,10 +482,9 @@ footer {
 <h2 id="1-向量把词变成数字">1. 向量：把词变成数字</h2>
 <h3 id="从二维坐标说起">从二维坐标说起</h3>
 <p>向量 $(2, 1)$ 就是二维平面的一个点：$x$ 方向走 $2$，$y$ 方向走 $1$。</p>
-<p>$$
+$$
 (2, 1) = 2 \times \begin{pmatrix}1 \cr 0\end{pmatrix} + 1 \times \begin{pmatrix}0 \cr 1\end{pmatrix}
-$$</p>
-<p>$\begin{pmatrix}1 \cr 0\end{pmatrix}$ 和 $\begin{pmatrix}0 \cr 1\end{pmatrix}$ 叫<strong>基向量（basis vectors）</strong>——坐标系的&quot;尺子&quot;。任何二维向量都是这两个基向量的<strong>线性组合</strong>（各自缩放后相加）。</p>
+$$<p>$\begin{pmatrix}1 \cr 0\end{pmatrix}$ 和 $\begin{pmatrix}0 \cr 1\end{pmatrix}$ 叫<strong>基向量（basis vectors）</strong>——坐标系的&quot;尺子&quot;。任何二维向量都是这两个基向量的<strong>线性组合</strong>（各自缩放后相加）。</p>
 <img src="/images/llm-linear-algebra/vector-2d.svg" alt="向量 (2,1) 由基向量 (1,0) 和 (0,1) 线性组合而成，蓝色箭头为主向量，绿色为基向量" width="45%">
 <h3 id="升维从-2d-到-768d">升维：从 2D 到 768D</h3>
 <p>把&quot;2 维 → 两个基向量&quot;的规律推广到 $d$ 维：一个 $d$ 维向量就是 $d$ 个基向量的线性组合。GPT-1 用了 768 个基向量，LLaMA 用了 4096 个——<strong>每个词被映射成高维空间里的一个坐标点</strong>。</p>
@@ -473,10 +529,9 @@ $$</p>
 <h3 id="为什么需要变换">为什么需要变换</h3>
 <p>&ldquo;猫&quot;在&quot;猫抓____&ldquo;和&quot;猫喵____&ldquo;中，后续词完全不同。模型需要一种机制：<strong>根据输入的上下文，调整每个词的向量表示</strong>。</p>
 <p>线性变换就是这样一种机制。它的数学形式是：</p>
-<p>$$
+$$
 \mathbf{y} = \mathbf{W}\mathbf{x}
-$$</p>
-<p>输入向量 $\mathbf{x}$ 经过矩阵 $\mathbf{W}$ 的处理，变成输出向量 $\mathbf{y}$。矩阵 $\mathbf{W}$ 就是<strong>变换规则</strong>——所有参数通过训练自动学习。</p>
+$$<p>输入向量 $\mathbf{x}$ 经过矩阵 $\mathbf{W}$ 的处理，变成输出向量 $\mathbf{y}$。矩阵 $\mathbf{W}$ 就是<strong>变换规则</strong>——所有参数通过训练自动学习。</p>
 <h3 id="矩阵向量特征的加权混合">矩阵×向量：特征的加权混合</h3>
 <p>以 $d=3$ 为例展开：</p>
 <div>
@@ -533,10 +588,9 @@ $$
 </table>
 <h3 id="偏置-b打破原点约束">偏置 b：打破原点约束</h3>
 <p>$\mathbf{W}$ 有一个限制：它必须经过原点（$\mathbf{W}\mathbf{0} = \mathbf{0}$）。但很多时候我们需要变换后有偏移——比如让所有向量整体右移。加一个<strong>偏置（bias）向量 $\mathbf{b}$</strong> 就能做到：</p>
-<p>$$
+$$
 \mathbf{y} = \mathbf{W}\mathbf{x} + \mathbf{b}
-$$</p>
-<p>几何上：$\mathbf{W}$ 做旋转+缩放，$\mathbf{b}$ 做平移。先旋转缩放，再平移，原点不再固定。</p>
+$$<p>几何上：$\mathbf{W}$ 做旋转+缩放，$\mathbf{b}$ 做平移。先旋转缩放，再平移，原点不再固定。</p>
 <p>三者协同的结构已经浮现：<strong>$\mathbf{W}$ 决定方向，$\mathbf{b}$ 决定位置，$\sigma$ 决定形状</strong>（$\sigma$ 将在下一节介绍）。</p>
 <h3 id="关键约束为什么需要非线性">关键约束：为什么需要非线性</h3>
 <p>线性变换对所有输入<strong>一视同仁</strong>——这是它最大的局限：</p>
@@ -552,17 +606,15 @@ $$</p>
 <h2 id="3-非线性激活筛选与保留">3. 非线性激活：筛选与保留</h2>
 <h3 id="没有非线性深层网络就是虚设">没有非线性，深层网络就是虚设</h3>
 <p>如果只有线性变换，叠加多层也毫无意义：</p>
-<p>$$
+$$
 \mathbf{W}_2(\mathbf{W}_1\mathbf{x}) = (\mathbf{W}_2\mathbf{W}_1)\mathbf{x}
-$$</p>
-<p>两层线性叠加等价于一个单层线性变换。再多层数也跟一层没区别。<strong>没有非线性，层数就是噱头。</strong></p>
+$$<p>两层线性叠加等价于一个单层线性变换。再多层数也跟一层没区别。<strong>没有非线性，层数就是噱头。</strong></p>
 <h3 id="relu砍掉负数">ReLU：砍掉负数</h3>
 <p>非线性激活函数的核心职责是<strong>筛选</strong>：检查每个候选特征，有用的留下，没用的扔掉。</p>
 <p>最简单的例子——ReLU：</p>
-<p>$$
+$$
 \text{ReLU}(x) = \max(0, x)
-$$</p>
-<img src="/images/llm-linear-algebra/relu.svg" alt="ReLU 激活函数曲线，负值归零正值保留，虚线为 GELU 对比" width="65%">
+$$<img src="/images/llm-linear-algebra/relu.svg" alt="ReLU 激活函数曲线，负值归零正值保留，虚线为 GELU 对比" width="65%">
 <p>正值保留原样，负值直接归零。GPT 系列用的是更平滑的 <strong>GELU</strong>（图中橙色虚线）：负值按概率衰减，不是一刀切砍到零，保留部分&quot;可能有用&quot;的信息。</p>
 <h3 id="w-与-σ-的分工协作">W 与 σ 的分工协作</h3>
 <p>从两个视角理解，结论是同一个：</p>
@@ -590,10 +642,9 @@ $$</p>
 	</tbody>
 </table>
 <p>完整的一层：</p>
-<p>$$
+$$
 \mathbf{y} = \sigma(\mathbf{W}\mathbf{x} + \mathbf{b})
-$$</p>
-<blockquote>
+$$<blockquote>
 <p>贯穿全文的线索：非线性激活 = 筛选特征 → 有用的留下，无用的砍掉。</p>
 </blockquote>
 <hr>
@@ -614,10 +665,9 @@ $$
 <p>像标准 Lego 积木，每块规格一样才能层层堆叠。</p>
 <p><strong>唯一特例：FFN 的&quot;打草稿&quot;</strong></p>
 <p>前馈网络（FFN）用一个巧妙的技巧打破了这个&quot;不变&quot;：<strong>先膨胀，再压缩</strong>。</p>
-<p>$$
+$$
 768 \xrightarrow{\text{膨胀 ×4}} 3072 \xrightarrow{\text{压缩}} 768
-$$</p>
-<p>第一步把 768 维向量映射到 3072 维——一个更大的空间，相当于给模型一张&quot;草稿纸&quot;，可以试探更多特征组合。算出结果后再压缩回 768 维，传递给下一层。</p>
+$$<p>第一步把 768 维向量映射到 3072 维——一个更大的空间，相当于给模型一张&quot;草稿纸&quot;，可以试探更多特征组合。算出结果后再压缩回 768 维，传递给下一层。</p>
 <p><strong>为什么不全程用高维？</strong> 计算成本。768×768 的矩阵乘法约 59 万次浮点运算，3072×3072 约 943 万次——近 16 倍。只在 FFN 短暂膨胀是最划算的折中。从 GPT-1（768）到 GPT-3（12288）再到 LLaMA（4096/8192），维度规模不断增长，但膨胀-压缩的设计始终如一。</p>
 <img src="/images/llm-linear-algebra/dimension-constraints.svg" alt="维度约束示意图：常规变换维度不变，FFN 先膨胀后压缩，以及各模型维度规模对比" width="85%">
 <blockquote>
@@ -627,10 +677,9 @@ $$</p>
 <h2 id="5-点积衡量语义有多对齐">5. 点积：衡量语义有多&quot;对齐&quot;</h2>
 <h3 id="两个向量的对齐程度">两个向量的对齐程度</h3>
 <p>点积是衡量两个向量方向一致程度的运算：</p>
-<p>$$
-\mathbf{a} \cdot \mathbf{b} = | \mathbf{a} | | \mathbf{b} | \cos\theta
-$$</p>
-<img src="/images/llm-linear-algebra/dot-product.svg" alt="点积的几何含义：两个向量 a 和 b 的夹角 θ 决定点积大小" width="45%">
+$$
+\mathbf{a} \cdot \mathbf{b} = \| \mathbf{a} \| \| \mathbf{b} \| \cos\theta
+$$<img src="/images/llm-linear-algebra/dot-product.svg" alt="点积的几何含义：两个向量 a 和 b 的夹角 θ 决定点积大小" width="45%">
 <table>
 	<thead>
 			<tr>
