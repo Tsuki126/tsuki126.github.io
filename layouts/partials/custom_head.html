@@ -1,3 +1,11 @@
+<!-- KaTeX for math rendering -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+<!-- Mermaid for diagrams -->
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" onload="mermaid.initialize({startOnLoad: true, theme: 'default'});"></script>
+
 <style>
 /* 通用 */
 a { color: #2563eb; }
@@ -17,7 +25,56 @@ img[src*="cover"] {
     border-radius: 6px;
 }
 
-/* footer 增加间距 */
+/* 图片统一样式（宽度由 HTML width 属性控制） */
+main img {
+    display: block;
+    height: auto;
+    margin: 1.4em auto;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    max-width: 100%;
+}
+/* SVG 流程图：宽度由 HTML width 属性控制，此处不设全局默认 */
+
+/* Mermaid 流程图容器 */
+.mermaid {
+    text-align: center;
+    margin: 1.5em 0;
+    overflow-x: auto;
+}
+.language-mermaid {
+    display: none;
+}
+@media (prefers-color-scheme: dark) {
+    main img[src$=".svg"] { filter: invert(0.9) hue-rotate(180deg); }
+}
+
+/* 行内代码防止换行 */
+main code { white-space: nowrap; }
+
+/* 表格样式：居中 */
+main table {
+    border-collapse: collapse;
+    margin: 1.5em auto;
+    font-size: 0.92em;
+    min-width: 55%;
+    display: table;
+}
+main th, main td {
+    border: 1px solid #e5e7eb;
+    padding: 8px 14px;
+    text-align: left;
+}
+main th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #1e293b;
+}
+main tr:nth-child(even) { background: #fafbfc; }
+main tr:hover { background: #f1f5f9; }
+
+/* footer */
 footer {
     padding: 40px 0 20px;
     font-size: 0.85em;
