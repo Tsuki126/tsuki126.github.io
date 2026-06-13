@@ -1,0 +1,8 @@
+{{- if eq .Type "mermaid" -}}
+<div class="mermaid">
+{{ .Inner | safeHTML }}
+</div>
+{{- else -}}
+{{ $result := transform.HighlightCodeBlock . }}
+{{ $result.Wrapped }}
+{{- end -}}
