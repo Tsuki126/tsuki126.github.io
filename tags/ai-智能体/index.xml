@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>LLM 基础 on Tsuki126</title>
-		<link>https://tsuki126.github.io/categories/llm-%E5%9F%BA%E7%A1%80/</link>
-		<description>Recent content in LLM 基础 on Tsuki126</description>
+		<title>AI 智能体 on Tsuki126</title>
+		<link>https://tsuki126.github.io/tags/ai-%E6%99%BA%E8%83%BD%E4%BD%93/</link>
+		<description>Recent content in AI 智能体 on Tsuki126</description>
 		<generator>Hugo</generator>
 		<language>zh-CN</language>
 		
@@ -14,20 +14,13 @@
 		
 			<lastBuildDate>Sat, 13 Jun 2026 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="https://tsuki126.github.io/categories/llm-%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://tsuki126.github.io/tags/ai-%E6%99%BA%E8%83%BD%E4%BD%93/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>AI 智能体基础（一）：核心循环</title>
 				<link>https://tsuki126.github.io/blog/ai-agent-01-core-loop/</link>
 				<pubDate>Sat, 13 Jun 2026 00:00:00 +0000</pubDate>
 				<guid>https://tsuki126.github.io/blog/ai-agent-01-core-loop/</guid>
 				<description>&lt;p&gt;AI 智能体是当前大语言模型应用中最具变革性的范式。它不是给 LLM 套上一层工具调用接口，而是一种全新的计算模型——将 LLM 从被动的文本生成器转变为自主的决策执行者。这篇从第一性原理出发，系统理解 AI 智能体，并给出最小可运行的代码骨架。&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>LLM 数学基础：线性代数</title>
-				<link>https://tsuki126.github.io/blog/llm-linear-algebra/</link>
-				<pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>https://tsuki126.github.io/blog/llm-linear-algebra/</guid>
-				<description>&lt;blockquote&gt;&#xA;&lt;p&gt;理解 LLM 只需要三个线性代数概念：&lt;strong&gt;向量（表示语义）→ 线性变换（混合特征）→ 非线性激活（筛选特征）&lt;/strong&gt;。&#xA;每个概念先用二维几何建立直觉，再升维到 768 维的 LLM 世界。&lt;/p&gt;</description>
 			</item>
 	</channel>
 </rss>
