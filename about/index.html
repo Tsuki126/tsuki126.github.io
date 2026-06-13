@@ -211,10 +211,10 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
 
 
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" onload="mermaid.initialize({startOnLoad: true, theme: 'default'});"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" onload="mermaid.initialize({startOnLoad: true, theme: 'base', themeVariables: {primaryColor: '#e8f0fe', primaryTextColor: '#1a1a2e', primaryBorderColor: '#a0b4d0', lineColor: '#6b7b8d', secondaryColor: '#f0f4f8', tertiaryColor: '#fafbfc', fontFamily: '-apple-system, sans-serif', fontSize: '14px'}});"></script>
 
 <style>
  
@@ -262,6 +262,13 @@ main img {
 
  
 main code { white-space: nowrap; }
+ 
+.katex { font-size: 0.95em; }
+ 
+main .highlight code { white-space: pre; }
+ 
+ 
+main pre code { font-size: 1em; }
 
  
 main table {

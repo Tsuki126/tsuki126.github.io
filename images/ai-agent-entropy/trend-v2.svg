@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 180">
+  <style>
+    text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:10px;fill:#999;}
+    .dot{fill:#2563EB;}
+    .dot-end{fill:#16A34A;}
+    .lbl{fill:#333;font-size:11px;}
+    .cmd{fill:#888;font-size:10px;}
+  </style>
+
+  <line x1="35" y1="25" x2="35" y2="155" stroke="#e5e7eb"/>
+  <line x1="35" y1="155" x2="410" y2="155" stroke="#e5e7eb"/>
+
+  <text x="28" y="158" text-anchor="end">0</text>
+  <text x="28" y="90" text-anchor="end">5</text>
+  <text x="28" y="28" text-anchor="end">10</text>
+
+  <path d="M90,25 C150,22 160,55 200,70 C240,85 250,105 300,115 C350,125 360,140 390,155"
+        stroke="#2563EB" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+  <circle cx="90" cy="25" r="3.5" fill="#2563EB"/>
+  <text x="90" y="16" text-anchor="middle" class="lbl">用户输入</text>
+  <text x="90" y="171" text-anchor="middle" class="cmd">① 接受任务</text>
+
+  <circle cx="200" cy="70" r="3.5" fill="#2563EB"/>
+  <text x="200" y="61" text-anchor="middle" class="cmd">ls /documents</text>
+  <text x="200" y="171" text-anchor="middle" class="cmd">② 文件列表</text>
+
+  <circle cx="300" cy="115" r="3.5" fill="#2563EB"/>
+  <text x="300" y="106" text-anchor="middle" class="cmd">file /documents/*</text>
+  <text x="300" y="171" text-anchor="middle" class="cmd">③ 文件类型</text>
+
+  <circle cx="390" cy="155" r="3.5" fill="#16A34A"/>
+  <text x="390" y="146" text-anchor="middle" class="lbl" style="fill:#16A34A">输出结果</text>
+  <text x="390" y="171" text-anchor="middle" class="cmd">④ 完成</text>
+
+  <text x="18" y="90" text-anchor="middle" transform="rotate(-90,18,90)" fill="#bbb" font-size="9px">H(S)</text>
+</svg>

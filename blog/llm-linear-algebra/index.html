@@ -206,10 +206,10 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
 
 
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" onload="mermaid.initialize({startOnLoad: true, theme: 'default'});"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" onload="mermaid.initialize({startOnLoad: true, theme: 'base', themeVariables: {primaryColor: '#e8f0fe', primaryTextColor: '#1a1a2e', primaryBorderColor: '#a0b4d0', lineColor: '#6b7b8d', secondaryColor: '#f0f4f8', tertiaryColor: '#fafbfc', fontFamily: '-apple-system, sans-serif', fontSize: '14px'}});"></script>
 
 <style>
  
@@ -257,6 +257,13 @@ main img {
 
  
 main code { white-space: nowrap; }
+ 
+.katex { font-size: 0.95em; }
+ 
+main .highlight code { white-space: pre; }
+ 
+ 
+main pre code { font-size: 1em; }
 
  
 main table {
@@ -711,6 +718,7 @@ $$<img src="/images/llm-linear-algebra/dot-product.svg" alt="点积的几何含�
 <p>把上述概念串起来：<strong>向量</strong>编码位置 → <strong>线性变换 + 偏置</strong>调整表示 → <strong>非线性激活</strong>筛选信息。那么模型如何&quot;知道一个词跟周围哪些词有关&quot;？靠点积。</p>
 <p>自注意力机制的核心就是点积矩阵 $\mathbf{Q}\mathbf{K}^{\mathsf T}$：<strong>计算每个位置和所有其他位置之间的&quot;对齐分数&quot;</strong>。分数高的位置贡献大，分数低的贡献小。</p>
 <p>用代码把直觉落到实处：</p>
+
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#007020;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">numpy</span> <span style="color:#007020;font-weight:bold">as</span> <span style="color:#0e84b5;font-weight:bold">np</span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#60a0b0;font-style:italic"># 两个语义相近的向量，点积高</span>
@@ -720,8 +728,7 @@ $$<img src="/images/llm-linear-algebra/dot-product.svg" alt="点积的几何含�
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span><span style="color:#60a0b0;font-style:italic"># 两个无关的向量，点积低</span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>code <span style="color:#666">=</span> np<span style="color:#666">.</span>array([<span style="color:#40a070">0.81</span>,  <span style="color:#40a070">0.34</span>, <span style="color:#666">-</span><span style="color:#40a070">0.22</span>, <span style="color:#40a070">0.65</span>])
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>np<span style="color:#666">.</span>dot(cat, code)  <span style="color:#60a0b0;font-style:italic"># ≈ 0.02（语义无关）</span>
-</span></span></code></pre></div><blockquote>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>np<span style="color:#666">.</span>dot(cat, code)  <span style="color:#60a0b0;font-style:italic"># ≈ 0.02（语义无关）</span></span></span></code></pre></div><blockquote>
 <p>点积大 → 语义相关，点积小 → 语义无关。</p>
 </blockquote>
 <hr>
