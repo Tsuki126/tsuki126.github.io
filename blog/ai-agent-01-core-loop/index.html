@@ -255,13 +255,16 @@ main img {
  
 @media (prefers-color-scheme: dark) {
     :root {
-        --background-color: #fff;
-        --heading-color: #222;
-        --text-color: #444;
-        --link-color: #3273dc;
-        --visited-color: #8b6fcb;
-        --blockquote-color: #222;
+        --background-color: #fff !important;
+        --heading-color: #222 !important;
+        --text-color: #444 !important;
+        --link-color: #3273dc !important;
+        --visited-color: #8b6fcb !important;
+        --blockquote-color: #222 !important;
     }
+    body { background-color: #fff !important; }
+    header { background-color: #fff !important; }
+    footer { color: #999 !important; }
 }
 
  
