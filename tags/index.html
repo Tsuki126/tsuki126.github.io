@@ -246,8 +246,17 @@ main img {
 .language-mermaid {
     display: none;
 }
+
+ 
 @media (prefers-color-scheme: dark) {
-    main img[src$=".svg"] { filter: invert(0.9) hue-rotate(180deg); }
+    :root {
+        --background-color: #fff;
+        --heading-color: #222;
+        --text-color: #444;
+        --link-color: #3273dc;
+        --visited-color: #8b6fcb;
+        --blockquote-color: #222;
+    }
 }
 
  
