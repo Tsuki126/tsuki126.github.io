@@ -23,6 +23,13 @@
 				<description>&lt;p&gt;AI 智能体是当前大语言模型应用中最具变革性的范式。它不是给 LLM 套上一层工具调用接口，而是一种全新的计算模型——将 LLM 从被动的文本生成器转变为自主的决策执行者。这篇从第一性原理出发，系统理解 AI 智能体，并给出最小可运行的代码骨架。&lt;/p&gt;</description>
 			</item>
 			<item>
+				<title>AI 智能体基础（二）：工具调用</title>
+				<link>https://tsuki126.github.io/blog/ai-agent-02-tool-calling/</link>
+				<pubDate>Sat, 13 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>https://tsuki126.github.io/blog/ai-agent-02-tool-calling/</guid>
+				<description>&lt;p&gt;Tool Calling 是智能体与外部世界交互的标准化接口。LLM 通过它发出结构化的函数调用请求，宿主环境负责解析参数、执行函数、回传结果。本文从协议规范出发，通过完整的三轮交互建立直觉，然后系统性地讨论 Schema 设计、错误恢复、Streaming 聚合等工程实践，最后回到训练机制——让读者既理解&amp;quot;LLM 如何学会调用工具&amp;quot;这一底层原理，也能构建可靠的生产级工具调度层。&lt;/p&gt;</description>
+			</item>
+			<item>
 				<title>LLM 数学基础：线性代数</title>
 				<link>https://tsuki126.github.io/blog/llm-linear-algebra/</link>
 				<pubDate>Sun, 07 Jun 2026 00:00:00 +0000</pubDate>
