@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://tsuki126.github.io/images/avatar.png" />
+<title>AI 智能体基础（三）：推理模式 | Tsuki126</title>
+<meta name="title" content="AI 智能体基础（三）：推理模式" />
+<meta name="description" content="智能体推理模式的形式化定义、CoT/ReAct/Plan-and-Execute/Reflexion 四种主流模式的原理与实现、以及 Claude Code 的实际案例分析。" />
+<meta name="keywords" content="AI 智能体," />
+
+
+<meta property="og:url" content="https://tsuki126.github.io/blog/ai-agent-03-reasoning/">
+	<meta property="og:site_name" content="Tsuki126">
+	<meta property="og:title" content="AI 智能体基础（三）：推理模式">
+	<meta property="og:description" content="智能体推理模式的形式化定义、CoT/ReAct/Plan-and-Execute/Reflexion 四种主流模式的原理与实现、以及 Claude Code 的实际案例分析。">
+	<meta property="og:locale" content="zh_CN">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="blog">
+		<meta property="article:published_time" content="2026-06-14T00:00:00+00:00">
+		<meta property="article:modified_time" content="2026-06-14T00:00:00+00:00">
+		<meta property="article:tag" content="AI 智能体">
+		<meta property="og:image" content="https://tsuki126.github.io/images/avatar.png">
+
+
+
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:image" content="https://tsuki126.github.io/images/avatar.png">
+	<meta name="twitter:title" content="AI 智能体基础（三）：推理模式">
+	<meta name="twitter:description" content="智能体推理模式的形式化定义、CoT/ReAct/Plan-and-Execute/Reflexion 四种主流模式的原理与实现、以及 Claude Code 的实际案例分析。">
+
+
+
+
+	<meta itemprop="name" content="AI 智能体基础（三）：推理模式">
+	<meta itemprop="description" content="智能体推理模式的形式化定义、CoT/ReAct/Plan-and-Execute/Reflexion 四种主流模式的原理与实现、以及 Claude Code 的实际案例分析。">
+	<meta itemprop="datePublished" content="2026-06-14T00:00:00+00:00">
+	<meta itemprop="dateModified" content="2026-06-14T00:00:00+00:00">
+	<meta itemprop="wordCount" content="12830">
+	<meta itemprop="image" content="https://tsuki126.github.io/images/avatar.png">
+	<meta itemprop="keywords" content="AI 智能体">
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  :root {
+    --width: 720px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: Verdana, sans-serif;
+    --font-scale: 1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  time {
+    font-family: monospace;
+    font-style: normal;
+    font-size: 15px;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--blockquote-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  .highlight pre,
+  .code pre {
+    min-width: 100%;
+    width: max-content;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: var(--visited-color);
+  }
+
+</style>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" onload="mermaid.initialize({startOnLoad: true, theme: 'base', themeVariables: {primaryColor: '#e8f0fe', primaryTextColor: '#1a1a2e', primaryBorderColor: '#a0b4d0', lineColor: '#6b7b8d', secondaryColor: '#f0f4f8', tertiaryColor: '#fafbfc', fontFamily: '-apple-system, sans-serif', fontSize: '14px'}});"></script>
+
+<style>
+ 
+a { color: #2563eb; }
+a:hover { color: #1d4ed8; }
+body { line-height: 1.8; max-width: 900px; padding: 20px 40px; }
+pre { border-radius: 4px; }
+hr { border: none; border-top: 1px solid #e5e7eb; margin: 1.5em 0; }
+
+ 
+@media (min-width: 1200px) {
+    body { max-width: 960px; }
+}
+
+ 
+img[src*="cover"] {
+    width: 100%;
+    border-radius: 6px;
+}
+
+ 
+main img {
+    display: block;
+    height: auto;
+    margin: 1.4em auto;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    max-width: 100%;
+}
+ 
+
+ 
+.mermaid {
+    text-align: center;
+    margin: 1.5em 0;
+    overflow-x: auto;
+}
+.language-mermaid {
+    display: none;
+}
+
+ 
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #fff !important;
+        --heading-color: #222 !important;
+        --text-color: #444 !important;
+        --link-color: #3273dc !important;
+        --visited-color: #8b6fcb !important;
+        --blockquote-color: #222 !important;
+    }
+    body { background-color: #fff !important; }
+    header { background-color: #fff !important; }
+    footer { color: #999 !important; }
+}
+
+ 
+main code { white-space: nowrap; }
+ 
+.katex { font-size: 0.95em; }
+ 
+main .highlight code { white-space: pre; }
+ 
+ 
+main pre code { font-size: 1em; }
+
+ 
+main table {
+    border-collapse: collapse;
+    margin: 1.5em auto;
+    font-size: 0.92em;
+    min-width: 55%;
+    display: table;
+}
+main th, main td {
+    border: 1px solid #e5e7eb;
+    padding: 8px 14px;
+    text-align: left;
+}
+main th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #1e293b;
+}
+main tr:nth-child(even) { background: #fafbfc; }
+main tr:hover { background: #f1f5f9; }
+
+ 
+footer {
+    padding: 40px 0 20px;
+    font-size: 0.85em;
+    color: #999;
+}
+
+ 
+
+ 
+.category-list {
+    margin: 0.5em 0 0.8em;
+    line-height: 1.6;
+}
+.category-list a {
+    color: #374151;
+    text-decoration: none;
+    font-size: 0.88em;
+}
+.category-list a:hover {
+    color: #2563eb;
+}
+.category-list .sep {
+    color: #d1d5db;
+    font-size: 0.7em;
+    margin: 0 6px;
+}
+
+ 
+.blog-list {
+    margin-top: 1em;
+}
+.blog-item {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #eee;
+    line-height: 1.6;
+}
+.blog-item:last-child {
+    border-bottom: none;
+}
+.blog-meta {
+    font-size: 0.85em;
+    color: #999;
+    flex-shrink: 0;
+}
+.blog-title {
+    font-size: 0.85em;
+    color: #2563eb;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.blog-title:hover {
+    color: #1d4ed8;
+}
+.blog-body {
+    font-size: 0.85em;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+    max-width: 360px;
+}
+
+ 
+.notes-list {
+    margin-top: 1em;
+}
+.note-year {
+    font-weight: bold;
+    font-size: 0.95em;
+    margin: 1.2em 0 0.4em;
+    color: #222;
+}
+.note-item {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #eee;
+    line-height: 1.6;
+}
+.note-item:last-child {
+    border-bottom: none;
+}
+.note-meta {
+    font-size: 0.85em;
+    color: #999;
+    flex-shrink: 0;
+}
+.note-title {
+    font-size: 0.85em;
+    color: #2563eb;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.note-title:hover {
+    color: #1d4ed8;
+}
+.note-body {
+    font-size: 0.85em;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+    max-width: 360px;
+}
+
+ 
+.note-date {
+    font-size: 0.85em;
+    color: #999;
+    margin-top: 0;
+}
+
+ 
+.about-page {
+    margin: 2em 0;
+}
+.about-page .about-header {
+    margin-bottom: 1.5em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #e5e7eb;
+}
+.about-page .about-header p {
+    margin: 0;
+}
+.about-page .about-exp p {
+    margin: 0.3em 0;
+}
+.about-page .about-exp p + p {
+    margin-top: 1em;
+}
+.about-page .about-contact {
+    margin-top: 1.5em;
+    padding-top: 1em;
+    border-top: 1px solid #e5e7eb;
+    font-size: 0.9em;
+    color: #666;
+}
+.about-page .about-contact code {
+    font-size: 0.85em;
+    background: #f5f5f5;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+ 
+@media (max-width: 600px) {
+    .blog-body, .note-body {
+        display: none;
+    }
+    .blog-item, .note-item {
+        gap: 8px;
+    }
+}
+</style></head>
+
+<body>
+  <header><a href="/" class="title">
+  <h2>Tsuki126</h2>
+</a>
+<nav>
+<a href="/">首页</a>
+
+<a href="/notes/">随笔</a>
+
+<a href="/blog/">博客</a>
+
+<a href="/about/">关于</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>AI 智能体基础（三）：推理模式</h1>
+<p>
+  <i>
+    <time datetime='2026-06-14'>
+      2026-06-14
+    </time>
+  </i>
+</p>
+
+<content>
+  <p>推理模式定义了智能体如何利用 LLM 进行决策——是一次成形还是逐步推进，是并行搜索还是反复修正。本文覆盖四种推理模式（CoT / ReAct / Plan-and-Execute / Reflexion），深入原理、实现和工程取舍，最后以先进编码智能体为例进行实际分析。</p>
+<hr>
+<h2 id="1-定义与定位">1. 定义与定位</h2>
+<h3 id="11-推理在智能体架构中的角色">1.1 推理在智能体架构中的角色</h3>
+<p>第一篇给出了智能体的四要素公式：</p>
+<div style="padding-left:1.5em">Agent = LLM（推理引擎）+ Tool Calling（工具调用）+ Memory（记忆系统）+ Loop（循环控制）</div>
+<p><strong>推理（Reasoning）</strong> 是其中 LLM 引擎的核心工作负载——在感知阶段获取上下文后，LLM 需要综合分析当前状态、规划下一步动作、选择合适工具、生成正确参数。推理的质量直接决定了 Agent 行为的有效性和可靠性。</p>
+<p>在感知-推理-行动-观察（P-R-A-O）的四阶段循环中，推理阶段承担两个核心任务：</p>
+<ol>
+<li><strong>状态分析</strong>：理解当前 messages 中累积的所有信息（用户输入、历史工具结果、系统指令），识别信息缺口和下一步目标</li>
+<li><strong>决策生成</strong>：输出结构化的动作指令——是调用工具（name + arguments）还是直接回答（final answer）</li>
+</ol>
+<h3 id="12-形式化定义">1.2 形式化定义</h3>
+<p>将推理过程建模为一个序列决策问题。设 $C_t$ 为 $t$ 时刻的累积上下文（包括初始指令、历史交互、工具结果），$\mathcal{T}$ 为可用工具集，LLM 的推理函数 $R$ 定义为：</p>
+$$
+a_t = R(C_t, \mathcal{T}) = \begin{cases}
+\text{Call}(f, \theta) & \text{如果 LLM 判断需调用工具 } f \text{，参数为 } \theta \\
+\text{Answer}(y) & \text{如果 LLM 判断信息已充足，直接回答 } y
+\end{cases}
+$$<p>其中 $C_t$ 随步骤累积：</p>
+$$
+C_{t+1} = C_t \cup \{(\text{Call}(f_t, \theta_t), \text{Obs}(\text{exec}(f_t, \theta_t)))\}
+$$<p>这里 $\text{exec}(f, \theta)$ 是工具执行函数，$\text{Obs}(\cdot)$ 是观察格式化的函数。</p>
+<p><strong>核心观察</strong>：推理函数 $R$ 的输入 $C_t$ 随步骤不断增长。Agent 推理的本质是<strong>在动态增长的上下文上做序列决策</strong>——每一步都依赖之前所有步骤的累积信息，这是与传统单轮 LLM 调用的根本区别。</p>
+<h3 id="13-两种基本范式">1.3 两种基本范式</h3>
+<p>所有推理模式可以归为两种基本范式：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">范式</th>
+					<th style="text-align: center">决策时序</th>
+					<th style="text-align: center">代表性的模式</th>
+					<th style="text-align: left">关键特征</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center"><strong>交错式推理</strong></td>
+					<td style="text-align: center">推理-行动-观察交替进行，每步动态决策</td>
+					<td style="text-align: center">ReAct, Reflexion</td>
+					<td style="text-align: left">灵活适应环境反馈，但上下文增长快</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>批处理式推理</strong></td>
+					<td style="text-align: center">先制定完整计划，再按序执行</td>
+					<td style="text-align: center">Plan-and-Execute, CoT-SC</td>
+					<td style="text-align: left">执行效率高，可并行，但适应性弱</td>
+			</tr>
+	</tbody>
+</table>
+<p>两种范式不是互斥的，实践中常以嵌套或分层方式组合使用。</p>
+<hr>
+<h2 id="2-chain-of-thought推理链">2. Chain of Thought（推理链）</h2>
+<p>Chain of Thought（CoT，Wei et al., 2022）是推理模式的基石。它本身不涉及工具调用，但为所有后续模式提供了核心机制——<strong>将隐式推理过程显式化为中间步骤</strong>。</p>
+<h3 id="21-原理">2.1 原理</h3>
+<p>CoT 的核心思想是让 LLM 在给出最终答案之前，先输出一系列中间推理步骤。在同一道算术题上，标准 Prompt 与 CoT Prompt 的差异如下：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left"></th>
+					<th style="text-align: left">用户提问</th>
+					<th style="text-align: left">LLM 回答</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>标准 Prompt</strong></td>
+					<td style="text-align: left">小明有 3 个苹果，妈妈又给了他 5 个，然后他吃了 2 个，还剩几个？</td>
+					<td style="text-align: left">还剩 6 个。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>CoT Prompt</strong></td>
+					<td style="text-align: left">小明有 3 个苹果，妈妈又给了他 5 个，然后他吃了 2 个，还剩几个？</td>
+					<td style="text-align: left">小明一开始有 3 个苹果。妈妈又给了他 5 个，所以总共有 3+5=8 个。他吃了 2 个，所以还剩 8-2=6 个。答案是 6。</td>
+			</tr>
+	</tbody>
+</table>
+<p>对比可以看到：两者用户的提问<strong>完全一样</strong>，区别仅在 LLM 的回答格式。标准 Prompt 直接输出答案，LLM 需要在单步内完成所有隐式推理；CoT Prompt 先输出中间推理步骤再给出答案，将推理过程外部化为显式文本。</p>
+<h3 id="22-zero-shot-cot">2.2 Zero-shot CoT</h3>
+<p>Zero-shot CoT（Kojima et al., 2022）通过在 prompt 末尾附加简单的触发短语来激活推理过程：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">zero_shot_cot</span>(query: <span style="color:#007020">str</span>) <span style="color:#666">-&gt;</span> <span style="color:#007020">str</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>    <span style="color:#4070a0">&#34;&#34;&#34;Zero-shot Chain of Thought：通过触发词激活推理&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>    client <span style="color:#666">=</span> OpenAI()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    response <span style="color:#666">=</span> client<span style="color:#666">.</span>chat<span style="color:#666">.</span>completions<span style="color:#666">.</span>create(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>        model<span style="color:#666">=</span><span style="color:#4070a0">&#34;gpt-4o&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>        messages<span style="color:#666">=</span>[
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>            {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;system&#34;</span>, <span style="color:#4070a0">&#34;content&#34;</span>: <span style="color:#4070a0">&#34;你是一个擅长逐步推理的助手。&#34;</span>},
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>            {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;user&#34;</span>, <span style="color:#4070a0">&#34;content&#34;</span>: <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;</span><span style="color:#70a0d0">{</span>query<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">请一步步分析。&#34;</span>}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>        ],
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>        temperature<span style="color:#666">=</span><span style="color:#40a070">0.0</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>    <span style="color:#007020;font-weight:bold">return</span> response<span style="color:#666">.</span>choices[<span style="color:#40a070">0</span>]<span style="color:#666">.</span>message<span style="color:#666">.</span>content</span></span></code></pre></div><p>&ldquo;请一步步分析&quot;这句触发词的效果来源于训练数据中的模式匹配——大量训练样本中，类似的提示词后面跟着结构化的推理路径。Kojima et al. 的实验表明，仅凭&quot;Let&rsquo;s think step by step&quot;这一句话，就可在 MultiArith 上将准确率从 ~18% 提升至 ~79%（PaLM 540B），效果几乎与精心构造的 few-shot CoT 示例相当。</p>
+<h3 id="23-self-consistency自一致性">2.3 Self-Consistency（自一致性）</h3>
+<p>Self-Consistency（Wang et al., 2022）在 CoT 的基础上引入<strong>采样多样性</strong>，然后通过投票选择最一致的答案：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">self_consistency</span>(query: <span style="color:#007020">str</span>, n_samples: <span style="color:#007020">int</span> <span style="color:#666">=</span> <span style="color:#40a070">5</span>) <span style="color:#666">-&gt;</span> <span style="color:#007020">str</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>    <span style="color:#4070a0">&#34;&#34;&#34;Self-Consistency：多次采样 → 多数投票&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>    client <span style="color:#666">=</span> OpenAI()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    responses <span style="color:#666">=</span> []
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>    <span style="color:#007020;font-weight:bold">for</span> _ <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">range</span>(n_samples):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>        response <span style="color:#666">=</span> client<span style="color:#666">.</span>chat<span style="color:#666">.</span>completions<span style="color:#666">.</span>create(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>            model<span style="color:#666">=</span><span style="color:#4070a0">&#34;gpt-4o&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>            messages<span style="color:#666">=</span>[
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>                {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;system&#34;</span>, <span style="color:#4070a0">&#34;content&#34;</span>: <span style="color:#4070a0">&#34;你是一个擅长逐步推理的助手。&#34;</span>},
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>                {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;user&#34;</span>, <span style="color:#4070a0">&#34;content&#34;</span>: <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;</span><span style="color:#70a0d0">{</span>query<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">请一步步分析。&#34;</span>}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>            ],
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>            temperature<span style="color:#666">=</span><span style="color:#40a070">0.7</span>  <span style="color:#60a0b0;font-style:italic"># 高温度增加多样性</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>        )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>        responses<span style="color:#666">.</span>append(response<span style="color:#666">.</span>choices[<span style="color:#40a070">0</span>]<span style="color:#666">.</span>message<span style="color:#666">.</span>content)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>    <span style="color:#60a0b0;font-style:italic"># 从每个推理路径中提取最终答案，多数投票</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>    <span style="color:#007020;font-weight:bold">return</span> majority_vote(responses)</span></span></code></pre></div><p>Self-Consistency 的核心假设是：正确的推理路径虽然在中间步骤上可能有差异，但最终答案趋于一致；而错误的推理路径则分散在不同的错误答案上。多数投票能有效过滤偏离路径。在 GSM8K 上，Self-Consistency（n=40）将 CoT 的准确率从 ~58% 进一步提升至 ~74%（Wang et al., 2022）——<strong>采样多样性的边际收益随 n 增大而递减</strong>，在 n=5 时已能捕获大部分增益。在 Agent 中，可用于关键决策点：当 LLM 对下一步行动不确定时，多次采样取最一致的计划。</p>
+<h3 id="24-在智能体中的定位">2.4 在智能体中的定位</h3>
+<p>CoT 在 Agent 中的角色是<strong>推理链的格式化工具</strong>。所有后续模式都依赖 CoT 将 LLM 的&quot;思维过程&quot;外部化为文本——没有这个基础，Agent 就无法实现可追溯的决策轨迹。</p>
+<hr>
+<h2 id="3-react交替推理">3. ReAct（交替推理）</h2>
+<p>ReAct（Reasoning + Acting，Yao et al., 2023）是目前最主流的 Agent 推理模式。它将推理（Reasoning）和行动（Acting）交错的模式形式化为标准框架。在实验评估中，ReAct 在 HotpotQA 上的准确率达到 58.3%，显著优于单纯使用推理（CoT, 43.6%）或单纯使用行动（Act-only, 48.2%），且幻觉率从 CoT 的 14.3% 降至 6.1%。</p>
+<h3 id="31-原理">3.1 原理</h3>
+<p>ReAct 的核心是让 LLM 在每一轮中依次输出三段信息：</p>
+<ol>
+<li><strong>Thought（推理）</strong>：分析当前状态，说明下一步计划做什么、为什么</li>
+<li><strong>Action（行动）</strong>：要么调用一个工具（指定名称和参数），要么决定终止</li>
+<li><strong>Observation（观察）</strong>：工具执行结果的回传（由宿主环境提供，非 LLM 生成）</li>
+</ol>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>Thought: 用户想查询北京今天的天气。我有天气查询工具可用，需要先获取城市代码。
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>Action: get_city_code(&#34;北京&#34;)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>Observation: 城市代码: BEIJING
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>Thought: 已获取北京的城市代码，现在查询天气。
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>Action: get_weather(&#34;BEIJING&#34;)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>Observation: 温度 28°C，晴，湿度 45%
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>Thought: 信息充足，可以回答用户了。
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>Action: 北京今天天气晴朗，温度 28°C，湿度 45%。</span></span></code></pre></div><p>一个完整的 ReAct 轨迹可以表示为：</p>
+$$
+\text{Thought}_1 \to \text{Action}_1 \to \text{Observation}_1 \to \text{Thought}_2 \to \text{Action}_2 \to \cdots \to \text{Thought}_k \to \text{Final}
+$$<p>序列重复 Thought → Action → Observation 循环，直到 LLM 认为信息充足，以 Thought → Final 终止。</p>
+<h3 id="32-实现">3.2 实现</h3>
+<p>ReAct 的核心循环与第一篇 AgentRuntime.run() 完全一致——都是&quot;LLM 根据 messages 和 tools 做决策 → 有 tool_calls 就执行并回传 → 无 tool_calls 就输出回答&quot;的循环。第一篇的代码即 ReAct 的最小实现（<a href="/blog/ai-agent-01-core-loop/#3-%E6%9C%80%E5%B0%8F%E5%8F%AF%E8%BF%90%E8%A1%8C%E5%AE%9E%E7%8E%B0">核心循环 → AgentRuntime 实现</a>）。</p>
+<p>唯一差别是 ReAct 要求 LLM 先输出 Thought 再决定行动，让推理过程保留在上下文中，多步推理时更连贯。对应第一篇的代码，只需替换 system_prompt：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>system_prompt <span style="color:#666">=</span> (
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>    <span style="color:#4070a0">&#34;你是运行在 ReAct 循环中的智能体。每轮先输出 Thought 说明分析，&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>    <span style="color:#4070a0">&#34;再输出 Action 调用工具或直接回答。&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>    <span style="color:#4070a0">&#34;信息充足时直接回答，不要过度调用工具。&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>    <span style="color:#4070a0">&#34;工具返回错误时尝试其他方式或告知用户。&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span>)</span></span></code></pre></div><h3 id="33-执行轨迹追踪">3.3 执行轨迹追踪</h3>
+<p>以&quot;查询北京和上海的天气并比较&quot;为例，ReAct 在三轮交互中逐轮追加消息。最终汇总轮的请求体完整展示了 messages 从 2 条到 6 条的累积过程：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">轮次</th>
+					<th style="text-align: center">messages 数量</th>
+					<th style="text-align: center">content 含 Thought?</th>
+					<th style="text-align: center">finish_reason</th>
+					<th style="text-align: left">LLM 输出</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center">1</td>
+					<td style="text-align: center">2（system + user）</td>
+					<td style="text-align: center">有 Thought + Action</td>
+					<td style="text-align: center">tool_calls</td>
+					<td style="text-align: left">get_weather(&ldquo;北京&rdquo;)</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">2</td>
+					<td style="text-align: center">4（+ tc₁ + r₁）</td>
+					<td style="text-align: center">有 Thought + Action</td>
+					<td style="text-align: center">tool_calls</td>
+					<td style="text-align: left">get_weather(&ldquo;上海&rdquo;)</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">3</td>
+					<td style="text-align: center">6（+ tc₂ + r₂）</td>
+					<td style="text-align: center">有 Thought + Final</td>
+					<td style="text-align: center">stop</td>
+					<td style="text-align: left">文本回答</td>
+			</tr>
+	</tbody>
+</table>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>{
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>    <span style="color:#062873;font-weight:bold">&#34;model&#34;</span>: <span style="color:#4070a0">&#34;gpt-4o&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>    <span style="color:#062873;font-weight:bold">&#34;messages&#34;</span>: [
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>        {<span style="color:#062873;font-weight:bold">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;system&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;content&#34;</span>: <span style="color:#4070a0">&#34;你是一个运行在 ReAct 循环中的智能体。每轮先输出 Thought 分析，再决定行动。&#34;</span>},
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>        {<span style="color:#062873;font-weight:bold">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;user&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;content&#34;</span>: <span style="color:#4070a0">&#34;查询北京和上海的天气并比较&#34;</span>},
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>        {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>            <span style="color:#062873;font-weight:bold">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;assistant&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>            <span style="color:#062873;font-weight:bold">&#34;content&#34;</span>: <span style="color:#4070a0">&#34;Thought: 用户需要比较北京和上海的天气。我先查询北京的天气。\nAction: get_weather(\&#34;北京\&#34;)&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>            <span style="color:#062873;font-weight:bold">&#34;tool_calls&#34;</span>: [
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>                {<span style="color:#062873;font-weight:bold">&#34;id&#34;</span>: <span style="color:#4070a0">&#34;call_001&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;type&#34;</span>: <span style="color:#4070a0">&#34;function&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;function&#34;</span>: {<span style="color:#062873;font-weight:bold">&#34;name&#34;</span>: <span style="color:#4070a0">&#34;get_weather&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;arguments&#34;</span>: <span style="color:#4070a0">&#34;{\&#34;city\&#34;: \&#34;北京\&#34;}&#34;</span>}}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>            ]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>        },
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>        {<span style="color:#062873;font-weight:bold">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;tool&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;tool_call_id&#34;</span>: <span style="color:#4070a0">&#34;call_001&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;content&#34;</span>: <span style="color:#4070a0">&#34;{\&#34;temperature\&#34;: 28, \&#34;condition\&#34;: \&#34;晴\&#34;}&#34;</span>},
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>        {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>            <span style="color:#062873;font-weight:bold">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;assistant&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>            <span style="color:#062873;font-weight:bold">&#34;content&#34;</span>: <span style="color:#4070a0">&#34;Thought: 北京天气已获取：28°C 晴。接下来查询上海天气。\nAction: get_weather(\&#34;上海\&#34;)&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>            <span style="color:#062873;font-weight:bold">&#34;tool_calls&#34;</span>: [
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>                {<span style="color:#062873;font-weight:bold">&#34;id&#34;</span>: <span style="color:#4070a0">&#34;call_002&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;type&#34;</span>: <span style="color:#4070a0">&#34;function&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;function&#34;</span>: {<span style="color:#062873;font-weight:bold">&#34;name&#34;</span>: <span style="color:#4070a0">&#34;get_weather&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;arguments&#34;</span>: <span style="color:#4070a0">&#34;{\&#34;city\&#34;: \&#34;上海\&#34;}&#34;</span>}}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>            ]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>        },
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>        {<span style="color:#062873;font-weight:bold">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;tool&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;tool_call_id&#34;</span>: <span style="color:#4070a0">&#34;call_002&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;content&#34;</span>: <span style="color:#4070a0">&#34;{\&#34;temperature\&#34;: 30, \&#34;condition\&#34;: \&#34;多云\&#34;}&#34;</span>}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>    ],
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>    <span style="color:#062873;font-weight:bold">&#34;tools&#34;</span>: [
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>        {<span style="color:#062873;font-weight:bold">&#34;type&#34;</span>: <span style="color:#4070a0">&#34;function&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;function&#34;</span>: {<span style="color:#062873;font-weight:bold">&#34;name&#34;</span>: <span style="color:#4070a0">&#34;get_weather&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;description&#34;</span>: <span style="color:#4070a0">&#34;查询指定城市的天气&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;parameters&#34;</span>: {<span style="color:#062873;font-weight:bold">&#34;type&#34;</span>: <span style="color:#4070a0">&#34;object&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;properties&#34;</span>: {<span style="color:#062873;font-weight:bold">&#34;city&#34;</span>: {<span style="color:#062873;font-weight:bold">&#34;type&#34;</span>: <span style="color:#4070a0">&#34;string&#34;</span>, <span style="color:#062873;font-weight:bold">&#34;description&#34;</span>: <span style="color:#4070a0">&#34;城市名称&#34;</span>}}, <span style="color:#062873;font-weight:bold">&#34;required&#34;</span>: [<span style="color:#4070a0">&#34;city&#34;</span>]}}}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>    ]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span>}</span></span></code></pre></div><p>LLM 看到这 6 条消息后，判定信息充足，返回不含 tool_calls 的最终回答。ReAct 的两层终止信号由此清晰可见：content 中的 Thought/Action 文本在持续增长，但代码层面的判据始终是 msg.tool_calls 是否为 null。Thought 文本虽然不参与循环控制，但为 LLM 保留了上一轮的推理思路，使其在多步决策中保持连贯。</p>
+<h3 id="34-token-消耗分解">3.4 Token 消耗分解</h3>
+<p>在 ReAct 循环中，token 消耗集中在两类消息上。以下是在上述天气比较任务中的实际分布：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">消息角色</th>
+					<th style="text-align: left">内容</th>
+					<th style="text-align: center">tokens（约）</th>
+					<th style="text-align: center">占比</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left">system prompt</td>
+					<td style="text-align: left">循环指令 + Thought 格式约束</td>
+					<td style="text-align: center">180</td>
+					<td style="text-align: center">5%</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">user message</td>
+					<td style="text-align: left">任务描述</td>
+					<td style="text-align: center">20</td>
+					<td style="text-align: center">&lt;1%</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">tool schemas</td>
+					<td style="text-align: left">工具定义（每次请求都携带）</td>
+					<td style="text-align: center">200×3</td>
+					<td style="text-align: center">18%</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">assistant (Thought + Action)</td>
+					<td style="text-align: left">&ldquo;Thought: &hellip; Action: &hellip;&rdquo;</td>
+					<td style="text-align: center">80×3</td>
+					<td style="text-align: center">7%</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">assistant (tool_calls)</td>
+					<td style="text-align: left">OpenAI 协议中的函数调用形式</td>
+					<td style="text-align: center">45×3</td>
+					<td style="text-align: center">4%</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">tool results</td>
+					<td style="text-align: left">查询结果</td>
+					<td style="text-align: center">30×2</td>
+					<td style="text-align: center">2%</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>输入累积开销</strong></td>
+					<td style="text-align: left">后续请求重复携带之前所有消息</td>
+					<td style="text-align: center">~2100</td>
+					<td style="text-align: center">63%</td>
+			</tr>
+	</tbody>
+</table>
+<p>输入累积是 ReAct 中最主要的 token 消耗来源——第 N 轮的请求体包含了前 N-1 轮的全部消息。对于 10 步以上的任务，输入 tokens 以 $O(N^2)$ 增长，远快于输出 tokens 的 $O(N)$。这就是为什么实际部署中必须设置滑动窗口或压缩策略（见 3.6 节）。</p>
+<h3 id="35-thought-格式设计">3.5 Thought 格式设计</h3>
+<p>Thought 的质量直接决定 ReAct 的效果。好的 Thought 应该包含三类信息：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">信息类型</th>
+					<th style="text-align: left">示例</th>
+					<th style="text-align: left">作用</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>状态认知</strong></td>
+					<td style="text-align: left">&ldquo;当前有文件列表数据，但还不知道文件类型&rdquo;</td>
+					<td style="text-align: left">帮助 LLM 定位当前进度</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>计划说明</strong></td>
+					<td style="text-align: left">&ldquo;下一步需要调用 file 命令识别类型&rdquo;</td>
+					<td style="text-align: left">让 LLM 形成有序的步骤规划</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>异常分析</strong></td>
+					<td style="text-align: left">&ldquo;文件打开失败，可能是路径不存在，改用搜索&rdquo;</td>
+					<td style="text-align: left">触发 LLM 的错误恢复策略</td>
+			</tr>
+	</tbody>
+</table>
+<p>实践中，在 system prompt 中对 Thought 格式做约束比让 LLM 自由发挥更可靠：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>system_prompt <span style="color:#666">=</span> <span style="color:#4070a0">&#34;&#34;&#34;运行在 ReAct 循环中的智能体。
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#4070a0">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#4070a0">每轮请按以下格式输出：
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#4070a0">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span><span style="color:#4070a0">分析：&lt;分析当前状态——已有什么信息，还缺什么信息&gt;
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span><span style="color:#4070a0">计划：&lt;说明下一步做什么以及为什么&gt;
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#4070a0">行动：&lt;调用工具或直接回答&gt;
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span><span style="color:#4070a0">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span><span style="color:#4070a0">注意：
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span><span style="color:#4070a0">- 如果上一步工具返回了错误，分析错误原因并尝试其他方法
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span><span style="color:#4070a0">- 获取到足够信息后直接回答，不要继续调用工具
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span><span style="color:#4070a0">- 回答时引用具体的数据来源&#34;&#34;&#34;</span></span></span></code></pre></div><p>这个格式有两个作用：对 LLM 是<strong>行为指南</strong>——通过写计划来规划步骤；对人则是<strong>决策日志</strong>——通过 Thought 链回溯 Agent 的决策依据。</p>
+<h3 id="36-上下文累积与截断策略">3.6 上下文累积与截断策略</h3>
+<p>ReAct 每轮都会在 messages 中追加 assistant 消息和 tool 消息，长任务下上下文会迅速膨胀。需要引入窗口管理：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#007020;font-weight:bold">class</span> <span style="color:#0e84b5;font-weight:bold">SlidingWindowManager</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>    <span style="color:#4070a0">&#34;&#34;&#34;滑动窗口上下文管理器&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    <span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">__init__</span>(<span style="color:#007020">self</span>, max_messages: <span style="color:#007020">int</span> <span style="color:#666">=</span> <span style="color:#40a070">40</span>, summary_model: <span style="color:#007020">str</span> <span style="color:#666">=</span> <span style="color:#4070a0">&#34;gpt-4o-mini&#34;</span>):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>        <span style="color:#007020">self</span><span style="color:#666">.</span>max_messages <span style="color:#666">=</span> max_messages
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>        <span style="color:#007020">self</span><span style="color:#666">.</span>summary_model <span style="color:#666">=</span> summary_model
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>        <span style="color:#007020">self</span><span style="color:#666">.</span>client <span style="color:#666">=</span> OpenAI()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>    <span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">compress</span>(<span style="color:#007020">self</span>, messages: <span style="color:#007020">list</span>[<span style="color:#007020">dict</span>]) <span style="color:#666">-&gt;</span> <span style="color:#007020">list</span>[<span style="color:#007020">dict</span>]:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>        <span style="color:#4070a0">&#34;&#34;&#34;当消息数超过阈值时，压缩早期的 tool 交互为摘要&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>        <span style="color:#007020;font-weight:bold">if</span> <span style="color:#007020">len</span>(messages) <span style="color:#666">&lt;=</span> <span style="color:#007020">self</span><span style="color:#666">.</span>max_messages:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>            <span style="color:#007020;font-weight:bold">return</span> messages
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>        <span style="color:#60a0b0;font-style:italic"># 保留 system prompt 和最近的 N 条消息</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>        system <span style="color:#666">=</span> [m <span style="color:#007020;font-weight:bold">for</span> m <span style="color:#007020;font-weight:bold">in</span> messages <span style="color:#007020;font-weight:bold">if</span> m[<span style="color:#4070a0">&#34;role&#34;</span>] <span style="color:#666">==</span> <span style="color:#4070a0">&#34;system&#34;</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>        recent <span style="color:#666">=</span> messages[<span style="color:#666">-</span><span style="color:#007020">self</span><span style="color:#666">.</span>max_messages <span style="color:#666">+</span> <span style="color:#40a070">2</span>:]  <span style="color:#60a0b0;font-style:italic"># 保留 + system + 摘要</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>        <span style="color:#60a0b0;font-style:italic"># 将早期的 tool 交互汇总为一段摘要文本</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>        early <span style="color:#666">=</span> messages[<span style="color:#007020">len</span>(system):<span style="color:#666">-</span><span style="color:#007020">self</span><span style="color:#666">.</span>max_messages <span style="color:#666">+</span> <span style="color:#40a070">2</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>        summary <span style="color:#666">=</span> <span style="color:#007020">self</span><span style="color:#666">.</span>_summarize_early_steps(early)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>        <span style="color:#007020;font-weight:bold">return</span> system <span style="color:#666">+</span> [
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>            {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;system&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>             <span style="color:#4070a0">&#34;content&#34;</span>: <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;[早期步骤摘要]</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#70a0d0">{</span>summary<span style="color:#70a0d0">}</span><span style="color:#4070a0">&#34;</span>}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>        ] <span style="color:#666">+</span> recent
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span>    <span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">_summarize_early_steps</span>(<span style="color:#007020">self</span>, steps: <span style="color:#007020">list</span>[<span style="color:#007020">dict</span>]) <span style="color:#666">-&gt;</span> <span style="color:#007020">str</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span>        <span style="color:#4070a0">&#34;&#34;&#34;调用小模型压缩早期步骤&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span><span>        text <span style="color:#666">=</span> <span style="color:#4070a0">&#34;</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span><span style="color:#666">.</span>join(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span><span>            <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;[</span><span style="color:#70a0d0">{</span>m[<span style="color:#4070a0">&#39;role&#39;</span>]<span style="color:#70a0d0">}</span><span style="color:#4070a0">]: </span><span style="color:#70a0d0">{</span><span style="color:#007020">str</span>(m<span style="color:#666">.</span>get(<span style="color:#4070a0">&#39;content&#39;</span>, <span style="color:#4070a0">&#39;&#39;</span>))[:<span style="color:#40a070">200</span>]<span style="color:#70a0d0">}</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span>            <span style="color:#007020;font-weight:bold">for</span> m <span style="color:#007020;font-weight:bold">in</span> steps
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span>        )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span><span>        <span style="color:#007020;font-weight:bold">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span>            resp <span style="color:#666">=</span> <span style="color:#007020">self</span><span style="color:#666">.</span>client<span style="color:#666">.</span>chat<span style="color:#666">.</span>completions<span style="color:#666">.</span>create(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span><span>                model<span style="color:#666">=</span><span style="color:#007020">self</span><span style="color:#666">.</span>summary_model,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span><span>                messages<span style="color:#666">=</span>[
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span><span>                    {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;system&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span><span>                     <span style="color:#4070a0">&#34;content&#34;</span>: <span style="color:#4070a0">&#34;压缩以下 Agent 交互步骤为一段摘要，保留关键信息和结果。&#34;</span>},
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span><span>                    {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;user&#34;</span>, <span style="color:#4070a0">&#34;content&#34;</span>: text}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span><span>                ],
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span><span>                temperature<span style="color:#666">=</span><span style="color:#40a070">0.0</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span><span>            )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span><span>            <span style="color:#007020;font-weight:bold">return</span> resp<span style="color:#666">.</span>choices[<span style="color:#40a070">0</span>]<span style="color:#666">.</span>message<span style="color:#666">.</span>content[:<span style="color:#40a070">2000</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span><span>        <span style="color:#007020;font-weight:bold">except</span> <span style="color:#007020">Exception</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span><span>            <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;(summary unavailable)&#34;</span></span></span></code></pre></div><p>关键原则：只压缩早期已完成的工具交互链，不压缩 system prompt 和最近的上下文。压缩不可逆：摘要替换原始日志后，无法回退到压缩前的状态。因此只在上下文长度接近模型限制时触发。</p>
+<h3 id="37-react-的失败模式">3.7 ReAct 的失败模式</h3>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">失败模式</th>
+					<th style="text-align: left">表现</th>
+					<th style="text-align: left">原因</th>
+					<th style="text-align: left">缓解措施</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>循环陷阱</strong></td>
+					<td style="text-align: left">Agent 反复调用同一工具获取相同结果</td>
+					<td style="text-align: left">LLM 忽略了观察信息中的关键内容</td>
+					<td style="text-align: left">添加 dedup 检测，相同结果连续出现 3 次则强制终止</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>过早终止</strong></td>
+					<td style="text-align: left">信息不充足就给出回答</td>
+					<td style="text-align: left">LLM 在 token 限制或模糊 prompt 下选择结束</td>
+					<td style="text-align: left">降低 temperature，增加&quot;再检查一次&quot;的提示</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>推理漂移</strong></td>
+					<td style="text-align: left">Thought 越来越长，但行动没有实质性进展</td>
+					<td style="text-align: left">LLM 在上下文噪声中失去对原始目标的聚焦</td>
+					<td style="text-align: left">定期在 system prompt 中重申原始任务</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>工具依赖固化</strong></td>
+					<td style="text-align: left">Agent 总是调用同一工具即使不适用</td>
+					<td style="text-align: left">工具 description 偏置使 LLM 倾向于简单工具</td>
+					<td style="text-align: left">检查并平衡各工具的 description 长度和质量</td>
+			</tr>
+	</tbody>
+</table>
+<p>循环陷阱是最常见的失败模式。一个典型的真实案例：Agent 被要求&quot;查找昨天的销售数据&rdquo;。它调用 search_database(&ldquo;2026-06-13&rdquo;) 返回空结果。Thought 中写&quot;没有数据，再试一次&quot;，下次调用参数完全相同的 search_database——因为 Thought 虽识别了问题，但未能改变 Action 的参数。检测方法：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">detect_loop</span>(history: <span style="color:#007020">list</span>[<span style="color:#007020">dict</span>], threshold: <span style="color:#007020">int</span> <span style="color:#666">=</span> <span style="color:#40a070">3</span>) <span style="color:#666">-&gt;</span> <span style="color:#007020">bool</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>    <span style="color:#4070a0">&#34;&#34;&#34;检测工具调用循环：相同工具+相同参数连续出现 threshold 次&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>    recent_calls <span style="color:#666">=</span> [
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>        (tc<span style="color:#666">.</span>function<span style="color:#666">.</span>name, tc<span style="color:#666">.</span>function<span style="color:#666">.</span>arguments)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>        <span style="color:#007020;font-weight:bold">for</span> m <span style="color:#007020;font-weight:bold">in</span> history[<span style="color:#666">-</span><span style="color:#40a070">10</span>:] <span style="color:#007020;font-weight:bold">if</span> m<span style="color:#666">.</span>get(<span style="color:#4070a0">&#34;tool_calls&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>        <span style="color:#007020;font-weight:bold">for</span> tc <span style="color:#007020;font-weight:bold">in</span> m[<span style="color:#4070a0">&#34;tool_calls&#34;</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>    ]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>    <span style="color:#007020;font-weight:bold">if</span> <span style="color:#007020">len</span>(recent_calls) <span style="color:#666">&lt;</span> threshold:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">False</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020">len</span>(<span style="color:#007020">set</span>(recent_calls[<span style="color:#666">-</span>threshold:])) <span style="color:#666">==</span> <span style="color:#40a070">1</span></span></span></code></pre></div><hr>
+<h2 id="4-plan-and-execute分解执行">4. Plan-and-Execute（分解执行）</h2>
+<p>Plan-and-Execute 将推理分为两个阶段：规划阶段（Plan）由 LLM 一次性制定完整计划，执行阶段（Execute）按计划依次推进。与 ReAct 的&quot;边走边看&quot;不同，它在行动开始前就确定所有步骤。</p>
+<h3 id="41-原理">4.1 原理</h3>
+<p>Plan-and-Execute 将过程分为两阶段。一个完整的 Plan-and-Execute 轨迹可以表示为：</p>
+$$
+\text{Plan}(\text{task}) \to \big( \text{Execute}(\text{step}_1) \parallel \text{Execute}(\text{step}_2) \big) \to \text{Execute}(\text{step}_3) \to \cdots \to \text{Summarize}
+$$<p><strong>规划阶段</strong>：LLM 将任务拆解为若干步骤，并标注步骤间的依赖关系。以下以任务&quot;对比 Rust 和 Go 的性能并生成报告&quot;为例：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">步骤</th>
+					<th style="text-align: left">工具</th>
+					<th style="text-align: left">参数</th>
+					<th style="text-align: center">依赖</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center">Step 0</td>
+					<td style="text-align: left">search_web</td>
+					<td style="text-align: left">&ldquo;Rust 性能&rdquo;</td>
+					<td style="text-align: center">无</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">Step 1</td>
+					<td style="text-align: left">search_web</td>
+					<td style="text-align: left">&ldquo;Go 性能&rdquo;</td>
+					<td style="text-align: center">无</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">Step 2</td>
+					<td style="text-align: left">extract_points</td>
+					<td style="text-align: left">step_0 的结果</td>
+					<td style="text-align: center">[0]</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">Step 3</td>
+					<td style="text-align: left">extract_points</td>
+					<td style="text-align: left">step_1 的结果</td>
+					<td style="text-align: center">[1]</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">Step 4</td>
+					<td style="text-align: left">compare</td>
+					<td style="text-align: left">step_2, step_3 的结果</td>
+					<td style="text-align: center">[2, 3]</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">Step 5</td>
+					<td style="text-align: left">summarize</td>
+					<td style="text-align: left">所有上一步结果</td>
+					<td style="text-align: center">[4]</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>执行阶段</strong>：按拓扑序执行——无依赖的步骤可并行（$\parallel$），有依赖的等前置完成后再执行：</p>
+$$
+\text{Execute:} \quad (\text{step}_0 \parallel \text{step}_1) \to (\text{step}_2 \parallel \text{step}_3) \to \text{step}_4 \to \text{step}_5
+$$<h3 id="42-实现">4.2 实现</h3>
+<p>分三个阶段实现：规划 → DAG 执行 → 自动汇总。</p>
+<p><strong>① 规划</strong>——LLM 将任务拆解为带依赖的步骤列表：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#007020;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">json</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">plan_and_execute</span>(task: <span style="color:#007020">str</span>, tools: <span style="color:#007020">list</span>[<span style="color:#007020">dict</span>],
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>                     dispatcher: callable,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>                     model: <span style="color:#007020">str</span> <span style="color:#666">=</span> <span style="color:#4070a0">&#34;gpt-4o&#34;</span>) <span style="color:#666">-&gt;</span> <span style="color:#007020">str</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>    client <span style="color:#666">=</span> OpenAI()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>    plan_prompt <span style="color:#666">=</span> (
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>        <span style="color:#4070a0">&#34;将以下任务拆解为可并行执行的步骤列表。</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>        <span style="color:#4070a0">&#34;每行格式：步骤编号 | 依赖步骤(逗号分隔,无依赖填0) | 工具名 | 参数字典</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>        <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;任务：</span><span style="color:#70a0d0">{</span>task<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>        <span style="color:#4070a0">&#34;要求：</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>        <span style="color:#4070a0">&#34;1. 无依赖的步骤应编号靠前，以支持并行执行</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>        <span style="color:#4070a0">&#34;2. 工具名必须从可用工具中选择</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>        <span style="color:#4070a0">&#34;3. 参数字典中 $step_N 引用第 N 步的结果</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>        <span style="color:#4070a0">&#34;4. 最后一步（汇总步骤）的工具名填 &#39;summarize&#39;&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>    )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>    plan_resp <span style="color:#666">=</span> client<span style="color:#666">.</span>chat<span style="color:#666">.</span>completions<span style="color:#666">.</span>create(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>        model<span style="color:#666">=</span>model,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>        messages<span style="color:#666">=</span>[
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>            {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;system&#34;</span>, <span style="color:#4070a0">&#34;content&#34;</span>: <span style="color:#4070a0">&#34;你是一个任务规划专家。&#34;</span>},
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>            {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;user&#34;</span>, <span style="color:#4070a0">&#34;content&#34;</span>: plan_prompt}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>        ],
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span>        temperature<span style="color:#666">=</span><span style="color:#40a070">0.0</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span>    )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span>    plan_text <span style="color:#666">=</span> plan_resp<span style="color:#666">.</span>choices[<span style="color:#40a070">0</span>]<span style="color:#666">.</span>message<span style="color:#666">.</span>content
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span><span>    <span style="color:#007020;font-weight:bold">if</span> <span style="color:#007020;font-weight:bold">not</span> plan_text:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span><span>        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;Planning failed: empty plan&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span>    steps <span style="color:#666">=</span> _parse_plan(plan_text)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span><span>    <span style="color:#007020;font-weight:bold">if</span> <span style="color:#007020;font-weight:bold">not</span> steps:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span>        <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">&#34;Planning failed: could not parse steps&#34;</span></span></span></code></pre></div><p><strong>② 按 DAG 执行</strong>——多轮调度器，只执行依赖已满足的步骤，检测死锁，失败不阻塞下游：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>    results: <span style="color:#007020">dict</span>[<span style="color:#007020">int</span>, <span style="color:#007020">str</span>] <span style="color:#666">=</span> {}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>    errors: <span style="color:#007020">dict</span>[<span style="color:#007020">int</span>, <span style="color:#007020">str</span>] <span style="color:#666">=</span> {}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>    sorted_steps <span style="color:#666">=</span> <span style="color:#007020">sorted</span>(steps, key<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">lambda</span> s: <span style="color:#007020">len</span>(s[<span style="color:#4070a0">&#34;depends_on&#34;</span>]))
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    remaining <span style="color:#666">=</span> <span style="color:#007020">set</span>(s[<span style="color:#4070a0">&#34;id&#34;</span>] <span style="color:#007020;font-weight:bold">for</span> s <span style="color:#007020;font-weight:bold">in</span> steps)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>    <span style="color:#007020;font-weight:bold">for</span> _round <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">range</span>(<span style="color:#40a070">20</span>):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>        <span style="color:#007020;font-weight:bold">if</span> <span style="color:#007020;font-weight:bold">not</span> remaining:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>            <span style="color:#007020;font-weight:bold">break</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>        ready <span style="color:#666">=</span> [
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>            s <span style="color:#007020;font-weight:bold">for</span> s <span style="color:#007020;font-weight:bold">in</span> sorted_steps
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>            <span style="color:#007020;font-weight:bold">if</span> s[<span style="color:#4070a0">&#34;id&#34;</span>] <span style="color:#007020;font-weight:bold">in</span> remaining
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>            <span style="color:#007020;font-weight:bold">and</span> <span style="color:#007020">all</span>(d <span style="color:#007020;font-weight:bold">in</span> results <span style="color:#007020;font-weight:bold">or</span> d <span style="color:#007020;font-weight:bold">in</span> errors <span style="color:#007020;font-weight:bold">for</span> d <span style="color:#007020;font-weight:bold">in</span> s[<span style="color:#4070a0">&#34;depends_on&#34;</span>])
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>        ]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>        <span style="color:#007020;font-weight:bold">if</span> <span style="color:#007020;font-weight:bold">not</span> ready:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>            <span style="color:#007020;font-weight:bold">for</span> sid <span style="color:#007020;font-weight:bold">in</span> remaining:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>                errors[sid] <span style="color:#666">=</span> <span style="color:#4070a0">&#34;Deadlock: dependencies cannot be satisfied&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>            <span style="color:#007020;font-weight:bold">break</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>        <span style="color:#007020;font-weight:bold">for</span> step <span style="color:#007020;font-weight:bold">in</span> ready:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>            sid <span style="color:#666">=</span> step[<span style="color:#4070a0">&#34;id&#34;</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>            failed_deps <span style="color:#666">=</span> [d <span style="color:#007020;font-weight:bold">for</span> d <span style="color:#007020;font-weight:bold">in</span> step[<span style="color:#4070a0">&#34;depends_on&#34;</span>] <span style="color:#007020;font-weight:bold">if</span> d <span style="color:#007020;font-weight:bold">in</span> errors]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>            <span style="color:#007020;font-weight:bold">if</span> failed_deps:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>                errors[sid] <span style="color:#666">=</span> <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;Dependency failed: step(s) </span><span style="color:#70a0d0">{</span>failed_deps<span style="color:#70a0d0">}</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>                remaining<span style="color:#666">.</span>remove(sid)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span>                <span style="color:#007020;font-weight:bold">continue</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span>            args <span style="color:#666">=</span> _resolve_args(step[<span style="color:#4070a0">&#34;args&#34;</span>], results)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span><span>            <span style="color:#007020;font-weight:bold">if</span> step[<span style="color:#4070a0">&#34;tool&#34;</span>] <span style="color:#666">==</span> <span style="color:#4070a0">&#34;summarize&#34;</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span>                <span style="color:#007020;font-weight:bold">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span>                    summary <span style="color:#666">=</span> client<span style="color:#666">.</span>chat<span style="color:#666">.</span>completions<span style="color:#666">.</span>create(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span><span>                        model<span style="color:#666">=</span>model,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span>                        messages<span style="color:#666">=</span>[
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span><span>                            {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;system&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span><span>                             <span style="color:#4070a0">&#34;content&#34;</span>: <span style="color:#4070a0">&#34;根据以下执行结果汇总，给出最终回答。&#34;</span>},
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span><span>                            {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;user&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span><span>                             <span style="color:#4070a0">&#34;content&#34;</span>: <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;任务：</span><span style="color:#70a0d0">{</span>task<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">执行结果：</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span><span>                                        <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;</span><span style="color:#70a0d0">{</span>json<span style="color:#666">.</span>dumps(results, ensure_ascii<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">False</span>, indent<span style="color:#666">=</span><span style="color:#40a070">2</span>)<span style="color:#70a0d0">}</span><span style="color:#4070a0">&#34;</span>}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span><span>                        ],
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span><span>                        temperature<span style="color:#666">=</span><span style="color:#40a070">0.0</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span><span>                    )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span><span>                    results[sid] <span style="color:#666">=</span> summary<span style="color:#666">.</span>choices[<span style="color:#40a070">0</span>]<span style="color:#666">.</span>message<span style="color:#666">.</span>content
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span><span>                <span style="color:#007020;font-weight:bold">except</span> <span style="color:#007020">Exception</span> <span style="color:#007020;font-weight:bold">as</span> e:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span><span>                    errors[sid] <span style="color:#666">=</span> <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;Summarization failed: </span><span style="color:#70a0d0">{</span>e<span style="color:#70a0d0">}</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span><span>            <span style="color:#007020;font-weight:bold">else</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span><span>                <span style="color:#007020;font-weight:bold">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span><span>                    result <span style="color:#666">=</span> dispatcher(step[<span style="color:#4070a0">&#34;tool&#34;</span>], args)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span><span>                    results[sid] <span style="color:#666">=</span> result[:<span style="color:#40a070">5000</span>] <span style="color:#007020;font-weight:bold">if</span> result <span style="color:#007020;font-weight:bold">else</span> <span style="color:#4070a0">&#34;(empty)&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span><span>                <span style="color:#007020;font-weight:bold">except</span> <span style="color:#007020">Exception</span> <span style="color:#007020;font-weight:bold">as</span> e:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51</span><span>                    errors[sid] <span style="color:#666">=</span> <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;ExecutionError: </span><span style="color:#70a0d0">{</span>e<span style="color:#70a0d0">}</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52</span><span>                    <span style="color:#007020;font-weight:bold">if</span> <span style="color:#007020;font-weight:bold">not</span> step<span style="color:#666">.</span>get(<span style="color:#4070a0">&#34;critical&#34;</span>, <span style="color:#007020;font-weight:bold">False</span>):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53</span><span>                        results[sid] <span style="color:#666">=</span> <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;(step </span><span style="color:#70a0d0">{</span>sid<span style="color:#70a0d0">}</span><span style="color:#4070a0"> failed: </span><span style="color:#70a0d0">{</span>e<span style="color:#70a0d0">}</span><span style="color:#4070a0">)&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54</span><span>            remaining<span style="color:#666">.</span>remove(sid)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span><span>    <span style="color:#007020;font-weight:bold">if</span> remaining:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57</span><span>        <span style="color:#007020;font-weight:bold">return</span> (<span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;Plan incomplete: </span><span style="color:#70a0d0">{</span><span style="color:#007020">len</span>(results)<span style="color:#70a0d0">}</span><span style="color:#4070a0"> done, &#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58</span><span>                <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;</span><span style="color:#70a0d0">{</span><span style="color:#007020">len</span>(errors)<span style="color:#70a0d0">}</span><span style="color:#4070a0"> failed, </span><span style="color:#70a0d0">{</span><span style="color:#007020">len</span>(remaining)<span style="color:#70a0d0">}</span><span style="color:#4070a0"> unfinished&#34;</span>)</span></span></code></pre></div><p><strong>③ 自动汇总</strong>——缺少 summarize 步骤时的兜底：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>    <span style="color:#007020;font-weight:bold">if</span> <span style="color:#007020;font-weight:bold">not</span> <span style="color:#007020">any</span>(s[<span style="color:#4070a0">&#34;tool&#34;</span>] <span style="color:#666">==</span> <span style="color:#4070a0">&#34;summarize&#34;</span> <span style="color:#007020;font-weight:bold">for</span> s <span style="color:#007020;font-weight:bold">in</span> steps):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>        <span style="color:#007020;font-weight:bold">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>            summary <span style="color:#666">=</span> client<span style="color:#666">.</span>chat<span style="color:#666">.</span>completions<span style="color:#666">.</span>create(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>                model<span style="color:#666">=</span>model,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>                messages<span style="color:#666">=</span>[
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>                    {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;system&#34;</span>, <span style="color:#4070a0">&#34;content&#34;</span>: <span style="color:#4070a0">&#34;汇总执行结果。&#34;</span>},
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>                    {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;user&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>                     <span style="color:#4070a0">&#34;content&#34;</span>: <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;任务：</span><span style="color:#70a0d0">{</span>task<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#70a0d0">{</span>json<span style="color:#666">.</span>dumps(results, ensure_ascii<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">False</span>, indent<span style="color:#666">=</span><span style="color:#40a070">2</span>)<span style="color:#70a0d0">}</span><span style="color:#4070a0">&#34;</span>}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>                ],
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>                temperature<span style="color:#666">=</span><span style="color:#40a070">0.0</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>            )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>            <span style="color:#007020;font-weight:bold">return</span> summary<span style="color:#666">.</span>choices[<span style="color:#40a070">0</span>]<span style="color:#666">.</span>message<span style="color:#666">.</span>content
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>        <span style="color:#007020;font-weight:bold">except</span> <span style="color:#007020">Exception</span> <span style="color:#007020;font-weight:bold">as</span> e:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>            <span style="color:#007020;font-weight:bold">return</span> <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;Auto-summarization failed: </span><span style="color:#70a0d0">{</span>e<span style="color:#70a0d0">}</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>    last_step <span style="color:#666">=</span> <span style="color:#007020">max</span>(steps, key<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">lambda</span> s: s[<span style="color:#4070a0">&#34;id&#34;</span>])
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>    <span style="color:#007020;font-weight:bold">return</span> results<span style="color:#666">.</span>get(last_step[<span style="color:#4070a0">&#34;id&#34;</span>], <span style="color:#007020">str</span>(results))</span></span></code></pre></div><p><strong>辅助函数</strong>——解析 &ldquo;编号 | 依赖 | 工具 | 参数&rdquo; 格式，并将 $step_N 替换为实际结果：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">_parse_plan</span>(text: <span style="color:#007020">str</span>) <span style="color:#666">-&gt;</span> <span style="color:#007020">list</span>[<span style="color:#007020">dict</span>]:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>    steps <span style="color:#666">=</span> []
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>    <span style="color:#007020;font-weight:bold">for</span> line <span style="color:#007020;font-weight:bold">in</span> text<span style="color:#666">.</span>strip()<span style="color:#666">.</span>split(<span style="color:#4070a0">&#34;</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span>):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>        parts <span style="color:#666">=</span> [p<span style="color:#666">.</span>strip() <span style="color:#007020;font-weight:bold">for</span> p <span style="color:#007020;font-weight:bold">in</span> line<span style="color:#666">.</span>split(<span style="color:#4070a0">&#34;|&#34;</span>)]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>        <span style="color:#007020;font-weight:bold">if</span> <span style="color:#007020">len</span>(parts) <span style="color:#666">&lt;</span> <span style="color:#40a070">3</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>            <span style="color:#007020;font-weight:bold">continue</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>        <span style="color:#007020;font-weight:bold">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>            deps <span style="color:#666">=</span> [<span style="color:#007020">int</span>(d<span style="color:#666">.</span>strip()) <span style="color:#007020;font-weight:bold">for</span> d <span style="color:#007020;font-weight:bold">in</span> parts[<span style="color:#40a070">0</span>]<span style="color:#666">.</span>split(<span style="color:#4070a0">&#34;,&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>                    <span style="color:#007020;font-weight:bold">if</span> d<span style="color:#666">.</span>strip() <span style="color:#007020;font-weight:bold">and</span> d<span style="color:#666">.</span>strip() <span style="color:#666">!=</span> <span style="color:#4070a0">&#34;0&#34;</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>            args <span style="color:#666">=</span> json<span style="color:#666">.</span>loads(parts[<span style="color:#40a070">2</span>]<span style="color:#666">.</span>strip()) <span style="color:#007020;font-weight:bold">or</span> {}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>            steps<span style="color:#666">.</span>append({<span style="color:#4070a0">&#34;id&#34;</span>: <span style="color:#007020">len</span>(steps), <span style="color:#4070a0">&#34;depends_on&#34;</span>: deps,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>                          <span style="color:#4070a0">&#34;tool&#34;</span>: parts[<span style="color:#40a070">1</span>]<span style="color:#666">.</span>strip(), <span style="color:#4070a0">&#34;args&#34;</span>: args})
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>        <span style="color:#007020;font-weight:bold">except</span> (<span style="color:#007020">ValueError</span>, json<span style="color:#666">.</span>JSONDecodeError):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>            <span style="color:#007020;font-weight:bold">continue</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>    <span style="color:#007020;font-weight:bold">return</span> steps
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">_resolve_args</span>(args: <span style="color:#007020">dict</span>, results: <span style="color:#007020">dict</span>[<span style="color:#007020">int</span>, <span style="color:#007020">str</span>]) <span style="color:#666">-&gt;</span> <span style="color:#007020">dict</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>    resolved <span style="color:#666">=</span> {}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>    <span style="color:#007020;font-weight:bold">for</span> k, v <span style="color:#007020;font-weight:bold">in</span> args<span style="color:#666">.</span>items():
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>        <span style="color:#007020;font-weight:bold">if</span> <span style="color:#007020">isinstance</span>(v, <span style="color:#007020">str</span>) <span style="color:#007020;font-weight:bold">and</span> v<span style="color:#666">.</span>startswith(<span style="color:#4070a0">&#34;$step_&#34;</span>):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>            <span style="color:#007020;font-weight:bold">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>                resolved[k] <span style="color:#666">=</span> results<span style="color:#666">.</span>get(<span style="color:#007020">int</span>(v[<span style="color:#40a070">6</span>:]), v)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>            <span style="color:#007020;font-weight:bold">except</span> <span style="color:#007020">ValueError</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>                resolved[k] <span style="color:#666">=</span> v
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span>        <span style="color:#007020;font-weight:bold">else</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span>            resolved[k] <span style="color:#666">=</span> v
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span>    <span style="color:#007020;font-weight:bold">return</span> resolved</span></span></code></pre></div><h3 id="43-动态重规划">4.3 动态重规划</h3>
+<p>固定计划的弱点在于对执行中出现的异常缺乏适应能力。当某一步失败时，Agent 需要重新规划后续路径：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">replan</span>(failed_step: <span style="color:#007020">int</span>, error: <span style="color:#007020">str</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>           remaining_goal: <span style="color:#007020">str</span>, context: <span style="color:#007020">dict</span>) <span style="color:#666">-&gt;</span> <span style="color:#007020">list</span>[<span style="color:#007020">dict</span>]:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>    <span style="color:#4070a0">&#34;&#34;&#34;在步骤执行失败后重新规划剩余任务&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    client <span style="color:#666">=</span> OpenAI()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>    replan_prompt <span style="color:#666">=</span> (
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>        <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;以下步骤执行失败：</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>        <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;步骤 </span><span style="color:#70a0d0">{</span>failed_step<span style="color:#70a0d0">}</span><span style="color:#4070a0"> → 错误: </span><span style="color:#70a0d0">{</span>error<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>        <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;已完成步骤的结果：</span><span style="color:#70a0d0">{</span>json<span style="color:#666">.</span>dumps(context, ensure_ascii<span style="color:#666">=</span><span style="color:#007020;font-weight:bold">False</span>)<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>        <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;剩余目标：</span><span style="color:#70a0d0">{</span>remaining_goal<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>        <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;请提供替代方案来完成剩余目标。&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>    resp <span style="color:#666">=</span> client<span style="color:#666">.</span>chat<span style="color:#666">.</span>completions<span style="color:#666">.</span>create(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>        model<span style="color:#666">=</span><span style="color:#4070a0">&#34;gpt-4o&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>        messages<span style="color:#666">=</span>[{<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;user&#34;</span>, <span style="color:#4070a0">&#34;content&#34;</span>: replan_prompt}],
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>        temperature<span style="color:#666">=</span><span style="color:#40a070">0.0</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>    )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>    <span style="color:#007020;font-weight:bold">return</span> _parse_plan(resp<span style="color:#666">.</span>choices[<span style="color:#40a070">0</span>]<span style="color:#666">.</span>message<span style="color:#666">.</span>content <span style="color:#007020;font-weight:bold">or</span> <span style="color:#4070a0">&#34;&#34;</span>)</span></span></code></pre></div><p>重规划的关键是<strong>粒度选择</strong>：整体重规划（放弃当前计划从头来）还是增量重规划（仅替换失败步骤）？整体规划更简单但丢弃已执行成果，增量更高效但需要准确识别可保留的步骤。实践中推荐增量为主，可让 LLM 自行判断：&ldquo;以下步骤执行失败，哪些已完成的结果仍然可用？&rdquo;</p>
+<h3 id="44-react-vs-plan-and-execute-的深度对比">4.4 ReAct vs. Plan-and-Execute 的深度对比</h3>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">维度</th>
+					<th style="text-align: left">ReAct</th>
+					<th style="text-align: left">Plan-and-Execute</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>决策时机</strong></td>
+					<td style="text-align: left">每步动态，利用上一步观察结果</td>
+					<td style="text-align: left">规划时一次性确定，执行中静态</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>上下文增长</strong></td>
+					<td style="text-align: left">快（每条 tool_call + tool_result + Thought 都追加）</td>
+					<td style="text-align: left">慢（仅执行结果，无中间推理文本）</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>并行能力</strong></td>
+					<td style="text-align: left">无（天然串行）</td>
+					<td style="text-align: left">有（DAG 拓扑排序，非依赖步骤并行）</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>适应变化</strong></td>
+					<td style="text-align: left">强——每一步都可以根据观察调整方向</td>
+					<td style="text-align: left">弱——偏离计划后需要显式重规划</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>错误传播</strong></td>
+					<td style="text-align: left">单步错误不影响后续步骤的判断</td>
+					<td style="text-align: left">一个步骤失败可能导致下游全部中断</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>LLM 调用数</strong></td>
+					<td style="text-align: left">N（步数），每步一次</td>
+					<td style="text-align: left">2 + K（1 次规划 + K 次执行/汇总）</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>适合场景</strong></td>
+					<td style="text-align: left">探索型、开放型、路径不确定</td>
+					<td style="text-align: left">确定型、可预测、步骤明确的批处理</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>成本特征</strong></td>
+					<td style="text-align: left">线性：步数越多成本越高</td>
+					<td style="text-align: left">前期高（规划）+ 后续低（执行）</td>
+			</tr>
+	</tbody>
+</table>
+<p>Plan-and-Execute 的优势在步骤可预测的任务中最为明显：网络爬虫（先规划所有页面→并行抓取）、批量数据处理（先规划 ETL 管线→并行执行）、报告生成（先确定报告结构→并行收集各章节数据）。</p>
+<hr>
+<h2 id="5-reflexion自我修正">5. Reflexion（自我修正）</h2>
+<p>Reflexion（Shinn et al., 2023）在 ReAct 基础上增加了评价环节：每轮执行完毕后，用另一个 LLM 调用对结果打分，不通过就把失败原因追加到 system prompt 中重新执行。本质上就是 ReAct + 外部评价循环：</p>
+$$
+\text{Round}_i: \text{ReAct} \to \text{Evaluate} \to \begin{cases}
+\text{PASS} & \to \text{Output} \\
+\text{FAIL} & \to \text{Round}_{i+1}
+\end{cases}
+$$<h3 id="51-原理">5.1 原理</h3>
+<p>Reflexion 维护一个额外的<strong>反思记忆</strong>（reflexion memory），记录过去执行中的错误和改进策略。每一轮包含三个阶段：</p>
+<ol>
+<li><strong>Execution（执行）</strong>：使用 ReAct 模式执行任务</li>
+<li><strong>Evaluation（评价）</strong>：LLM 自我评估执行结果的质量</li>
+<li><strong>Reflection（反思）</strong>：如果评价不通过，分析失败原因，更新反思记忆</li>
+</ol>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>Round 1:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>  Execute: 用户要求查询 API → Agent 调用了错误的端点 → 返回错误
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>  Evaluate: &#34;结果不符合要求，返回值显示 404&#34;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>  Reflect: &#34;错误原因是使用了 /v1/legacy 端点，该端点已废弃。应使用 /v2/new&#34;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span>Round 2:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span><span>  Execute: 将反思注入 system prompt → Agent 使用 /v2/new 端点 → 正确
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8</span><span>  Evaluate: &#34;结果正确&#34;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9</span><span>  → 结束</span></span></code></pre></div><h3 id="52-实现">5.2 实现</h3>
+<p>Reflexion = ReAct + 评价包装。外层循环控制轮次，每轮分三步：</p>
+<p><strong>① 执行</strong>——调用 react_agent，注入历史反思经验：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">reflexion_agent</span>(task: <span style="color:#007020">str</span>, tools: <span style="color:#007020">list</span>[<span style="color:#007020">dict</span>],
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>                    dispatcher: callable,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>                    max_rounds: <span style="color:#007020">int</span> <span style="color:#666">=</span> <span style="color:#40a070">3</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>                    max_steps_per_round: <span style="color:#007020">int</span> <span style="color:#666">=</span> <span style="color:#40a070">10</span>) <span style="color:#666">-&gt;</span> <span style="color:#007020">str</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>    client <span style="color:#666">=</span> OpenAI()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>    reflexion_memory <span style="color:#666">=</span> []
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>    history <span style="color:#666">=</span> []
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>    <span style="color:#007020;font-weight:bold">for</span> round_num <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">range</span>(max_rounds):
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>        system_prompt <span style="color:#666">=</span> (
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>            <span style="color:#4070a0">&#34;你是 ReAct 模式运行的智能体。每轮先输出分析，再决定行动。</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>            <span style="color:#4070a0">&#34;获取足够信息后直接回答。&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>        )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>        <span style="color:#007020;font-weight:bold">if</span> reflexion_memory:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>            memory_text <span style="color:#666">=</span> <span style="color:#4070a0">&#34;</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span><span style="color:#666">.</span>join(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>                <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;Round </span><span style="color:#70a0d0">{</span>i<span style="color:#666">+</span><span style="color:#40a070">1</span><span style="color:#70a0d0">}</span><span style="color:#4070a0"> 反思: </span><span style="color:#70a0d0">{</span>m<span style="color:#70a0d0">}</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>                <span style="color:#007020;font-weight:bold">for</span> i, m <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">enumerate</span>(reflexion_memory)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>            )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>            system_prompt <span style="color:#666">+=</span> (
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>                <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">=== 历史经验 ===</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>                <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;</span><span style="color:#70a0d0">{</span>memory_text<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>                <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;请在本次执行中避免上述错误。&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>            )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>        current_result <span style="color:#666">=</span> react_agent(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span>            task<span style="color:#666">=</span>task, tools<span style="color:#666">=</span>tools,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span>            dispatcher<span style="color:#666">=</span>dispatcher,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span>            max_steps<span style="color:#666">=</span>max_steps_per_round
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span><span>        )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span><span>        history<span style="color:#666">.</span>append(current_result)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span>        <span style="color:#007020;font-weight:bold">if</span> current_result <span style="color:#007020;font-weight:bold">is</span> <span style="color:#007020;font-weight:bold">None</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span><span>            reflexion_memory<span style="color:#666">.</span>append(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span>                <span style="color:#4070a0">&#34;未能在步数限制内完成任务，可能需要更简洁的步骤序列&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span><span>            )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span><span>            <span style="color:#007020;font-weight:bold">continue</span></span></span></code></pre></div><p><strong>② 评价</strong>——LLM 按标准打分，判定 PASS 或 FAIL：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>        eval_prompt <span style="color:#666">=</span> (
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>            <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;任务：</span><span style="color:#70a0d0">{</span>task<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>            <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;Agent 的回答：</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#70a0d0">{</span>current_result<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>            <span style="color:#4070a0">&#34;评价标准：</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>            <span style="color:#4070a0">&#34;1. 回答是否完整覆盖了任务要求？</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>            <span style="color:#4070a0">&#34;2. 回答中的数据是否来自工具调用（而非 LLM 编造）？</span><span style="color:#4070a0;font-weight:bold">\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>            <span style="color:#4070a0">&#34;3. 是否有遗漏的步骤或未处理的边缘情况？</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>            <span style="color:#4070a0">&#34;先逐项分析，再在末行输出 PASS 或 FAIL 及其原因。&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>        )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>        <span style="color:#007020;font-weight:bold">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>            eval_resp <span style="color:#666">=</span> client<span style="color:#666">.</span>chat<span style="color:#666">.</span>completions<span style="color:#666">.</span>create(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>                model<span style="color:#666">=</span><span style="color:#4070a0">&#34;gpt-4o&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>                messages<span style="color:#666">=</span>[
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>                    {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;system&#34;</span>, <span style="color:#4070a0">&#34;content&#34;</span>: <span style="color:#4070a0">&#34;你是一个严格的 Agent 行为评审员。&#34;</span>},
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>                    {<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;user&#34;</span>, <span style="color:#4070a0">&#34;content&#34;</span>: eval_prompt}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>                ],
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>                temperature<span style="color:#666">=</span><span style="color:#40a070">0.0</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>            )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>            evaluation <span style="color:#666">=</span> eval_resp<span style="color:#666">.</span>choices[<span style="color:#40a070">0</span>]<span style="color:#666">.</span>message<span style="color:#666">.</span>content
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>        <span style="color:#007020;font-weight:bold">except</span> <span style="color:#007020">Exception</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>            <span style="color:#007020;font-weight:bold">return</span> current_result
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>        <span style="color:#007020;font-weight:bold">if</span> <span style="color:#4070a0">&#34;PASS&#34;</span> <span style="color:#007020;font-weight:bold">in</span> evaluation<span style="color:#666">.</span>upper():
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>            <span style="color:#007020;font-weight:bold">return</span> current_result</span></span></code></pre></div><p><strong>③ 反思</strong>——提取失败原因存入记忆，用于下一轮：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>        reflect_prompt <span style="color:#666">=</span> (
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>            <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;任务：</span><span style="color:#70a0d0">{</span>task<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>            <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;Agent 的回答：</span><span style="color:#70a0d0">{</span>current_result<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>            <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;评价意见：</span><span style="color:#70a0d0">{</span>evaluation<span style="color:#70a0d0">}</span><span style="color:#4070a0;font-weight:bold">\n\n</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>            <span style="color:#4070a0">&#34;请分析失败原因并提出具体改进策略用于下一轮。&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>        )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>        <span style="color:#007020;font-weight:bold">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>            reflect_resp <span style="color:#666">=</span> client<span style="color:#666">.</span>chat<span style="color:#666">.</span>completions<span style="color:#666">.</span>create(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>                model<span style="color:#666">=</span><span style="color:#4070a0">&#34;gpt-4o&#34;</span>,
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>                messages<span style="color:#666">=</span>[{<span style="color:#4070a0">&#34;role&#34;</span>: <span style="color:#4070a0">&#34;user&#34;</span>, <span style="color:#4070a0">&#34;content&#34;</span>: reflect_prompt}],
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>                temperature<span style="color:#666">=</span><span style="color:#40a070">0.0</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>            )
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>            reflection <span style="color:#666">=</span> reflect_resp<span style="color:#666">.</span>choices[<span style="color:#40a070">0</span>]<span style="color:#666">.</span>message<span style="color:#666">.</span>content
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>            reflexion_memory<span style="color:#666">.</span>append(reflection)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>        <span style="color:#007020;font-weight:bold">except</span> <span style="color:#007020">Exception</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>            reflexion_memory<span style="color:#666">.</span>append(<span style="color:#4070a0">&#34;发生错误，需检查 API 可用性&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>    <span style="color:#007020;font-weight:bold">return</span> history[<span style="color:#666">-</span><span style="color:#40a070">1</span>] <span style="color:#007020;font-weight:bold">if</span> history <span style="color:#007020;font-weight:bold">else</span> <span style="color:#007020;font-weight:bold">None</span></span></span></code></pre></div><h3 id="53-评价机制的三种策略">5.3 评价机制的三种策略</h3>
+<p>Reflexion 的效果高度依赖评价机制的可靠性。有三种模式可选：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">策略</th>
+					<th style="text-align: center">评价者</th>
+					<th style="text-align: left">优点</th>
+					<th style="text-align: left">缺点</th>
+					<th style="text-align: left">适用场景</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center"><strong>LLM 自评</strong></td>
+					<td style="text-align: center">当前 LLM</td>
+					<td style="text-align: left">无需额外模型</td>
+					<td style="text-align: left">评价与执行共享盲区</td>
+					<td style="text-align: left">通用场景</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>LLM 评审员</strong></td>
+					<td style="text-align: center">独立 LLM（不同配置）</td>
+					<td style="text-align: left">独立视角，可设不同 system prompt</td>
+					<td style="text-align: left">成本翻倍</td>
+					<td style="text-align: left">质量要求高</td>
+			</tr>
+			<tr>
+					<td style="text-align: center"><strong>外部评估</strong></td>
+					<td style="text-align: center">规则、测试用例、验证器</td>
+					<td style="text-align: left">100% 客观，无幻觉</td>
+					<td style="text-align: left">需要可量化的评估标准</td>
+					<td style="text-align: left">代码生成、数学</td>
+			</tr>
+	</tbody>
+</table>
+<p>外部评估是最可靠的方式。在代码生成任务中，通过测试用例评估可以将 Reflexion 的准确率从自评模式的 ~60% 提升至 ~85% 以上（Shinn et al., 2023）。适用于可以自动化验证的场景：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">evaluate_with_tests</span>(response: <span style="color:#007020">str</span>, test_cases: <span style="color:#007020">list</span>[<span style="color:#007020">dict</span>]) <span style="color:#666">-&gt;</span> <span style="color:#007020">tuple</span>[<span style="color:#007020">bool</span>, <span style="color:#007020">str</span>]:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>    <span style="color:#4070a0">&#34;&#34;&#34;通过测试用例评估，适用于代码生成任务&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>    <span style="color:#007020;font-weight:bold">for</span> tc <span style="color:#007020;font-weight:bold">in</span> test_cases:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>        <span style="color:#007020;font-weight:bold">try</span>:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>            output <span style="color:#666">=</span> execute_code(response, tc[<span style="color:#4070a0">&#34;input&#34;</span>])
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>            <span style="color:#007020;font-weight:bold">if</span> output <span style="color:#666">!=</span> tc[<span style="color:#4070a0">&#34;expected&#34;</span>]:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>                <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">False</span>, <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;Test failed: input=</span><span style="color:#70a0d0">{</span>tc[<span style="color:#4070a0">&#39;input&#39;</span>]<span style="color:#70a0d0">}</span><span style="color:#4070a0">, &#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>                             <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;expected=</span><span style="color:#70a0d0">{</span>tc[<span style="color:#4070a0">&#39;expected&#39;</span>]<span style="color:#70a0d0">}</span><span style="color:#4070a0">, got=</span><span style="color:#70a0d0">{</span>output<span style="color:#70a0d0">}</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>        <span style="color:#007020;font-weight:bold">except</span> <span style="color:#007020">Exception</span> <span style="color:#007020;font-weight:bold">as</span> e:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>            <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">False</span>, <span style="color:#4070a0">f</span><span style="color:#4070a0">&#34;Execution error on </span><span style="color:#70a0d0">{</span>tc[<span style="color:#4070a0">&#39;input&#39;</span>]<span style="color:#70a0d0">}</span><span style="color:#4070a0">: </span><span style="color:#70a0d0">{</span>e<span style="color:#70a0d0">}</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    <span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">True</span>, <span style="color:#4070a0">&#34;All tests passed&#34;</span></span></span></code></pre></div><h3 id="54-收敛性分析">5.4 收敛性分析</h3>
+<p>Reflexion 的有效性受评价器质量的直接制约。评价器判对，Reflexion 收敛到正确答案；评价器判错，Reflexion 可能在错误状态终止或陷入死循环。三种典型的不收敛模式：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">不收敛模式</th>
+					<th style="text-align: left">根因</th>
+					<th style="text-align: left">缓解方式</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>评价者盲区</strong></td>
+					<td style="text-align: left">自评模式下 LLM 对自身输出的&quot;盲区评价&quot;准确率仅 50-70%，错误结果可能被错误地判定为 PASS</td>
+					<td style="text-align: left">使用独立 LLM 评审员或外部评估</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>同一错误反复</strong></td>
+					<td style="text-align: left">反思被写入 system prompt 末尾，LLM 在长上下文中注意力分散，未能有效吸收</td>
+					<td style="text-align: left">将反思紧贴 system prompt 开头，或缩短上下文后再注入</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>过度修正</strong></td>
+					<td style="text-align: left">为避免错误 A 而走向极端 → 在新方向上犯错 B → 同时避免 A 和 B → 犯错 C</td>
+					<td style="text-align: left">限制最大轮次，而非让 Agent 无限迭代</td>
+			</tr>
+	</tbody>
+</table>
+<p>过度修正在任务上表现为连锁偏移：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>Round 1: 错误 A
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>Round 2: 避免 A → 错误 B
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>Round 3: 避免 A 和 B → 错误 C
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>...</span></span></code></pre></div><p>实践中，设置最大轮次为 2-3 轮即可——Shinn et al. 的实验表明，2 轮 Reflexion 捕获了约 80% 的可修复错误，第 3 轮的边际增益不足 5%。Reflexion 适合捕获偶发错误和边界情况，不适合修复系统性设计缺陷——如果你的 Agent 在第一轮就犯逻辑错误，第三轮大概率也会犯。</p>
+<hr>
+<h2 id="6-案例分析claude-code-的推理架构">6. 案例分析：Claude Code 的推理架构</h2>
+<p>基于 v2.1.88 源码分析。Claude Code 的推理架构分为三层：底层是唯一的主循环，中间层是工具系统与上下文管理，上层是模式切换的实现机制。</p>
+<img src="/images/diagrams/claude-code-architecture.svg" alt="Claude Code 推理架构图" style="display:block;margin:1em auto;max-width:900px;width:100%" />
+<h3 id="底层单一主循环">底层：单一主循环</h3>
+<p>系统仅维持一个主循环，每轮迭代执行统一流程：</p>
+<p><strong>调用模型 → 检查 tool_use →</strong> 有则执行工具并回传继续下一轮，无则输出回答终止。</p>
+<p><strong>循环逻辑恒定，行为差异源于输入控制</strong>。</p>
+<h3 id="中间层工具系统与上下文管理">中间层：工具系统与上下文管理</h3>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">机制</th>
+					<th style="text-align: left">实现要点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left">工具声明</td>
+					<td style="text-align: left">各工具注册时提供文本描述（prompt 方法），动态拼入 system prompt</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">并行策略</td>
+					<td style="text-align: left">只读工具可并行执行，写操作串行，模型可在单轮发起多个独立读取</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">上下文压缩</td>
+					<td style="text-align: left">消息列表随轮次递增，四层压缩防止超限：自动摘要 → 截断 → 微压缩 → 塌缩</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="上层模式切换">上层：模式切换</h3>
+<p>Claude Code 的四种模式共享同一主循环（queryLoop），差异仅在于<strong>主循环的输入参数</strong>不同——循环逻辑本身不变：</p>
+<div class="mermaid">
+flowchart TD
+    L["主循环 queryLoop()"]
+
+    L -- "工具集：全部" --> N["① 普通对话"]
+    L -- "工具集：仅只读<br>↓ 用户确认<br>↓ 恢复全部" --> P["② 规划模式"]
+    L -- "上下文：隔离命名空间<br>信号：独立中止<br>提示：不弹权限" --> S["③ 子智能体"]
+    L -- "API 参数：+thinking<br>预算：budget_tokens" --> T["④ Extended Thinking"]
+
+    style L fill:#4a90d9,color:#fff,stroke:#2c5f8a,stroke-width:2px
+</div><p>四种模式分别来自四个维度的输入控制：</p>
+<h4 id="-普通对话--默认模式">① 普通对话 — 默认模式</h4>
+<p>模型访问全部注册工具，主循环以最简配置运行。规划、子智能体、Extended Thinking 三种模式均以此为起点，任务完成后也回到此状态。</p>
+<h4 id="-规划模式--权限维度">② 规划模式 — 权限维度</h4>
+<p>通过<strong>权限标记切换</strong>实现。仅修改了工具的可用范围，循环逻辑不变：</p>
+<div class="mermaid">
+flowchart LR
+    S0["普通对话<br/>（全部工具）"] -->|"触发规划"| S1["规划模式<br/>（仅只读）"]
+    S1 -->|"设计方案"| DEC{"用户确认？"}
+    DEC -->|"驳回"| S1
+    DEC -->|"通过"| S2["执行阶段<br/>（恢复全部工具）"]
+</div><p>阶段切换由用户把关而非模型自主决定，避免规划不充分即跳入执行。</p>
+<h4 id="-子智能体--上下文维度">③ 子智能体 — 上下文维度</h4>
+<p>在父循环中创建<strong>隔离上下文</strong>，嵌套运行一个完整的 queryLoop，形成嵌套 ReAct。父循环调用子智能体后挂起等待，子循环独立执行完整 queryLoop 后将结果返回，父循环继续执行：</p>
+<div class="mermaid">
+flowchart LR
+    P["父循环（queryLoop）"]
+    S["子循环（queryLoop）<br/>（隔离上下文）"]
+
+    P -->|"① 调用"| S
+    S -->|"② 返回结果"| P
+</div><p>隔离内容（<code>src/utils/forkedAgent.ts:345</code>）：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">隔离项</th>
+					<th style="text-align: left">实现</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left">文件缓存</td>
+					<td style="text-align: left">clone(父节点文件缓存)</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">中止控制</td>
+					<td style="text-align: left">独立中止信号</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">agentId</td>
+					<td style="text-align: left">随机生成新 ID</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">权限提示</td>
+					<td style="text-align: left">关闭（shouldAvoidPermissionPrompts: true）</td>
+			</tr>
+	</tbody>
+</table>
+<p>父 Agent 仅见最终结果，子智能体内部推理轨迹完全隔离。</p>
+<h4 id="-extended-thinking--api-参数维度">④ Extended Thinking — API 参数维度</h4>
+<p>Extended Thinking 开启后，LLM 在输出最终回答之前，会先生成一段<strong>内部推理</strong>（模型的&quot;打草稿&quot;过程）。这相当于传统 CoT 中写在回答里的逐步推理，但以独立的数据块回传——类似 DeepSeek 在回答文本中插入的 think 标签，区别在于 API 协议用独立的数据类型而非字符串标签来实现：</p>
+<ul>
+<li><strong>普通调用</strong>：输入 → 模型直接生成回答（推理过程在模型参数中隐式完成）</li>
+<li><strong>Thinking 调用</strong>：输入 → 模型先输出 thinking block（推理草稿）→ 再输出 text block（正式回答）</li>
+</ul>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span># 有 thinking 时的 Streaming 事件序列
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>content_block_start → type: &#34;thinking&#34;      ← 模型开始打草稿
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>content_block_delta → &#34;用户想比较...需要先看...&#34;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>content_block_delta → &#34;Rust的核心是所有权...&#34;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>content_block_stop
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span>                                             ← 推理阶段结束
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span><span>content_block_start → type: &#34;text&#34;           ← 开始输出正式回答
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8</span><span>content_block_delta → &#34;Rust 和 Go 的...&#34;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9</span><span>content_block_stop</span></span></code></pre></div><p>两段数据分别以不同事件到达客户端，让 UI 可以独立处理：展示思考过程、或只展示最终回答、或两者并排。区别于传统的 CoT 中推理文本和回答混在同一个响应文本里。</p>
+<p>在 API 请求中追加 thinking 参数即开启此功能。从流量侧看，核心变化在请求体中：</p>
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-http" data-lang="http"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="">POST /v1/messages
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="">Content-Type: application/json
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style=""># 无 thinking（普通请求）
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span><span style="">{
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span><span style="">    &#34;model&#34;: &#34;claude-sonnet-4-6&#34;,
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="">    &#34;messages&#34;: [{&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: &#34;对比 Rust 和 Go 的并发模型&#34;}],
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span><span style="">    &#34;max_tokens&#34;: 2048
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span><span style="">}
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span><span style="">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span><span style=""># 有 thinking（开启推理）
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span><span style="">{
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span><span style="">    &#34;model&#34;: &#34;claude-sonnet-4-6&#34;,
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span><span style="">    &#34;messages&#34;: [{&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: &#34;对比 Rust 和 Go 的并发模型&#34;}],
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span><span style="">    &#34;max_tokens&#34;: 2048,
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span><span style="">    &#34;thinking&#34;: {
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span><span style="">        &#34;type&#34;: &#34;enabled&#34;,
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span><span style="">        &#34;budget_tokens&#34;: 4096
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span><span style="">    }
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span><span style="">}</span></span></span></code></pre></div><p>多了一个 thinking 参数，其中 budget_tokens 告知 API 为内部推理预留的 token 配额。这个配额不计入 max_tokens——max_tokens=2048 约束的是最终回答的长度，thinking 配额是额外的，按 completion 单价计费。</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">配置</th>
+					<th style="text-align: left">请求体中的 thinking 字段</th>
+					<th style="text-align: left">行为</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><code>adaptive</code>（默认）</td>
+					<td style="text-align: left"><code>{&quot;type&quot;: &quot;adaptive&quot;}</code></td>
+					<td style="text-align: left">模型自主决定是否使用 thinking</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>enabled</code> + <code>budgetTokens</code></td>
+					<td style="text-align: left"><code>{&quot;type&quot;: &quot;enabled&quot;, &quot;budget_tokens&quot;: N}</code></td>
+					<td style="text-align: left">强制启用，限定推理预算上限</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>disabled</code></td>
+					<td style="text-align: left">不传或传 <code>null</code></td>
+					<td style="text-align: left">禁用，不产生 thinking 开销</td>
+			</tr>
+	</tbody>
+</table>
+<p>子智能体默认关闭以控制成本——嵌套的子智能体调用也开启 thinking 时，token 消耗会叠加。</p>
+<h3 id="贯穿示例四种模式的协作流程">贯穿示例：四种模式的协作流程</h3>
+<p>以一个常见重构任务为例——&ldquo;将用户认证从 session 改造为 JWT，补充测试并更新文档，最后提交 MR&rdquo;。完整执行中依次触发全部四种模式，展示三层架构如何响应多模式切换：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">阶段</th>
+					<th style="text-align: left">触发模式</th>
+					<th style="text-align: left">行为</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center">① 代码审查</td>
+					<td style="text-align: left"><strong>普通对话</strong></td>
+					<td style="text-align: left">阅读 auth 模块与路由中间件源码，了解当前 session 认证的全貌</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">② 迁移规划</td>
+					<td style="text-align: left"><strong>规划模式</strong></td>
+					<td style="text-align: left">限制只读工具，输出 JWT 迁移的分步方案供用户确认</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">③ 方案确认</td>
+					<td style="text-align: left"><strong>普通对话</strong></td>
+					<td style="text-align: left">用户审阅方案后确认执行，主循环恢复全部工具权限</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">④ 核心实现</td>
+					<td style="text-align: left"><strong>Extended Thinking</strong></td>
+					<td style="text-align: left">编写 token 签发/验证逻辑时启用 thinking，推敲安全边界</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">⑤ 并行任务</td>
+					<td style="text-align: left"><strong>子智能体</strong></td>
+					<td style="text-align: left">同时改写路由中间件、更新类型定义、补充单元测试</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">⑥ 提交 MR</td>
+					<td style="text-align: left"><strong>普通对话</strong></td>
+					<td style="text-align: left">汇总变更、提交 commit、创建 Merge Request</td>
+			</tr>
+	</tbody>
+</table>
+<p>四种模式在上层通过<strong>不同机制</strong>切换：</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">模式切换</th>
+					<th style="text-align: left">触发机制</th>
+					<th style="text-align: left">恢复机制</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left">普通对话 ↔ 规划模式</td>
+					<td style="text-align: left">LLM 主动提议 + 用户确认</td>
+					<td style="text-align: left">用户确认后恢复全部工具</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">普通对话 → Extended Thinking</td>
+					<td style="text-align: left">thinking 参数阶段性生效</td>
+					<td style="text-align: left">同一轮内自动恢复</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">普通对话 → 子智能体</td>
+					<td style="text-align: left">宿主检测到可并行子任务</td>
+					<td style="text-align: left">子循环执行完毕后归并</td>
+			</tr>
+	</tbody>
+</table>
+<p>模式切换永远只影响<strong>上层</strong>的参数配置。中间层和底层在同一进程内持续运行，不受模式变更影响——这正是三层架构&quot;解耦循环逻辑与行为控制&quot;的设计目标。</p>
+<h3 id="错误处理贯穿全栈的统一策略">错误处理：贯穿全栈的统一策略</h3>
+<p>无论哪一层出现异常，处理方式一致：基础设施错误（API 调用失败、上下文超限、token 截断）由宿主代码容错重试；工具执行错误（工具不存在、参数校验失败、权限不足、执行异常）全部以 is_error: true 的结果放回消息列表，不做针对性分支处理，由模型在下一轮自行决定恢复策略。宿主代码中没有针对 ModuleNotFoundError 或 PermissionDenied 的特殊分支。错误信息本身即为评价信号，修正由推理自然完成——相比第 5 节的显式 Reflexion，省去了独立的评价阶段和反思记忆。</p>
+<h3 id="与本文推理模式的对应">与本文推理模式的对应</h3>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">模式</th>
+					<th style="text-align: left">Claude Code 实现</th>
+					<th style="text-align: left">区别</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left">ReAct</td>
+					<td style="text-align: left">queryLoop，needsFollowUp 控制分支</td>
+					<td style="text-align: left">标准 ReAct，无定制分支</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">Plan-and-Execute</td>
+					<td style="text-align: left">切换 mode: &ldquo;plan&rdquo;，限制只读工具</td>
+					<td style="text-align: left">用户确认充当阶段门禁</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">Reflexion</td>
+					<td style="text-align: left">工具异常 → is_error: true → LLM 自行恢复</td>
+					<td style="text-align: left">隐式容错，无独立反思阶段</td>
+			</tr>
+			<tr>
+					<td style="text-align: left">CoT</td>
+					<td style="text-align: left">依赖底层模型能力</td>
+					<td style="text-align: left">宿主不干预，依赖模型原生推理</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="设计评价">设计评价</h3>
+<p>这套三层架构的核心优势在于将&quot;循环逻辑&quot;与&quot;行为控制&quot;解耦。主循环只需关注调用模型与分发工具的标准流程，模式切换和工具管理等变化集中在输入参数层实现。新增模式无需修改循环代码，降低了维护成本与回归风险。</p>
+<p>代价是模式间的差异完全隐式地体现在输入参数中（权限标记、嵌套上下文、API 参数），阅读代码时无法在一处看到所有模式的全貌。此外，错误处理完全依赖 LLM 的自我恢复能力，在模型推理质量不稳定时可能引入不可控的行为变异。</p>
+<hr>
+<h2 id="核心概念速查">核心概念速查</h2>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: center">概念</th>
+					<th style="text-align: left">定义</th>
+					<th style="text-align: left">关键约束</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: center">推理模式</td>
+					<td style="text-align: left">Agent 利用 LLM 进行决策的结构化方法</td>
+					<td style="text-align: left">模式选择影响 Token 效率、并行度和适应性</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">Chain of Thought</td>
+					<td style="text-align: left">将隐式推理外部化为中间步骤</td>
+					<td style="text-align: left">基础准确率提升 10-30%（GSM8K），所有 Agent 推理模式的基础</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">Self-Consistency</td>
+					<td style="text-align: left">多次采样推理路径 → 多数投票</td>
+					<td style="text-align: left">边际收益随 n 递减，n=5 时已捕获大部分增益</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">ReAct</td>
+					<td style="text-align: left">Thought-Action-Observation 交替循环</td>
+					<td style="text-align: left">串行执行，上下文增长快，输入累积呈 O(N²)</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">Plan-and-Execute</td>
+					<td style="text-align: left">先规划步骤 DAG，再按依赖序执行</td>
+					<td style="text-align: left">token 效率比 ReAct 高 30-40%，但需要确定性任务</td>
+			</tr>
+			<tr>
+					<td style="text-align: center">Reflexion</td>
+					<td style="text-align: left">执行-评价-反思的多轮自修正循环</td>
+					<td style="text-align: left">收敛性依赖评价器质量，建议不超过 3 轮</td>
+			</tr>
+	</tbody>
+</table>
+
+</content>
+
+<div style="font-size:0.8em;display:flex;gap:16px;justify-content:center;">
+  <p>
+    
+    <a href="https://tsuki126.github.io/blog/ai-agent-01-core-loop/">
+      &lt;&lt; Previous Post</a>
+        
+  </p>
+  <p>|</p>
+  <p>
+    
+    <strike>Next Post >></strike>
+    
+  </p>
+</div>
+
+
+<p>
+  
+  <a href="https://tsuki126.github.io/tags/ai-%E6%99%BA%E8%83%BD%E4%BD%93/">#AI 智能体</a>
+  
+</p>
+
+  </main>
+  <footer>© 2026 Tsuki126 · <a href="https://github.com/Tsuki126">GitHub</a></footer>
+
+  
+</body>
+
+</html>
