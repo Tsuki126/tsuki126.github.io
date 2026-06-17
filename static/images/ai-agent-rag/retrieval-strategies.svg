@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" font-family="system-ui, -apple-system, sans-serif">
+  <style>
+    .title { fill: #1a1a2e; font-size: 13px; font-weight: 600; }
+    .text-normal { fill: #1a1a2e; font-size: 12px; }
+    .text-small { fill: #555; font-size: 11px; }
+    .text-desc { fill: #666; font-size: 10.5px; }
+    .box-strategy { fill: #ffffff; stroke: #b0b8c8; stroke-width: 1; rx: 6; }
+    .box-query { fill: #f5f0e0; stroke: #d4c88a; stroke-width: 1; rx: 4; }
+    .box-example { fill: #f3f4f6; stroke: none; rx: 3; }
+    .arrow { fill: none; stroke: #888; stroke-width: 1; marker-end: url(#arrowhead); }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="7" markerHeight="4" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <text x="360" y="22" text-anchor="middle" class="title">四种检索策略对比</text>
+
+  <!-- Strategy 1: Vector Only -->
+  <rect x="25" y="40" width="330" height="125" class="box-strategy"/>
+  <rect x="30" y="44" width="60" height="18" rx="3" fill="#d4e1f5"/>
+  <text x="60" y="57" text-anchor="middle" class="text-small" font-weight="600">向量</text>
+  <text x="95" y="57" class="text-normal" font-weight="600">语义检索（单路）</text>
+
+  <rect x="35" y="72" width="130" height="26" class="box-query"/>
+  <text x="100" y="89" text-anchor="middle" class="text-small">"如何配置 SSL 证书？"</text>
+  <line x1="165" y1="85" x2="185" y2="85" class="arrow"/>
+  <rect x="185" y="72" width="90" height="26" class="box-example"/>
+  <text x="230" y="89" text-anchor="middle" class="text-small">embedding → 余弦相似度</text>
+  <line x1="275" y1="85" x2="295" y2="85" class="arrow"/>
+  <rect x="295" y="72" width="48" height="26" class="box-example"/>
+  <text x="319" y="89" text-anchor="middle" class="text-small">Top-K</text>
+
+  <text x="190" y="126" text-anchor="middle" class="text-desc">优点：理解语义近似，跨语言</text>
+  <text x="190" y="141" text-anchor="middle" class="text-desc">缺点：精确关键词匹配弱，冷启动</text>
+  <text x="190" y="156" text-anchor="middle" class="text-desc">适合：开放式问答、同义改写</text>
+
+  <!-- Strategy 2: Hybrid -->
+  <rect x="365" y="40" width="330" height="125" class="box-strategy"/>
+  <rect x="370" y="44" width="60" height="18" rx="3" fill="#e8f0e8"/>
+  <text x="400" y="57" text-anchor="middle" class="text-small" font-weight="600">混合</text>
+  <text x="435" y="57" class="text-normal" font-weight="600">向量 + 全文（两路）</text>
+
+  <rect x="375" y="72" width="130" height="26" class="box-query"/>
+  <text x="440" y="89" text-anchor="middle" class="text-small">"SSL 证书 配置 错误 代码 502"</text>
+  <line x1="505" y1="85" x2="515" y2="75" class="arrow"/>
+  <line x1="505" y1="85" x2="515" y2="95" class="arrow"/>
+  <rect x="515" y="62" width="80" height="26" class="box-example"/>
+  <text x="555" y="79" text-anchor="middle" class="text-small">向量检索</text>
+  <rect x="515" y="92" width="80" height="26" class="box-example"/>
+  <text x="555" y="109" text-anchor="middle" class="text-small">BM25 全文</text>
+  <line x1="595" y1="85" x2="635" y2="85" class="arrow"/>
+  <rect x="635" y="72" width="48" height="26" class="box-example"/>
+  <text x="659" y="89" text-anchor="middle" class="text-small">RRF 融合</text>
+
+  <text x="530" y="126" text-anchor="middle" class="text-desc">优点：语义+精确兼顾</text>
+  <text x="530" y="141" text-anchor="middle" class="text-desc">缺点：两套索引，延迟翻倍</text>
+  <text x="530" y="156" text-anchor="middle" class="text-desc">适合：生产级通用知识检索</text>
+
+  <!-- Strategy 3: Graph RAG -->
+  <rect x="25" y="180" width="330" height="125" class="box-strategy"/>
+  <rect x="30" y="184" width="70" height="18" rx="3" fill="#e0d8f0"/>
+  <text x="65" y="197" text-anchor="middle" class="text-small" font-weight="600">图检索</text>
+  <text x="105" y="197" class="text-normal" font-weight="600">知识图谱（多跳关联）</text>
+
+  <rect x="35" y="212" width="130" height="26" class="box-query"/>
+  <text x="100" y="229" text-anchor="middle" class="text-small">"哪个团队负责 SSL 模块？"</text>
+  <line x1="165" y1="225" x2="185" y2="225" class="arrow"/>
+  <rect x="185" y="212" width="90" height="26" class="box-example"/>
+  <text x="230" y="229" text-anchor="middle" class="text-small">实体抽取 → 图遍历</text>
+  <line x1="275" y1="225" x2="295" y2="225" class="arrow"/>
+  <rect x="295" y="212" width="48" height="26" class="box-example"/>
+  <text x="319" y="229" text-anchor="middle" class="text-small">路径</text>
+
+  <text x="190" y="266" text-anchor="middle" class="text-desc">优点：精确关系推理，可解释</text>
+  <text x="190" y="281" text-anchor="middle" class="text-desc">缺点：构建成本高，覆盖有界</text>
+  <text x="190" y="296" text-anchor="middle" class="text-desc">适合：多跳问答、关联分析</text>
+
+  <!-- Strategy 4: Agentic RAG -->
+  <rect x="365" y="180" width="330" height="125" class="box-strategy"/>
+  <rect x="370" y="184" width="80" height="18" rx="3" fill="#fce8e8"/>
+  <text x="410" y="197" text-anchor="middle" class="text-small" font-weight="600">Agentic</text>
+  <text x="455" y="197" class="text-normal" font-weight="600">多步迭代检索</text>
+
+  <rect x="375" y="212" width="130" height="26" class="box-query"/>
+  <text x="440" y="229" text-anchor="middle" class="text-small">"SSL 错误 502，怎么解决？"</text>
+  <line x1="505" y1="225" x2="515" y2="225" class="arrow"/>
+  <rect x="515" y="200" width="90" height="50" class="box-example"/>
+  <text x="560" y="217" text-anchor="middle" class="text-small">LLM 判断<br/>→ 向量搜配置</text>
+  <text x="560" y="237" text-anchor="middle" class="text-small">→ 不够？再搜日志</text>
+  <line x1="605" y1="225" x2="635" y2="225" class="arrow"/>
+  <rect x="635" y="212" width="48" height="26" class="box-example"/>
+  <text x="659" y="229" text-anchor="middle" class="text-small">聚合</text>
+
+  <text x="530" y="266" text-anchor="middle" class="text-desc">优点：检索路径可动态调整</text>
+  <text x="530" y="281" text-anchor="middle" class="text-desc">缺点：多步 LLM 调用，延迟高</text>
+  <text x="530" y="296" text-anchor="middle" class="text-desc">适合：复合问题，边界不清晰</text>
+</svg>

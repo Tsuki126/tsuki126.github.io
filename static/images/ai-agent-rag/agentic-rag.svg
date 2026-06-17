@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="system-ui, -apple-system, sans-serif">
+  <style>
+    .title { fill: #1a1a2e; font-size: 13px; font-weight: 600; }
+    .text-normal { fill: #1a1a2e; font-size: 12px; }
+    .text-small { fill: #555; font-size: 11px; }
+    .text-desc { fill: #666; font-size: 10.5px; }
+    .box-agent { fill: #d4e1f5; stroke: #88a8d0; stroke-width: 1.5; rx: 8; }
+    .box-retrieval { fill: #fef3e2; stroke: #e6c988; stroke-width: 1.5; rx: 8; }
+    .box-storage { fill: #e8f0e8; stroke: #a0c8a0; stroke-width: 1.5; rx: 8; }
+    .box-white { fill: #ffffff; stroke: #b0b8c8; stroke-width: 1; rx: 5; }
+    .arrow { fill: none; stroke: #888; stroke-width: 1.2; marker-end: url(#arrowhead); }
+    .arrow-thick { fill: none; stroke: #555; stroke-width: 1.8; marker-end: url(#arrowhead); }
+    .label-bg { fill: #f5f0e0; stroke: none; rx: 3; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="8" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="360" y="20" text-anchor="middle" class="title">Agentic RAG 架构</text>
+
+  <!-- === Agent Side (left) === -->
+  <rect x="30" y="35" width="280" height="370" class="box-agent"/>
+  <rect x="30" y="35" width="280" height="30" fill="#d4e1f5" rx="8"/>
+  <rect x="30" y="59" width="280" height="6" fill="#d4e1f5"/>
+  <text x="170" y="55" text-anchor="middle" class="title">智能体（Agent）</text>
+
+  <!-- LLM Core -->
+  <rect x="48" y="80" width="244" height="46" class="box-white"/>
+  <text x="170" y="99" text-anchor="middle" class="text-normal" font-weight="600">LLM 推理引擎</text>
+  <text x="170" y="115" text-anchor="middle" class="text-desc">综合分析上下文 + 检索结果 → 决策</text>
+
+  <!-- Memory System -->
+  <rect x="48" y="140" width="244" height="46" class="box-white"/>
+  <text x="170" y="159" text-anchor="middle" class="text-normal" font-weight="600">工作记忆 + 情景记忆</text>
+  <text x="170" y="175" text-anchor="middle" class="text-desc">上下文窗口 + 历史交互</text>
+
+  <!-- Retrieval Trigger -->
+  <rect x="48" y="200" width="244" height="46" class="box-white"/>
+  <text x="170" y="219" text-anchor="middle" class="text-normal" font-weight="600">检索触发器</text>
+  <text x="170" y="235" text-anchor="middle" class="text-desc">LLM 决策 / 系统指令 / 用户标识</text>
+
+  <!-- Retrieval Adapter -->
+  <rect x="48" y="260" width="244" height="46" class="box-white"/>
+  <text x="170" y="279" text-anchor="middle" class="text-normal" font-weight="600">检索适配器</text>
+  <text x="170" y="295" text-anchor="middle" class="text-desc">查询改写 / 策略路由 / 结果重排</text>
+
+  <!-- Result Injector -->
+  <rect x="48" y="320" width="244" height="46" class="box-white"/>
+  <text x="170" y="339" text-anchor="middle" class="text-normal" font-weight="600">结果注入器</text>
+  <text x="170" y="355" text-anchor="middle" class="text-desc">分段注入上下文 / 格式转换</text>
+
+  <!-- === Retrieval System (right) === -->
+  <rect x="400" y="35" width="290" height="370" class="box-retrieval"/>
+  <rect x="400" y="35" width="290" height="30" fill="#fef3e2" rx="8"/>
+  <rect x="400" y="59" width="290" height="6" fill="#fef3e2"/>
+  <text x="545" y="55" text-anchor="middle" class="title">检索系统（Retrieval System）</text>
+
+  <!-- Query Router -->
+  <rect x="415" y="80" width="260" height="38" class="box-white"/>
+  <text x="545" y="99" text-anchor="middle" class="text-normal" font-weight="600">查询路由器</text>
+  <text x="545" y="114" text-anchor="middle" class="text-desc">向量 / 全文 / SQL / 图查询 → 选路或混排</text>
+
+  <!-- Multiple retrievers -->
+  <rect x="415" y="130" width="125" height="44" class="box-white"/>
+  <text x="477" y="149" text-anchor="middle" class="text-normal" font-weight="600">向量检索引擎</text>
+  <text x="477" y="165" text-anchor="middle" class="text-desc">余弦 / 内积 / HNSW</text>
+
+  <rect x="550" y="130" width="125" height="44" class="box-white"/>
+  <text x="612" y="149" text-anchor="middle" class="text-normal" font-weight="600">全文检索引擎</text>
+  <text x="612" y="165" text-anchor="middle" class="text-desc">BM25 / 倒排索引</text>
+
+  <!-- Re-ranker -->
+  <rect x="415" y="190" width="260" height="38" class="box-white"/>
+  <text x="545" y="209" text-anchor="middle" class="text-normal" font-weight="600">重排序（Reranker）</text>
+  <text x="545" y="224" text-anchor="middle" class="text-desc">Cohere Rerank / BGE / 交叉编码器</text>
+
+  <!-- === Index Side (rightmost) === -->
+  <rect x="400" y="250" width="290" height="155" class="box-storage"/>
+  <rect x="400" y="250" width="290" height="28" fill="#e8f0e8" rx="8"/>
+  <rect x="400" y="272" width="290" height="6" fill="#e8f0e8"/>
+  <text x="545" y="269" text-anchor="middle" class="title">索引层（Index Layer）</text>
+
+  <rect x="415" y="288" width="260" height="34" class="box-white"/>
+  <text x="545" y="305" text-anchor="middle" class="text-normal" font-weight="600">向量索引</text>
+  <text x="545" y="317" text-anchor="middle" class="text-desc">Embedding + 分段</text>
+
+  <rect x="415" y="328" width="260" height="34" class="box-white"/>
+  <text x="545" y="345" text-anchor="middle" class="text-normal" font-weight="600">文档索引</text>
+  <text x="545" y="357" text-anchor="middle" class="text-desc">元数据 + 全文 + XPath</text>
+
+  <rect x="415" y="368" width="260" height="28" class="box-white"/>
+  <text x="545" y="386" text-anchor="middle" class="text-normal" font-weight="600">知识图谱索引</text>
+
+  <!-- === Flow Arrows === -->
+  <!-- Agent → Query Router -->
+  <line x1="292" y1="282" x2="410" y2="98" class="arrow"/>
+  <rect x="310" y="150" width="90" height="50" rx="4" class="label-bg"/>
+  <text x="355" y="168" text-anchor="middle" class="text-small" font-weight="600">查询请求</text>
+  <text x="355" y="183" text-anchor="middle" class="text-desc">(自然语言)</text>
+
+  <!-- Index → Retrieval -->
+  <line x1="545" y1="288" x2="545" y2="230" class="arrow" stroke="#a0c8a0"/>
+
+  <!-- Retrieval → Agent -->
+  <line x1="415" y1="210" x2="298" y2="340" class="arrow"/>
+  <rect x="310" y="270" width="90" height="50" rx="4" class="label-bg"/>
+  <text x="355" y="288" text-anchor="middle" class="text-small" font-weight="600">检索结果</text>
+  <text x="355" y="303" text-anchor="middle" class="text-desc">(文本块 + 元数据)</text>
+</svg>

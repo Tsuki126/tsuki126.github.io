@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 340" font-family="system-ui, -apple-system, sans-serif">
+  <style>
+    .title { fill: #1a1a2e; font-size: 13px; font-weight: 600; }
+    .text-normal { fill: #1a1a2e; font-size: 12px; }
+    .text-small { fill: #555; font-size: 11px; }
+    .text-desc { fill: #666; font-size: 10.5px; }
+    .box-native { fill: #fef3e2; stroke: #e6c988; stroke-width: 1.5; rx: 8; }
+    .box-mcp { fill: #d4e1f5; stroke: #88a8d0; stroke-width: 1.5; rx: 8; }
+    .box-white { fill: #ffffff; stroke: #b0b8c8; stroke-width: 1; rx: 5; }
+    .box-blue-bg { fill: #eef5ff; stroke: none; rx: 4; }
+    .arrow { fill: none; stroke: #888; stroke-width: 1; marker-end: url(#arrowhead); }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="7" markerHeight="4" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <text x="350" y="22" text-anchor="middle" class="title">原生 Tool Calling vs MCP 对比</text>
+
+  <!-- === Native Tool Calling === -->
+  <rect x="25" y="40" width="310" height="285" class="box-native"/>
+  <rect x="25" y="40" width="310" height="28" fill="#fef3e2" rx="8"/>
+  <rect x="25" y="62" width="310" height="6" fill="#fef3e2"/>
+  <text x="180" y="59" text-anchor="middle" class="title">原生 Tool Calling</text>
+
+  <!-- Flow: Native -->
+  <rect x="40" y="82" width="280" height="36" class="box-white"/>
+  <text x="180" y="100" text-anchor="middle" class="text-normal" font-weight="600">Tool Schema 硬编码在请求体中</text>
+  <text x="180" y="113" text-anchor="middle" class="text-desc">每轮请求都携带完整 tools 参数</text>
+
+  <line x1="180" y1="118" x2="180" y2="132" class="arrow"/>
+  <rect x="40" y="135" width="280" height="36" class="box-white"/>
+  <text x="180" y="153" text-anchor="middle" class="text-normal" font-weight="600">LLM 输出 tool_call</text>
+  <text x="180" y="166" text-anchor="middle" class="text-desc">宿主解析 → 执行函数</text>
+
+  <text x="180" y="202" text-anchor="middle" class="text-small" font-weight="600">局限</text>
+  <text x="180" y="220" text-anchor="middle" class="text-desc">• 耦合紧：工具定义和调用代码绑在一起</text>
+  <text x="180" y="236" text-anchor="middle" class="text-desc">• 动态发现：新增工具要改代码</text>
+  <text x="180" y="252" text-anchor="middle" class="text-desc">• 复用难：一个工具定义只能服务一个应用</text>
+  <text x="180" y="268" text-anchor="middle" class="text-desc">• 无标准传输：依赖 HTTP API 自有协议</text>
+  <text x="180" y="284" text-anchor="middle" class="text-desc">• 无权限模型：工具即能调用一切</text>
+
+  <rect x="40" y="298" width="280" height="18" rx="3" fill="#fce8e8"/>
+  <text x="180" y="311" text-anchor="middle" class="text-small" fill="#c0392b">每新增工具 → 修改工具注册表代码 → 重新部署</text>
+
+  <!-- === MCP === -->
+  <rect x="365" y="40" width="310" height="285" class="box-mcp"/>
+  <rect x="365" y="40" width="310" height="28" fill="#d4e1f5" rx="8"/>
+  <rect x="365" y="62" width="310" height="6" fill="#d4e1f5"/>
+  <text x="520" y="59" text-anchor="middle" class="title">MCP Tool Calling</text>
+
+  <!-- Flow: MCP -->
+  <rect x="380" y="82" width="280" height="36" class="box-white"/>
+  <text x="520" y="100" text-anchor="middle" class="text-normal" font-weight="600">MCP Client 启动时调用 tools/list</text>
+  <text x="520" y="113" text-anchor="middle" class="text-desc">MCP Server 返回可用工具列表</text>
+
+  <line x1="520" y1="118" x2="520" y2="132" class="arrow"/>
+  <rect x="380" y="135" width="280" height="36" class="box-white"/>
+  <text x="520" y="153" text-anchor="middle" class="text-normal" font-weight="600">Client 缓存工具列表后调用 LLM</text>
+  <text x="520" y="166" text-anchor="middle" class="text-desc">LLM 输出 tool_call → Client 路由到对应 Server</text>
+
+  <text x="520" y="202" text-anchor="middle" class="text-small" font-weight="600">优势</text>
+  <text x="520" y="220" text-anchor="middle" class="text-desc">• 解耦：工具由独立 Server 提供</text>
+  <text x="520" y="236" text-anchor="middle" class="text-desc">• 动态发现：tools/list 运行时获取</text>
+  <text x="520" y="252" text-anchor="middle" class="text-desc">• 可复用：同一 Server 可服务多个 Host</text>
+  <text x="520" y="268" text-anchor="middle" class="text-desc">• 标准化：JSON-RPC 2.0 传输统一</text>
+  <text x="520" y="284" text-anchor="middle" class="text-desc">• 可扩展：安全/鉴权在传输层实现</text>
+
+  <rect x="380" y="298" width="280" height="18" rx="3" fill="#cfe6d4"/>
+  <text x="520" y="311" text-anchor="middle" class="text-small" fill="#1a6b1a">新增工具 → 启动新 MCP Server → 动态发现</text>
+</svg>

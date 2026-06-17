@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 450" font-family="system-ui, -apple-system, sans-serif">
+  <style>
+    .title { fill: #1a1a2e; font-size: 13px; font-weight: 600; }
+    .text-normal { fill: #1a1a2e; font-size: 12px; }
+    .text-small { fill: #555; font-size: 11px; }
+    .text-desc { fill: #666; font-size: 10.5px; }
+    .text-white { fill: #fff; font-size: 11px; font-weight: 600; }
+    .box-agent-a { fill: #d4e1f5; stroke: #88a8d0; stroke-width: 1.5; rx: 8; }
+    .box-agent-b { fill: #e8f0e8; stroke: #a0c8a0; stroke-width: 1.5; rx: 8; }
+    .box-white { fill: #ffffff; stroke: #b0b8c8; stroke-width: 1; rx: 5; }
+    .box-card { fill: #fef3e2; stroke: #e6c988; stroke-width: 1.2; rx: 5; }
+    .box-state { fill: #f9f9fb; stroke: #ccc; stroke-width: 1; rx: 5; }
+    .arrow { fill: none; stroke: #555; stroke-width: 1.5; marker-end: url(#arrowhead); }
+    .arrow-dash { fill: none; stroke: #888; stroke-width: 1.2; stroke-dasharray: 5,4; marker-end: url(#arrowhead); }
+    .phase-bg { fill: #f3f4f6; stroke: none; rx: 4; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="8" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="360" y="22" text-anchor="middle" class="title">A2A 通信流程：Agent 发现与任务委派</text>
+
+  <!-- === Phase 1: Discovery === -->
+  <rect x="30" y="40" width="200" height="24" rx="4" class="phase-bg"/>
+  <text x="130" y="56" text-anchor="middle" class="text-small" font-weight="600">Phase 1: 服务发现</text>
+
+  <!-- Orchestrator Agent -->
+  <rect x="30" y="75" width="200" height="80" class="box-agent-a"/>
+  <rect x="30" y="75" width="200" height="24" fill="#d4e1f5" rx="8"/>
+  <rect x="30" y="93" width="200" height="6" fill="#d4e1f5"/>
+  <text x="130" y="92" text-anchor="middle" class="title">编排 Agent</text>
+  <text x="130" y="112" text-anchor="middle" class="text-desc">Orchestrator</text>
+  <text x="130" y="128" text-anchor="middle" class="text-desc">接收用户请求，分解任务</text>
+
+  <!-- Agent Card (well-known) -->
+  <rect x="240" y="80" width="130" height="70" class="box-card"/>
+  <text x="305" y="98" text-anchor="middle" class="text-small" font-weight="600">Agent Card</text>
+  <text x="305" y="113" text-anchor="middle" class="text-desc">/.well-known/</text>
+  <text x="305" y="127" text-anchor="middle" class="text-desc">agent-card.json</text>
+  <text x="305" y="141" text-anchor="middle" class="text-desc">skills: [...]</text>
+
+  <!-- Arrow: Orchestrator → Agent Card -->
+  <line x1="230" y1="100" x2="236" y2="100" class="arrow-dash"/>
+  <line x1="240" y1="90" x2="240" y2="110" class="arrow-dash"/>
+
+  <!-- Specialized Agent -->
+  <rect x="420" y="75" width="270" height="80" class="box-agent-b"/>
+  <rect x="420" y="75" width="270" height="24" fill="#e8f0e8" rx="8"/>
+  <rect x="420" y="93" width="270" height="6" fill="#e8f0e8"/>
+  <text x="555" y="92" text-anchor="middle" class="title">专业 Agent</text>
+  <text x="555" y="112" text-anchor="middle" class="text-desc">Specialist（如：KYC Agent / 代码审查 Agent）</text>
+  <text x="555" y="128" text-anchor="middle" class="text-desc">暴露 Agent Card，含 skills 声明</text>
+
+  <!-- Arrow: Agent Card → Specialist -->
+  <line x1="370" y1="115" x2="416" y2="115" class="arrow"/>
+
+  <!-- Phase label -->
+  <text x="360" y="168" text-anchor="middle" class="text-desc">┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄</text>
+
+  <!-- === Phase 2: Task Submission === -->
+  <rect x="30" y="178" width="200" height="24" rx="4" class="phase-bg"/>
+  <text x="130" y="194" text-anchor="middle" class="text-small" font-weight="600">Phase 2: 任务提交</text>
+
+  <!-- Message flow -->
+  <rect x="30" y="214" width="660" height="56" class="box-white"/>
+  <text x="360" y="234" text-anchor="middle" class="text-normal" font-weight="600">A2A SendMessage（JSON-RPC 2.0 over HTTPS / gRPC）</text>
+
+  <rect x="50" y="248" width="300" height="16" class="box-agent-a" rx="3"/>
+  <text x="200" y="260" text-anchor="middle" class="text-small" fill="#1a1a2e">Orchestrator → 任务描述 + 上下文</text>
+  <rect x="370" y="248" width="300" height="16" class="box-agent-b" rx="3"/>
+  <text x="520" y="260" text-anchor="middle" class="text-small" fill="#1a1a2e">Specialist → Task ID + 接受确认</text>
+
+  <!-- Phase label -->
+  <text x="360" y="282" text-anchor="middle" class="text-desc">┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄</text>
+
+  <!-- === Phase 3: Task Execution & Status === -->
+  <rect x="30" y="292" width="200" height="24" rx="4" class="phase-bg"/>
+  <text x="130" y="308" text-anchor="middle" class="text-small" font-weight="600">Phase 3: 执行与状态追踪</text>
+
+  <!-- Task State Machine -->
+  <rect x="30" y="326" width="660" height="56" class="box-white"/>
+
+  <rect x="42" y="336" width="80" height="36" rx="4" class="box-state"/>
+  <text x="82" y="354" text-anchor="middle" class="text-small" font-weight="600">SUBMITTED</text>
+  <text x="82" y="367" text-anchor="middle" class="text-desc">已提交</text>
+
+  <line x1="122" y1="354" x2="137" y2="354" class="arrow"/>
+  <rect x="140" y="336" width="80" height="36" rx="4" class="box-state"/>
+  <text x="180" y="354" text-anchor="middle" class="text-small" font-weight="600">WORKING</text>
+  <text x="180" y="367" text-anchor="middle" class="text-desc">执行中</text>
+
+  <line x1="220" y1="354" x2="235" y2="354" class="arrow"/>
+  <rect x="238" y="336" width="80" height="36" rx="4" class="box-state"/>
+  <text x="278" y="354" text-anchor="middle" class="text-small" font-weight="600">INPUT_REQ</text>
+  <text x="278" y="367" text-anchor="middle" class="text-desc">需输入</text>
+
+  <line x1="318" y1="354" x2="333" y2="354" class="arrow"/>
+  <rect x="336" y="336" width="80" height="36" rx="4" class="box-state"/>
+  <text x="376" y="354" text-anchor="middle" class="text-small" font-weight="600">COMPLETED</text>
+  <text x="376" y="367" text-anchor="middle" class="text-desc">已完成</text>
+
+  <rect x="434" y="336" width="80" height="36" rx="4" class="box-state"/>
+  <text x="474" y="354" text-anchor="middle" class="text-small" font-weight="600">FAILED</text>
+  <text x="474" y="367" text-anchor="middle" class="text-desc">已失败</text>
+
+  <rect x="532" y="336" width="70" height="36" rx="4" class="box-state"/>
+  <text x="567" y="354" text-anchor="middle" class="text-small" font-weight="600">CANCELED</text>
+  <text x="567" y="367" text-anchor="middle" class="text-desc">已取消</text>
+
+  <rect x="620" y="336" width="60" height="36" rx="4" class="box-state"/>
+  <text x="650" y="354" text-anchor="middle" class="text-small" font-weight="600">REJECTED</text>
+  <text x="650" y="367" text-anchor="middle" class="text-desc">已拒绝</text>
+
+  <!-- Streaming path note -->
+  <text x="360" y="395" text-anchor="middle" class="text-desc">支持 Streaming：WORKING 状态时，Specialist 可通过 SSE 持续推送进度</text>
+
+  <!-- === Phase 4: Result === -->
+  <rect x="30" y="410" width="200" height="24" rx="4" class="phase-bg"/>
+  <text x="130" y="426" text-anchor="middle" class="text-small" font-weight="600">Phase 4: 结果返回</text>
+
+  <rect x="30" y="440" width="660" height="30" rx="4" class="box-agent-b"/>
+  <text x="360" y="459" text-anchor="middle" class="text-small" fill="#1a1a2e">
+    Specialist → 通过 Task COMPLETED 返回 Artifacts（结构化结果 + 消息 + 引用）
+  </text>
+</svg>
