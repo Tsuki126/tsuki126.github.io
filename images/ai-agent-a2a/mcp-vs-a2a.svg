@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 340" font-family="system-ui, -apple-system, sans-serif">
+  <style>
+    .title { fill: #1a1a2e; font-size: 13px; font-weight: 600; }
+    .text-normal { fill: #1a1a2e; font-size: 12px; }
+    .text-small { fill: #555; font-size: 11px; }
+    .text-desc { fill: #666; font-size: 10.5px; }
+    .text-white { fill: #fff; font-size: 11px; font-weight: 600; }
+    .box-mcp { fill: #d4e1f5; stroke: #88a8d0; stroke-width: 1.5; rx: 8; }
+    .box-a2a { fill: #e8f0e8; stroke: #a0c8a0; stroke-width: 1.5; rx: 8; }
+    .box-combo { fill: #fef3e2; stroke: #e6c988; stroke-width: 2; rx: 10; }
+    .box-white { fill: #ffffff; stroke: #b0b8c8; stroke-width: 1; rx: 5; }
+    .arrow { fill: none; stroke: #555; stroke-width: 1.5; marker-end: url(#arrowhead); }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="8" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="350" y="22" text-anchor="middle" class="title">MCP vs A2A：互补而非竞争</text>
+
+  <!-- Left: MCP -->
+  <rect x="25" y="40" width="310" height="145" class="box-mcp"/>
+  <rect x="25" y="40" width="310" height="28" fill="#d4e1f5" rx="8"/>
+  <rect x="25" y="62" width="310" height="6" fill="#d4e1f5"/>
+  <text x="180" y="60" text-anchor="middle" class="title">MCP — 模型 → 工具</text>
+
+  <rect x="40" y="82" width="280" height="36" class="box-white"/>
+  <text x="180" y="100" text-anchor="middle" class="text-normal" font-weight="600">Agent ⇄ 数据库 / 文件 / API</text>
+  <text x="180" y="113" text-anchor="middle" class="text-desc">Agent 调用外部系统</text>
+
+  <text x="180" y="140" text-anchor="middle" class="text-small" font-weight="600">垂直集成：Agent 下连工具</text>
+  <text x="180" y="156" text-anchor="middle" class="text-desc">Client-Server 模型，工具负责执行</text>
+
+  <!-- Right: A2A -->
+  <rect x="365" y="40" width="310" height="145" class="box-a2a"/>
+  <rect x="365" y="40" width="310" height="28" fill="#e8f0e8" rx="8"/>
+  <rect x="365" y="62" width="310" height="6" fill="#e8f0e8"/>
+  <text x="520" y="60" text-anchor="middle" class="title">A2A — Agent ↔ Agent</text>
+
+  <rect x="380" y="82" width="280" height="36" class="box-white"/>
+  <text x="520" y="100" text-anchor="middle" class="text-normal" font-weight="600">Orchestrator ↔ Specialist Agent</text>
+  <text x="520" y="113" text-anchor="middle" class="text-desc">Agent 委派任务给另一个 Agent</text>
+
+  <text x="520" y="140" text-anchor="middle" class="text-small" font-weight="600">水平集成：Agent 互连</text>
+  <text x="520" y="156" text-anchor="middle" class="text-desc">Peer-to-Peer 模型，按能力发现</text>
+
+  <!-- Comparison table -->
+  <rect x="25" y="200" width="650" height="20" rx="3" fill="#4a5568"/>
+  <text x="50" y="214" class="text-white">维度</text>
+  <text x="220" y="214" class="text-white">MCP</text>
+  <text x="460" y="214" class="text-white">A2A</text>
+
+  <rect x="25" y="222" width="650" height="20" rx="2" fill="#f9f9fb"/>
+  <text x="50" y="237" class="text-small">目的</text>
+  <text x="220" y="237" class="text-small">Agent 调用外部工具</text>
+  <text x="460" y="237" class="text-small">Agent 与 Agent 协作</text>
+
+  <rect x="25" y="244" width="650" height="20" rx="2" fill="#fff"/>
+  <text x="50" y="259" class="text-small">方向</text>
+  <text x="220" y="259" class="text-small">垂直（模型 → 系统）</text>
+  <text x="460" y="259" class="text-small">水平（Agent ↔ Agent）</text>
+
+  <rect x="25" y="266" width="650" height="20" rx="2" fill="#f9f9fb"/>
+  <text x="50" y="281" class="text-small">拓扑</text>
+  <text x="220" y="281" class="text-small">Client-Server</text>
+  <text x="460" y="281" class="text-small">Peer-to-Peer</text>
+
+  <rect x="25" y="288" width="650" height="20" rx="2" fill="#fff"/>
+  <text x="50" y="303" class="text-small">发现机制</text>
+  <text x="220" y="303" class="text-small">tools/list（会话内）</text>
+  <text x="460" y="303" class="text-small">Agent Card（well-known URI）</text>
+
+  <rect x="25" y="310" width="650" height="20" rx="2" fill="#f9f9fb"/>
+  <text x="50" y="325" class="text-small">状态模型</text>
+  <text x="220" y="325" class="text-small">无状态调用</text>
+  <text x="460" y="325" class="text-small">Task 状态机（7 种状态）</text>
+
+  <!-- Bottom: Combined architecture -->
+  <rect x="130" y="355" width="440" height="36" class="box-combo"/>
+  <text x="350" y="373" text-anchor="middle" class="text-normal" font-weight="600">生产部署：A2A（Agent 间编排）→ MCP（Agent 连接工具）</text>
+  <text x="350" y="387" text-anchor="middle" class="text-desc">Orchestrator 通过 A2A 委派 Specialist，Specialist 内部通过 MCP 调用工具</text>
+</svg>

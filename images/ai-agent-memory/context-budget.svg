@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 320" font-family="system-ui, -apple-system, sans-serif">
+  <style>
+    .title { fill: #1a1a2e; font-size: 13px; font-weight: 600; }
+    .text-normal { fill: #1a1a2e; font-size: 12px; }
+    .text-small { fill: #555; font-size: 11px; }
+    .text-tiny { fill: #888; font-size: 10px; }
+    .box-item { rx: 4; }
+    .bar-bg { fill: #f0f0f5; }
+    .bar-limit { fill: #e8e8ee; stroke: #ccc; stroke-width: 0.5; stroke-dasharray: 4,3; }
+  </style>
+
+  <!-- Title -->
+  <text x="350" y="22" text-anchor="middle" class="title">上下文窗口 Token 预算分配</text>
+  <text x="350" y="40" text-anchor="middle" class="text-small">以 128K 上下文窗口为例，展示各区域的典型分配</text>
+
+  <!-- Total bar background -->
+  <rect x="40" y="55" width="620" height="36" rx="6" class="bar-bg"/>
+
+  <!-- System prompt -->
+  <rect x="40" y="55" width="80" height="36" rx="4" fill="#d4e1f5"/>
+  <text x="80" y="101" text-anchor="middle" class="text-small" font-weight="600">System</text>
+  <text x="80" y="115" text-anchor="middle" class="text-tiny">~2K tokens</text>
+
+  <!-- User input -->
+  <rect x="124" y="55" width="60" height="36" rx="4" fill="#f5f0e0"/>
+  <text x="154" y="101" text-anchor="middle" class="text-small" font-weight="600">用户输入</text>
+  <text x="154" y="115" text-anchor="middle" class="text-tiny">~0.5K</text>
+
+  <!-- Episodic memory context -->
+  <rect x="188" y="55" width="150" height="36" rx="4" fill="#e8f0e8"/>
+  <text x="263" y="101" text-anchor="middle" class="text-small" font-weight="600">情景记忆（历史摘要）</text>
+  <text x="263" y="115" text-anchor="middle" class="text-tiny">~20K tokens（压缩后）</text>
+
+  <!-- Semantic memory context -->
+  <rect x="342" y="55" width="100" height="36" rx="4" fill="#fef3e2"/>
+  <text x="392" y="101" text-anchor="middle" class="text-small" font-weight="600">语义检索</text>
+  <text x="392" y="115" text-anchor="middle" class="text-tiny">~5K tokens</text>
+
+  <!-- Tool schemas -->
+  <rect x="446" y="55" width="80" height="36" rx="4" fill="#e0d8f0"/>
+  <text x="486" y="101" text-anchor="middle" class="text-small" font-weight="600">Tool Schema</text>
+  <text x="486" y="115" text-anchor="middle" class="text-tiny">~3K tokens</text>
+
+  <!-- Scratchpad -->
+  <rect x="530" y="55" width="70" height="36" rx="4" fill="#fce8e8"/>
+  <text x="565" y="101" text-anchor="middle" class="text-small" font-weight="600">思考区</text>
+  <text x="565" y="115" text-anchor="middle" class="text-tiny">~2K tokens</text>
+
+  <!-- Remaining -->
+  <rect x="604" y="55" width="56" height="36" rx="4" fill="#e0e0e0" stroke="#ccc" stroke-width="0.5"/>
+  <text x="632" y="101" text-anchor="middle" class="text-small" font-weight="600" fill="#999">可用</text>
+  <text x="632" y="115" text-anchor="middle" class="text-tiny">~95.5K</text>
+
+  <!-- Legend line: "已用" vs "可用" label -->
+  <text x="40" y="140" class="text-tiny">已用：~32.5K（25%）</text>
+  <text x="320" y="140" class="text-tiny">可用：~95.5K（75%）</text>
+
+  <!-- ===== 压缩策略对比表 ===== -->
+  <text x="350" y="175" text-anchor="middle" class="title">上下文压缩策略</text>
+
+  <!-- Header -->
+  <rect x="40" y="190" width="150" height="24" rx="3" fill="#4a5568"/>
+  <rect x="190" y="190" width="170" height="24" rx="3" fill="#4a5568"/>
+  <rect x="360" y="190" width="170" height="24" rx="3" fill="#4a5568"/>
+  <rect x="530" y="190" width="150" height="24" rx="3" fill="#4a5568"/>
+  <text x="115" y="206" text-anchor="middle" class="text-small" fill="#fff" font-weight="600">策略</text>
+  <text x="275" y="206" text-anchor="middle" class="text-small" fill="#fff" font-weight="600">方式</text>
+  <text x="445" y="206" text-anchor="middle" class="text-small" fill="#fff" font-weight="600">信息损失</text>
+  <text x="605" y="206" text-anchor="middle" class="text-small" fill="#fff" font-weight="600">触发条件</text>
+
+  <!-- Row 1: Truncation -->
+  <rect x="40" y="216" width="150" height="24" rx="2" fill="#f9f9fb"/>
+  <rect x="190" y="216" width="170" height="24" rx="2" fill="#f9f9fb"/>
+  <rect x="360" y="216" width="170" height="24" rx="2" fill="#f9f9fb"/>
+  <rect x="530" y="216" width="150" height="24" rx="2" fill="#f9f9fb"/>
+  <text x="115" y="232" text-anchor="middle" class="text-small">1. 截断</text>
+  <text x="275" y="232" text-anchor="middle" class="text-small">丢弃最早的 N 条消息</text>
+  <text x="445" y="232" text-anchor="middle" class="text-small">高（完全丢失）</text>
+  <text x="605" y="232" text-anchor="middle" class="text-small">上下文超限</text>
+
+  <!-- Row 2: Summary -->
+  <rect x="40" y="242" width="150" height="24" rx="2" fill="#fff"/>
+  <rect x="190" y="242" width="170" height="24" rx="2" fill="#fff"/>
+  <rect x="360" y="242" width="170" height="24" rx="2" fill="#fff"/>
+  <rect x="530" y="242" width="150" height="24" rx="2" fill="#fff"/>
+  <text x="115" y="258" text-anchor="middle" class="text-small">2. 摘要压缩</text>
+  <text x="275" y="258" text-anchor="middle" class="text-small">小模型汇总早期轮次</text>
+  <text x="445" y="258" text-anchor="middle" class="text-small">中（保留关键信息）</text>
+  <text x="605" y="258" text-anchor="middle" class="text-small">消息数达阈值</text>
+
+  <!-- Row 3: Progressive -->
+  <rect x="40" y="268" width="150" height="24" rx="2" fill="#f9f9fb"/>
+  <rect x="190" y="268" width="170" height="24" rx="2" fill="#f9f9fb"/>
+  <rect x="360" y="268" width="170" height="24" rx="2" fill="#f9f9fb"/>
+  <rect x="530" y="268" width="150" height="24" rx="2" fill="#f9f9fb"/>
+  <text x="115" y="284" text-anchor="middle" class="text-small">3. 渐进压缩</text>
+  <text x="275" y="284" text-anchor="middle" class="text-small">多级压缩（摘要→截断→塌缩）</text>
+  <text x="445" y="284" text-anchor="middle" class="text-small">逐级递增</text>
+  <text x="605" y="284" text-anchor="middle" class="text-small">逐级触发</text>
+
+  <!-- Row 4: Selective -->
+  <rect x="40" y="294" width="150" height="24" rx="2" fill="#fff"/>
+  <rect x="190" y="294" width="170" height="24" rx="2" fill="#fff"/>
+  <rect x="360" y="294" width="170" height="24" rx="2" fill="#fff"/>
+  <rect x="530" y="294" width="150" height="24" rx="2" fill="#fff"/>
+  <text x="115" y="310" text-anchor="middle" class="text-small">4. 选择性压缩</text>
+  <text x="275" y="310" text-anchor="middle" class="text-small">只压缩 tool 结果，保留 thought</text>
+  <text x="445" y="310" text-anchor="middle" class="text-small">低（丢弃冗余细节）</text>
+  <text x="605" y="310" text-anchor="middle" class="text-small">人工或规则判断</text>
+</svg>

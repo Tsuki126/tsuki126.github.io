@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420" font-family="system-ui, -apple-system, sans-serif">
+  <style>
+    .title { fill: #1a1a2e; font-size: 13px; font-weight: 600; }
+    .text-normal { fill: #1a1a2e; font-size: 12px; }
+    .text-small { fill: #555; font-size: 11px; }
+    .text-desc { fill: #666; font-size: 10.5px; }
+    .text-white { fill: #fff; font-size: 11px; font-weight: 600; }
+    .box-level { fill: #ffffff; stroke: #b0b8c8; stroke-width: 1; rx: 8; }
+    .arrow { fill: none; stroke: #888; stroke-width: 1.2; marker-end: url(#arrowhead); }
+    .badge-tool { fill: #d4e1f5; stroke: none; rx: 3; }
+    .badge-skill { fill: #e8f0e8; stroke: none; rx: 3; }
+    .badge-workflow { fill: #fef3e2; stroke: none; rx: 3; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="7" markerHeight="4" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <text x="350" y="22" text-anchor="middle" class="title">能力抽象层次：Tool → Skill → Workflow</text>
+
+  <!-- Layer 3: Workflow (top) -->
+  <rect x="25" y="40" width="650" height="90" class="box-level"/>
+  <rect x="30" y="44" width="80" height="20" rx="3" fill="#fef3e2"/>
+  <text x="70" y="58" text-anchor="middle" class="text-small" font-weight="600">Workflow</text>
+  <text x="115" y="58" class="text-normal" font-weight="600">完整的任务工作流</text>
+
+  <rect x="40" y="74" width="195" height="44" class="box-level" stroke="#e6c988"/>
+  <text x="137" y="93" text-anchor="middle" class="text-normal" font-weight="600">调试生产环境</text>
+  <text x="137" y="109" text-anchor="middle" class="text-desc">审查代码 → 检查配置 → 查看日志 → 修复</text>
+
+  <rect x="250" y="74" width="195" height="44" class="box-level" stroke="#e6c988"/>
+  <text x="347" y="93" text-anchor="middle" class="text-normal" font-weight="600">生成周报</text>
+  <text x="347" y="109" text-anchor="middle" class="text-desc">收集数据 → 分析趋势 → 生成图表 → 撰写</text>
+
+  <rect x="460" y="74" width="200" height="44" class="box-level" stroke="#e6c988"/>
+  <text x="560" y="93" text-anchor="middle" class="text-normal" font-weight="600">部署新版本</text>
+  <text x="560" y="109" text-anchor="middle" class="text-desc">构建 → 测试 → 打包 → 发布 → 验证</text>
+
+  <text x="350" y="133" text-anchor="middle" class="text-desc">▸ 由 LLM 编排多个 Skill 和 Tool，按序或按条件执行</text>
+
+  <!-- Arrow between layers -->
+  <line x1="350" y1="143" x2="350" y2="168" class="arrow"/>
+
+  <!-- Layer 2: Skill (middle) -->
+  <rect x="25" y="178" width="650" height="90" class="box-level"/>
+  <rect x="30" y="182" width="60" height="20" rx="3" fill="#e8f0e8"/>
+  <text x="60" y="196" text-anchor="middle" class="text-small" font-weight="600">Skill</text>
+  <text x="95" y="196" class="text-normal" font-weight="600">可复用的能力模块</text>
+
+  <rect x="40" y="212" width="100" height="44" class="box-level" stroke="#a0c8a0"/>
+  <text x="90" y="230" text-anchor="middle" class="text-normal" font-weight="600">代码审查</text>
+  <text x="90" y="247" text-anchor="middle" class="text-desc">read_file + search_code</text>
+
+  <rect x="155" y="212" width="140" height="44" class="box-level" stroke="#a0c8a0"/>
+  <text x="225" y="230" text-anchor="middle" class="text-normal" font-weight="600">Git 操作</text>
+  <text x="225" y="247" text-anchor="middle" class="text-desc">commit + push + fetch + merge</text>
+
+  <rect x="310" y="212" width="130" height="44" class="box-level" stroke="#a0c8a0"/>
+  <text x="375" y="230" text-anchor="middle" class="text-normal" font-weight="600">日志分析</text>
+  <text x="375" y="247" text-anchor="middle" class="text-desc">grep + tail + awk</text>
+
+  <rect x="455" y="212" width="110" height="44" class="box-level" stroke="#a0c8a0"/>
+  <text x="510" y="230" text-anchor="middle" class="text-normal" font-weight="600">Docker 管理</text>
+  <text x="510" y="247" text-anchor="middle" class="text-desc">ps + logs + exec</text>
+
+  <rect x="580" y="212" width="80" height="44" class="box-level" stroke="#a0c8a0"/>
+  <text x="620" y="230" text-anchor="middle" class="text-normal" font-weight="600">...更多</text>
+
+  <text x="350" y="271" text-anchor="middle" class="text-desc">▸ 多个 Tool 的组合包装，通常是同一领域的操作集合</text>
+
+  <!-- Arrow between layers -->
+  <line x1="350" y1="281" x2="350" y2="306" class="arrow"/>
+
+  <!-- Layer 1: Tool (bottom) -->
+  <rect x="25" y="316" width="650" height="90" class="box-level"/>
+  <rect x="30" y="320" width="50" height="20" rx="3" fill="#d4e1f5"/>
+  <text x="55" y="334" text-anchor="middle" class="text-small" font-weight="600">Tool</text>
+  <text x="85" y="334" class="text-normal" font-weight="600">原子操作单元</text>
+
+  <rect x="40" y="350" width="75" height="44" class="box-level" stroke="#88a8d0"/>
+  <text x="77" y="369" text-anchor="middle" class="text-normal" font-weight="600">read_file</text>
+  <text x="77" y="384" text-anchor="middle" class="text-desc">读取文件</text>
+
+  <rect x="125" y="350" width="75" height="44" class="box-level" stroke="#88a8d0"/>
+  <text x="162" y="369" text-anchor="middle" class="text-normal" font-weight="600">search</text>
+  <text x="162" y="384" text-anchor="middle" class="text-desc">搜索代码</text>
+
+  <rect x="210" y="350" width="75" height="44" class="box-level" stroke="#88a8d0"/>
+  <text x="247" y="369" text-anchor="middle" class="text-normal" font-weight="600">bash</text>
+  <text x="247" y="384" text-anchor="middle" class="text-desc">执行命令</text>
+
+  <rect x="295" y="350" width="75" height="44" class="box-level" stroke="#88a8d0"/>
+  <text x="332" y="369" text-anchor="middle" class="text-normal" font-weight="600">git_diff</text>
+  <text x="332" y="384" text-anchor="middle" class="text-desc">查看差异</text>
+
+  <rect x="380" y="350" width="75" height="44" class="box-level" stroke="#88a8d0"/>
+  <text x="417" y="369" text-anchor="middle" class="text-normal" font-weight="600">docker</text>
+  <text x="417" y="384" text-anchor="middle" class="text-desc">容器命令</text>
+
+  <rect x="465" y="350" width="75" height="44" class="box-level" stroke="#88a8d0"/>
+  <text x="502" y="369" text-anchor="middle" class="text-normal" font-weight="600">curl</text>
+  <text x="502" y="384" text-anchor="middle" class="text-desc">HTTP 请求</text>
+
+  <rect x="550" y="350" width="110" height="44" class="box-level" stroke="#88a8d0"/>
+  <text x="605" y="369" text-anchor="middle" class="text-normal" font-weight="600">database</text>
+  <text x="605" y="384" text-anchor="middle" class="text-desc">SQL 查询</text>
+
+  <text x="350" y="411" text-anchor="middle" class="text-desc">▸ 由 MCP Tool / 原生 Tool Calling 定义，单一职责</text>
+</svg>

@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 520" font-family="system-ui, -apple-system, sans-serif">
+  <style>
+    .title { fill: #1a1a2e; font-size: 13px; font-weight: 600; }
+    .text-normal { fill: #1a1a2e; font-size: 12px; }
+    .text-small { fill: #1a1a2e; font-size: 11px; }
+    .text-desc { fill: #555; font-size: 10.5px; }
+    .box-white { fill: #ffffff; stroke: #b0b8c8; stroke-width: 1; }
+    .box-ephemeral { fill: #fef3e2; stroke: #e6c988; stroke-width: 1; }
+    .box-session { fill: #e8f0e8; stroke: #a0c8a0; stroke-width: 1; }
+    .box-persistent { fill: #d4e1f5; stroke: #88a8d0; stroke-width: 1; }
+    .arrow { fill: none; stroke: #888; stroke-width: 1.2; marker-end: url(#arrowhead); }
+    .arrow-thick { fill: none; stroke: #555; stroke-width: 1.8; marker-end: url(#arrowhead); }
+    .layer-border { stroke: #b0b8c8; stroke-width: 1.5; fill: none; rx: 8; }
+    .badge { fill: #4a90d9; rx: 3; }
+    .badge-text { fill: #fff; font-size: 9px; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="8" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#888"/>
+    </marker>
+    <marker id="arrowhead-thick" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="8" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- ===== Layer 3 (top): 工作记忆 ===== -->
+  <rect x="40" y="20" width="640" height="110" rx="8" class="layer-border"/>
+  <rect x="40" y="20" width="640" height="30" rx="8" class="box-ephemeral"/>
+  <rect x="40" y="44" width="640" height="6" fill="#fef3e2"/>
+  <text x="60" y="40" class="title">工作记忆（Working Memory）</text>
+  <rect x="50" y="56" width="300" height="60" rx="5" class="box-white"/>
+  <text x="200" y="75" text-anchor="middle" class="text-normal" font-weight="600">LLM 上下文窗口（Context Window）</text>
+  <text x="200" y="92" text-anchor="middle" class="text-desc">当前轮次全部 messages：system + user + assistant + tool</text>
+  <text x="200" y="106" text-anchor="middle" class="text-desc">生命周期：单次推理结束后可丢弃</text>
+  <text x="60" y="128" class="text-small" fill="#888">▸ 容量：受模型上下文长度限制（4K-200K tokens）</text>
+  <text x="420" y="128" class="text-small" fill="#888">▸ 速度：纳秒级（内存访问）</text>
+
+  <!-- Arrow: Working → Episodic -->
+  <line x1="360" y1="130" x2="360" y2="170" class="arrow-thick"/>
+  <text x="372" y="153" class="text-small" fill="#888">压缩归档</text>
+
+  <!-- ===== Layer 2 (middle): 情景记忆 ===== -->
+  <rect x="40" y="180" width="640" height="140" rx="8" class="layer-border"/>
+  <rect x="40" y="180" width="640" height="30" rx="8" class="box-session"/>
+  <rect x="40" y="204" width="640" height="6" fill="#e8f0e8"/>
+  <text x="60" y="200" class="title">情景记忆（Episodic Memory）</text>
+
+  <!-- Left: Compressed History -->
+  <rect x="55" y="218" width="290" height="88" rx="5" class="box-white"/>
+  <text x="200" y="237" text-anchor="middle" class="text-normal" font-weight="600">会话历史摘要</text>
+  <text x="200" y="254" text-anchor="middle" class="text-desc">自动摘要 / 滑动窗口 / 时间衰减截断</text>
+  <text x="200" y="270" text-anchor="middle" class="text-desc">按时间序列组织，支持回溯</text>
+  <text x="200" y="286" text-anchor="middle" class="text-desc">可压缩、截断、遗忘</text>
+
+  <!-- Right: Recent Interactions -->
+  <rect x="375" y="218" width="290" height="88" rx="5" class="box-white"/>
+  <text x="520" y="237" text-anchor="middle" class="text-normal" font-weight="600">近期完整交互</text>
+  <text x="520" y="254" text-anchor="middle" class="text-desc">保留最近 N 轮完整 tool_call / result</text>
+  <text x="520" y="270" text-anchor="middle" class="text-desc">N 由 max_messages 配置控制</text>
+  <text x="520" y="286" text-anchor="middle" class="text-desc">超出后触发压缩</text>
+
+  <text x="60" y="340" class="text-small" fill="#888">▸ 容量：MB 级（数据库/文件）</text>
+  <text x="420" y="340" class="text-small" fill="#888">▸ 速度：毫秒级（本地存储）</text>
+
+  <!-- Arrow: Episodic → Semantic -->
+  <line x1="360" y1="350" x2="360" y2="390" class="arrow-thick"/>
+  <text x="372" y="373" class="text-small" fill="#888">知识提取</text>
+
+  <!-- ===== Layer 1 (bottom): 语义记忆 ===== -->
+  <rect x="40" y="400" width="640" height="110" rx="8" class="layer-border"/>
+  <rect x="40" y="400" width="640" height="30" rx="8" class="box-persistent"/>
+  <rect x="40" y="424" width="640" height="6" fill="#d4e1f5"/>
+  <text x="60" y="420" class="title">语义记忆（Semantic Memory）</text>
+
+  <rect x="55" y="438" width="190" height="58" rx="5" class="box-white"/>
+  <text x="150" y="457" text-anchor="middle" class="text-normal" font-weight="600">向量存储</text>
+  <text x="150" y="474" text-anchor="middle" class="text-desc">嵌入向量 ≈ 语义相似度</text>
+  <text x="150" y="490" text-anchor="middle" class="text-desc">适合模糊检索、联想</text>
+
+  <rect x="265" y="438" width="190" height="58" rx="5" class="box-white"/>
+  <text x="360" y="457" text-anchor="middle" class="text-normal" font-weight="600">结构化存储</text>
+  <text x="360" y="474" text-anchor="middle" class="text-desc">关系/文档数据库</text>
+  <text x="360" y="490" text-anchor="middle" class="text-desc">适合精确查询、事务</text>
+
+  <rect x="475" y="438" width="190" height="58" rx="5" class="box-white"/>
+  <text x="570" y="457" text-anchor="middle" class="text-normal" font-weight="600">图存储</text>
+  <text x="570" y="474" text-anchor="middle" class="text-desc">知识图谱（实体+关系）</text>
+  <text x="570" y="490" text-anchor="middle" class="text-desc">适合推理、多跳关联</text>
+
+  <text x="60" y="522" class="text-small" fill="#888">▸ 容量：GB~TB 级（外部存储）</text>
+  <text x="420" y="522" class="text-small" fill="#888">▸ 速度：数十毫秒级（网络 I/O）</text>
+
+  <!-- Left label -->
+  <text x="16" y="75" text-anchor="middle" transform="rotate(-90,16,75)" fill="#ccc" font-size="9px">更快  ← 访问速度 / 数据易失性 →  更持久</text>
+</svg>
