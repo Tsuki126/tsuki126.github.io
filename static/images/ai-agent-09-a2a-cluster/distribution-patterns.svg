@@ -1,0 +1,239 @@
+<svg viewBox="0 0 880 640" xmlns="http://www.w3.org/2000/svg"
+     font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 6" refX="9.5" refY="3"
+            markerWidth="7" markerHeight="4.5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#a8a29e"/>
+    </marker>
+    <marker id="ar-theme" viewBox="0 0 10 6" refX="9.5" refY="3"
+            markerWidth="7" markerHeight="4.5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#d97706"/>
+    </marker>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2"
+                    flood-color="#292524" flood-opacity="0.04"/>
+    </filter>
+  </defs>
+
+  <rect width="880" height="640" fill="#faf8f5"/>
+
+  <text x="440" y="32" font-size="17" font-weight="700" fill="#292524"
+        text-anchor="middle">A2A 集群任务分发模式</text>
+
+  <!-- ============================================================ -->
+  <!-- CARD 1: Fan-out (top-left) -->
+  <!-- ============================================================ -->
+  <rect x="25" y="52" width="405" height="270" rx="8" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <rect x="25" y="52" width="3" height="270" rx="4" fill="#d97706"/>
+
+  <text x="42" y="78" font-size="13" font-weight="600" fill="#d97706">Fan-out</text>
+  <text x="100" y="78" font-size="11" fill="#a8a29e">│ 并发广播分发</text>
+
+  <!-- Diagram -->
+  <rect x="55" y="105" width="75" height="28" rx="5" fill="#ffffff"
+        stroke="#d97706" stroke-width="1.2"/>
+  <text x="92" y="123" font-size="10" font-weight="500" fill="#292524"
+        text-anchor="middle">Orchestrator</text>
+
+  <rect x="215" y="96" width="75" height="24" rx="4" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="252" y="113" font-size="10" fill="#292524" text-anchor="middle">Agent A</text>
+
+  <rect x="215" y="127" width="75" height="24" rx="4" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="252" y="144" font-size="10" fill="#292524" text-anchor="middle">Agent B</text>
+
+  <rect x="215" y="158" width="75" height="24" rx="4" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="252" y="175" font-size="10" fill="#292524" text-anchor="middle">Agent C</text>
+
+  <!-- Arrows: Orchestrator → Agents -->
+  <line x1="130" y1="114" x2="213" y2="104" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+  <line x1="130" y1="119" x2="213" y2="135" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+  <line x1="130" y1="124" x2="213" y2="166" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+
+  <!-- Results -->
+  <text x="300" y="113" font-size="9" fill="#a8a29e">✓ 结果 A</text>
+  <text x="300" y="144" font-size="9" fill="#a8a29e">✓ 结果 B</text>
+  <text x="300" y="175" font-size="9" fill="#a8a29e">✓ 结果 C</text>
+
+  <!-- Description -->
+  <text x="42" y="220" font-size="10" fill="#78716c">
+    主节点同时向多个 Agent 广播任务，各 Agent 独立执行并返回结果。
+  </text>
+  <text x="42" y="240" font-size="10" fill="#a8a29e" font-style="italic">
+    延迟 = max(各 Agent 耗时)  |  适合：批量检测、并行查询、安全巡检
+  </text>
+
+  <!-- ============================================================ -->
+  <!-- CARD 2: Chain (top-right) -->
+  <!-- ============================================================ -->
+  <rect x="450" y="52" width="405" height="270" rx="8" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <rect x="450" y="52" width="3" height="270" rx="4" fill="#d97706"/>
+
+  <text x="467" y="78" font-size="13" font-weight="600" fill="#d97706">Chain</text>
+  <text x="500" y="78" font-size="11" fill="#a8a29e">│ 流水线顺序执行</text>
+
+  <!-- Diagram -->
+  <rect x="485" y="105" width="70" height="28" rx="5" fill="#ffffff"
+        stroke="#d97706" stroke-width="1.2"/>
+  <text x="520" y="123" font-size="10" font-weight="500" fill="#292524"
+        text-anchor="middle">Stage 1</text>
+
+  <rect x="580" y="105" width="70" height="28" rx="5" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="615" y="123" font-size="10" fill="#292524" text-anchor="middle">Stage 2</text>
+
+  <rect x="675" y="105" width="70" height="28" rx="5" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="710" y="123" font-size="10" fill="#292524" text-anchor="middle">Stage 3</text>
+
+  <rect x="770" y="105" width="70" height="28" rx="5" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="805" y="123" font-size="10" fill="#292524" text-anchor="middle">Stage 4</text>
+
+  <!-- Arrows -->
+  <line x1="555" y1="119" x2="578" y2="119" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+  <line x1="650" y1="119" x2="673" y2="119" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+  <line x1="745" y1="119" x2="768" y2="119" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+
+  <!-- Labels -->
+  <text x="520" y="150" font-size="9" fill="#a8a29e" text-anchor="middle" font-style="italic">输入</text>
+  <text x="615" y="150" font-size="9" fill="#a8a29e" text-anchor="middle" font-style="italic">中间结果</text>
+  <text x="710" y="150" font-size="9" fill="#a8a29e" text-anchor="middle" font-style="italic">中间结果</text>
+  <text x="805" y="150" font-size="9" fill="#a8a29e" text-anchor="middle" font-style="italic">输出</text>
+
+  <!-- Description -->
+  <text x="467" y="220" font-size="10" fill="#78716c">
+    任务流水线：前序 Agent 的输出作为后续 Agent 的输入，逐级传递处理。
+  </text>
+  <text x="467" y="240" font-size="10" fill="#a8a29e" font-style="italic">
+    延迟 = Σ(各阶段耗时)  |  适合：数据处理管道、审核流、CI/CD 流水线
+  </text>
+
+  <!-- ============================================================ -->
+  <!-- CARD 3: Scatter-Gather (bottom-left) -->
+  <!-- ============================================================ -->
+  <rect x="25" y="338" width="405" height="270" rx="8" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <rect x="25" y="338" width="3" height="270" rx="4" fill="#d97706"/>
+
+  <text x="42" y="364" font-size="13" font-weight="600" fill="#d97706">Scatter-Gather</text>
+  <text x="130" y="364" font-size="11" fill="#a8a29e">│ 分派 → 并行 → 汇总</text>
+
+  <!-- Diagram -->
+  <rect x="55" y="395" width="80" height="28" rx="5" fill="#ffffff"
+        stroke="#d97706" stroke-width="1.2"/>
+  <text x="95" y="413" font-size="10" font-weight="500" fill="#292524"
+        text-anchor="middle">Orchestrator</text>
+
+  <rect x="195" y="390" width="70" height="24" rx="4" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="230" y="407" font-size="10" fill="#292524" text-anchor="middle">Agent A</text>
+
+  <rect x="195" y="420" width="70" height="24" rx="4" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="230" y="437" font-size="10" fill="#292524" text-anchor="middle">Agent B</text>
+
+  <rect x="195" y="450" width="70" height="24" rx="4" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="230" y="467" font-size="10" fill="#292524" text-anchor="middle">Agent C</text>
+
+  <rect x="320" y="420" width="80" height="28" rx="5" fill="#ffffff"
+        stroke="#d97706" stroke-width="1.2"/>
+  <text x="360" y="437" font-size="10" font-weight="500" fill="#292524"
+        text-anchor="middle">Aggregator</text>
+
+  <!-- Scatter arrows: Orchestrator → Agents -->
+  <line x1="135" y1="403" x2="193" y2="398" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+  <line x1="135" y1="409" x2="193" y2="428" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+  <line x1="135" y1="415" x2="193" y2="458" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+
+  <!-- Gather arrows: Agents → Aggregator -->
+  <line x1="265" y1="402" x2="318" y2="432" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+  <line x1="265" y1="432" x2="318" y2="434" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+  <line x1="265" y1="462" x2="318" y2="436" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+
+  <!-- Description -->
+  <text x="42" y="510" font-size="10" fill="#78716c">
+    先并行分发（Scatter）到多个 Agent 执行子任务，再聚合结果（Gather）为统一输出。
+  </text>
+  <text x="42" y="530" font-size="10" fill="#a8a29e" font-style="italic">
+    延迟 ≈ max(各 Agent)  |  适合：多模型投票、多源情报分析、并行评估
+  </text>
+
+  <!-- ============================================================ -->
+  <!-- CARD 4: Pub/Sub (bottom-right) -->
+  <!-- ============================================================ -->
+  <rect x="450" y="338" width="405" height="270" rx="8" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <rect x="450" y="338" width="3" height="270" rx="4" fill="#d97706"/>
+
+  <text x="467" y="364" font-size="13" font-weight="600" fill="#d97706">Pub / Sub</text>
+  <text x="530" y="364" font-size="11" fill="#a8a29e">│ 事件驱动异步分发</text>
+
+  <!-- Diagram -->
+  <rect x="480" y="398" width="75" height="28" rx="5" fill="#ffffff"
+        stroke="#d97706" stroke-width="1.2"/>
+  <text x="517" y="416" font-size="10" font-weight="500" fill="#292524"
+        text-anchor="middle">Publisher</text>
+
+  <rect x="610" y="396" width="90" height="32" rx="6" fill="#fef3c7"
+        stroke="#d97706" stroke-width="0.8" stroke-dasharray="3 2"/>
+  <text x="655" y="416" font-size="10" font-weight="500" fill="#d97706"
+        text-anchor="middle">Message Queue</text>
+
+  <!-- Pub → MQ -->
+  <line x1="555" y1="412" x2="608" y2="412" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+  <text x="580" y="404" font-size="9" fill="#a8a29e" text-anchor="middle"
+        font-style="italic">事件</text>
+
+  <!-- Subscribers -->
+  <rect x="495" y="464" width="70" height="24" rx="4" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="530" y="481" font-size="10" fill="#292524" text-anchor="middle">Sub A</text>
+
+  <rect x="585" y="464" width="70" height="24" rx="4" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="620" y="481" font-size="10" fill="#292524" text-anchor="middle">Sub B</text>
+
+  <rect x="675" y="464" width="70" height="24" rx="4" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="710" y="481" font-size="10" fill="#292524" text-anchor="middle">Sub C</text>
+
+  <!-- MQ → Subscribers -->
+  <line x1="620" y1="428" x2="530" y2="462" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+  <line x1="655" y1="428" x2="620" y2="462" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+  <line x1="690" y1="428" x2="710" y2="462" stroke="#a8a29e" stroke-width="1.2"
+        marker-end="url(#ar)"/>
+
+  <!-- Description -->
+  <text x="467" y="520" font-size="10" fill="#78716c">
+    Agent 发布事件到消息队列，订阅者按需消费，发布者与订阅者完全解耦。
+  </text>
+  <text x="467" y="540" font-size="10" fill="#a8a29e" font-style="italic">
+    延迟 = 队列调度 + 处理  |  适合：事件驱动工作流、日志采集、通知系统
+  </text>
+
+  <!-- ============ Bottom note ============ -->
+  <text x="440" y="620" font-size="10" fill="#a8a29e" text-anchor="middle">
+    四种模式可以组合嵌套 —— 如 Scatter-Gather 中每个子任务可以是一条 Chain
+  </text>
+</svg>

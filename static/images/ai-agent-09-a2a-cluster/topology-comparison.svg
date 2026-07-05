@@ -1,0 +1,125 @@
+<svg viewBox="0 0 860 560" xmlns="http://www.w3.org/2000/svg"
+     font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2"
+                    flood-color="#292524" flood-opacity="0.04"/>
+    </filter>
+  </defs>
+
+  <rect width="860" height="560" fill="#faf8f5"/>
+
+  <text x="430" y="32" font-size="17" font-weight="700" fill="#292524"
+        text-anchor="middle">三种 A2A 集群拓扑对比</text>
+
+  <!-- ============ Header ============ -->
+  <rect x="25" y="56" width="810" height="34" rx="4" fill="#e8e4de"/>
+  <text x="115" y="77" font-size="12" font-weight="600" fill="#292524" text-anchor="middle">对比维度</text>
+  <text x="310" y="77" font-size="12" font-weight="600" fill="#d97706" text-anchor="middle">星型拓扑</text>
+  <text x="520" y="77" font-size="12" font-weight="600" fill="#d97706" text-anchor="middle">网格拓扑</text>
+  <text x="730" y="77" font-size="12" font-weight="600" fill="#d97706" text-anchor="middle">分层拓扑</text>
+
+  <!-- ============ Rows ============ -->
+  <!-- Row 1: 拓扑结构 -->
+  <rect x="25" y="90" width="810" height="36" rx="2" fill="#ffffff"/>
+  <text x="35" y="113" font-size="11" font-weight="600" fill="#292524">拓扑结构</text>
+  <text x="205" y="113" font-size="11" fill="#292524" text-anchor="middle">中心协调者 + 叶子节点</text>
+  <text x="415" y="113" font-size="11" fill="#292524" text-anchor="middle">全互联对等节点</text>
+  <text x="625" y="113" font-size="11" fill="#292524" text-anchor="middle">树状层级委派</text>
+
+  <!-- Row 2: 通信延迟 -->
+  <rect x="25" y="126" width="810" height="36" rx="2" fill="#f5f5f4"/>
+  <text x="35" y="149" font-size="11" font-weight="600" fill="#292524">通信延迟</text>
+  <text x="205" y="149" font-size="11" fill="#78716c" text-anchor="middle">低，直达中心节点</text>
+  <text x="415" y="149" font-size="11" fill="#78716c" text-anchor="middle">中，多跳传播</text>
+  <text x="625" y="149" font-size="11" fill="#78716c" text-anchor="middle">低–中，层级路径</text>
+
+  <!-- Row 3: 可扩展性 -->
+  <rect x="25" y="162" width="810" height="36" rx="2" fill="#ffffff"/>
+  <text x="35" y="185" font-size="11" font-weight="600" fill="#292524">可扩展性</text>
+  <text x="205" y="185" font-size="11" fill="#78716c" text-anchor="middle">受限，中心节点瓶颈</text>
+  <text x="415" y="185" font-size="11" fill="#78716c" text-anchor="middle">高，但连接数 O(N²)</text>
+  <text x="625" y="185" font-size="11" fill="#78716c" text-anchor="middle">高，子树独立扩展</text>
+
+  <!-- Row 4: 容错性 -->
+  <rect x="25" y="198" width="810" height="36" rx="2" fill="#f5f5f4"/>
+  <text x="35" y="221" font-size="11" font-weight="600" fill="#292524">容错性</text>
+  <text x="205" y="221" font-size="11" fill="#78716c" text-anchor="middle">低，中心单点故障</text>
+  <text x="415" y="221" font-size="11" fill="#78716c" text-anchor="middle">高，天然冗余</text>
+  <text x="625" y="221" font-size="11" fill="#78716c" text-anchor="middle">中，上层仍有关键节点</text>
+
+  <!-- Row 5: 部署复杂度 -->
+  <rect x="25" y="234" width="810" height="36" rx="2" fill="#ffffff"/>
+  <text x="35" y="257" font-size="11" font-weight="600" fill="#292524">部署复杂度</text>
+  <text x="205" y="257" font-size="11" fill="#78716c" text-anchor="middle">低，集中管理</text>
+  <text x="415" y="257" font-size="11" fill="#78716c" text-anchor="middle">高，全连通配置</text>
+  <text x="625" y="257" font-size="11" fill="#78716c" text-anchor="middle">中，组内自治</text>
+
+  <!-- Row 6: 服务发现 -->
+  <rect x="25" y="270" width="810" height="36" rx="2" fill="#f5f5f4"/>
+  <text x="35" y="293" font-size="11" font-weight="600" fill="#292524">服务发现</text>
+  <text x="205" y="293" font-size="11" fill="#78716c" text-anchor="middle">中心 Registry</text>
+  <text x="415" y="293" font-size="11" fill="#78716c" text-anchor="middle">去中心化 Gossip</text>
+  <text x="625" y="293" font-size="11" fill="#78716c" text-anchor="middle">层级 Registry</text>
+
+  <!-- Row 7: 适用场景 -->
+  <rect x="25" y="306" width="810" height="36" rx="2" fill="#ffffff"/>
+  <text x="35" y="329" font-size="11" font-weight="600" fill="#292524">适用场景</text>
+  <text x="205" y="329" font-size="11" fill="#d97706" text-anchor="middle">小团队，单一控制面</text>
+  <text x="415" y="329" font-size="11" fill="#d97706" text-anchor="middle">高可用，异构系统互通</text>
+  <text x="625" y="329" font-size="11" fill="#d97706" text-anchor="middle">企业多部门，权限分级</text>
+
+  <!-- ============ Conclusion ============ -->
+  <rect x="25" y="358" width="810" height="52" rx="6" fill="#fef3c7"
+        stroke="#d97706" stroke-width="0.8"/>
+  <text x="430" y="380" font-size="12" font-weight="600" fill="#d97706" text-anchor="middle">选型建议</text>
+  <text x="430" y="399" font-size="11" fill="#78716c" text-anchor="middle">
+    &lt; 10 Agent → 星型（最简）  |  &gt; 10 Agent + 高可用 → 分层（推荐）  |  异构系统互通 → 网格
+  </text>
+
+  <!-- ============ Topology illustrations ============ -->
+  <text x="430" y="436" font-size="10" fill="#a8a29e" text-anchor="middle">
+    星型 = 单一协调者辐射  |  网格 = 全互联对等网  |  分层 = 子树独立自治
+  </text>
+
+  <!-- Star topology -->
+  <text x="160" y="478" font-size="11" font-weight="500" fill="#292524" text-anchor="middle">星型</text>
+  <circle cx="160" cy="500" r="6" fill="#d97706" stroke="#d97706" stroke-width="1.5"/>
+  <circle cx="100" cy="528" r="4" fill="#a8a29e"/>
+  <circle cx="130" cy="540" r="4" fill="#a8a29e"/>
+  <circle cx="190" cy="540" r="4" fill="#a8a29e"/>
+  <circle cx="220" cy="528" r="4" fill="#a8a29e"/>
+  <line x1="160" y1="500" x2="100" y2="528" stroke="#a8a29e" stroke-width="1.2"/>
+  <line x1="160" y1="500" x2="130" y2="540" stroke="#a8a29e" stroke-width="1.2"/>
+  <line x1="160" y1="500" x2="190" y2="540" stroke="#a8a29e" stroke-width="1.2"/>
+  <line x1="160" y1="500" x2="220" y2="528" stroke="#a8a29e" stroke-width="1.2"/>
+
+  <!-- Mesh topology -->
+  <text x="430" y="478" font-size="11" font-weight="500" fill="#292524" text-anchor="middle">网格</text>
+  <circle cx="375" cy="505" r="4" fill="#a8a29e"/>
+  <circle cx="485" cy="505" r="4" fill="#a8a29e"/>
+  <circle cx="375" cy="540" r="4" fill="#a8a29e"/>
+  <circle cx="485" cy="540" r="4" fill="#a8a29e"/>
+  <line x1="375" y1="505" x2="485" y2="505" stroke="#a8a29e" stroke-width="0.8"/>
+  <line x1="375" y1="505" x2="375" y2="540" stroke="#a8a29e" stroke-width="0.8"/>
+  <line x1="375" y1="505" x2="485" y2="540" stroke="#a8a29e" stroke-width="0.8"/>
+  <line x1="485" y1="505" x2="375" y2="540" stroke="#a8a29e" stroke-width="0.8"/>
+  <line x1="485" y1="505" x2="485" y2="540" stroke="#a8a29e" stroke-width="0.8"/>
+  <line x1="375" y1="540" x2="485" y2="540" stroke="#a8a29e" stroke-width="0.8"/>
+
+  <!-- Hierarchical topology -->
+  <text x="700" y="478" font-size="11" font-weight="500" fill="#292524" text-anchor="middle">分层</text>
+  <circle cx="700" cy="500" r="5" fill="#d97706"/>
+  <line x1="700" y1="500" x2="670" y2="522" stroke="#a8a29e" stroke-width="1.2"/>
+  <line x1="700" y1="500" x2="730" y2="522" stroke="#a8a29e" stroke-width="1.2"/>
+  <circle cx="670" cy="522" r="3.5" fill="#a8a29e"/>
+  <circle cx="730" cy="522" r="3.5" fill="#a8a29e"/>
+  <line x1="670" y1="522" x2="648" y2="544" stroke="#a8a29e" stroke-width="0.8"/>
+  <line x1="670" y1="522" x2="682" y2="544" stroke="#a8a29e" stroke-width="0.8"/>
+  <line x1="730" y1="522" x2="718" y2="544" stroke="#a8a29e" stroke-width="0.8"/>
+  <line x1="730" y1="522" x2="742" y2="544" stroke="#a8a29e" stroke-width="0.8"/>
+  <circle cx="648" cy="544" r="3" fill="#a8a29e"/>
+  <circle cx="682" cy="544" r="3" fill="#a8a29e"/>
+  <circle cx="718" cy="544" r="3" fill="#a8a29e"/>
+  <circle cx="742" cy="544" r="3" fill="#a8a29e"/>
+</svg>

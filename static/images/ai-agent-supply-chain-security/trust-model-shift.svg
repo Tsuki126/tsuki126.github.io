@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 460" style="background:#faf8f5;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif">
+  <defs>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#292524" flood-opacity="0.04"/>
+    </filter>
+    <marker id="ar-gray" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="7" markerHeight="4.5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#78716c"/>
+    </marker>
+    <marker id="ar-amber" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="7" markerHeight="4.5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#d97706"/>
+    </marker>
+  </defs>
+
+  <text x="390" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#292524">两种供应链安全模型：构建时信任 vs 运行时信任</text>
+
+  <!-- ===== LEFT: Traditional ===== -->
+  <rect x="20" y="48" width="360" height="38" rx="5" fill="#f5f5f4" stroke="#e8e4de" stroke-width="0.8"/>
+  <rect x="20" y="48" width="3" height="38" rx="2" fill="#78716c"/>
+  <text x="36" y="73" font-size="13" font-weight="600" fill="#78716c">传统软件供应链</text>
+
+  <!-- Pipeline -->
+  <rect x="24" y="104" width="64" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="56" y="123" text-anchor="middle" font-size="11" fill="#292524" font-weight="500">编写代码</text>
+  <line x1="88" y1="119" x2="100" y2="119" stroke="#78716c" stroke-width="1.5" marker-end="url(#ar-gray)"/>
+
+  <rect x="104" y="104" width="64" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="136" y="123" text-anchor="middle" font-size="11" fill="#292524" font-weight="500">构建编译</text>
+  <line x1="168" y1="119" x2="180" y2="119" stroke="#78716c" stroke-width="1.5" marker-end="url(#ar-gray)"/>
+
+  <rect x="184" y="104" width="64" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="216" y="123" text-anchor="middle" font-size="11" fill="#292524" font-weight="500">签名校验</text>
+  <line x1="248" y1="119" x2="260" y2="119" stroke="#78716c" stroke-width="1.5" marker-end="url(#ar-gray)"/>
+
+  <rect x="264" y="104" width="64" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="296" y="123" text-anchor="middle" font-size="11" fill="#292524" font-weight="500">版本锁定</text>
+  <line x1="328" y1="119" x2="340" y2="119" stroke="#78716c" stroke-width="1.5" marker-end="url(#ar-gray)"/>
+
+  <rect x="344" y="104" width="32" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="360" y="123" text-anchor="middle" font-size="11" fill="#292524" font-weight="500">部署</text>
+
+  <!-- Lock -->
+  <rect x="130" y="156" width="140" height="54" rx="8" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <rect x="130" y="156" width="140" height="54" rx="8" fill="#f5f5f4" opacity="0.4"/>
+  <rect x="186" y="174" width="28" height="20" rx="4" fill="#78716c"/>
+  <path d="M188,174 L188,168 C188,160 200,156 200,156 M200,156 C200,156 212,160 212,168 L212,174" fill="none" stroke="#78716c" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="197" y="181" width="6" height="6" rx="2" fill="#ffffff"/>
+  <text x="200" y="203" text-anchor="middle" font-size="9" fill="#78716c">信任在此锁定</text>
+
+  <line x1="200" y1="210" x2="200" y2="240" stroke="#78716c" stroke-width="1.5"/>
+  <polygon points="195,240 200,248 205,240" fill="#78716c"/>
+
+  <rect x="60" y="252" width="280" height="44" rx="6" fill="#f5f5f4" stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="200" y="272" text-anchor="middle" font-size="12" font-weight="600" fill="#78716c">信任在部署前一次性确定</text>
+  <text x="200" y="288" text-anchor="middle" font-size="10" fill="#a8a29e">签名、哈希、版本锁定均在此阶段完成</text>
+
+  <rect x="60" y="312" width="280" height="102" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="76" y="332" font-size="10" fill="#78716c" font-weight="600">关键特征</text>
+  <circle cx="78" cy="346" r="3" fill="#78716c"/>
+  <text x="90" y="350" font-size="10" fill="#78716c">依赖选择是确定性的</text>
+  <circle cx="78" cy="366" r="3" fill="#78716c"/>
+  <text x="90" y="370" font-size="10" fill="#78716c">代码与元数据严格分离</text>
+  <circle cx="78" cy="386" r="3" fill="#78716c"/>
+  <text x="90" y="390" font-size="10" fill="#78716c">运行时无需额外信任决策</text>
+
+  <line x1="390" y1="48" x2="390" y2="430" stroke="#e8e4de" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- ===== RIGHT: AI Agent ===== -->
+  <rect x="400" y="48" width="360" height="38" rx="5" fill="#fef3c7" stroke="#e8e4de" stroke-width="0.8"/>
+  <rect x="400" y="48" width="3" height="38" rx="2" fill="#d97706"/>
+  <text x="416" y="73" font-size="13" font-weight="600" fill="#d97706">AI Agent 供应链</text>
+
+  <!-- Diamond cycle -->
+  <!-- Top: 工具发现 -->
+  <rect x="505" y="94" width="120" height="34" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <rect x="505" y="94" width="120" height="3" rx="2" fill="#d97706"/>
+  <text x="565" y="115" text-anchor="middle" font-size="11" fill="#292524" font-weight="500">工具发现</text>
+
+  <!-- Right: 语义匹配 -->
+  <rect x="605" y="140" width="120" height="34" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <rect x="605" y="140" width="120" height="3" rx="2" fill="#d97706"/>
+  <text x="665" y="161" text-anchor="middle" font-size="11" fill="#292524" font-weight="500">语义匹配</text>
+
+  <!-- Bottom: 调用决策 -->
+  <rect x="505" y="186" width="120" height="34" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <rect x="505" y="186" width="120" height="3" rx="2" fill="#d97706"/>
+  <text x="565" y="207" text-anchor="middle" font-size="11" fill="#292524" font-weight="500">调用决策</text>
+
+  <!-- Left: 工具调用 -->
+  <rect x="405" y="140" width="120" height="34" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <rect x="405" y="140" width="120" height="3" rx="2" fill="#d97706"/>
+  <text x="465" y="161" text-anchor="middle" font-size="11" fill="#292524" font-weight="500">工具调用</text>
+
+  <!-- Curved arrows with correct edge-to-edge coordinates -->
+  <!-- Arrow 1: Top→Right.  Top right edge (625,111) → Right top edge (665,140) -->
+  <path d="M625,111 C645,111 665,130 665,140" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#ar-amber)"/>
+
+  <!-- Arrow 2: Right→Bottom. Right bottom edge (665,174) → Bottom right edge (625,203) -->
+  <path d="M665,174 C665,194 645,203 625,203" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#ar-amber)"/>
+
+  <!-- Arrow 3: Bottom→Left. Bottom left edge (505,203) → Left bottom edge (465,174) -->
+  <path d="M505,203 C485,203 465,194 465,174" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#ar-amber)"/>
+
+  <!-- Arrow 4: Left→Top. Left top edge (465,140) → Top left edge (505,111) -->
+  <path d="M465,140 C465,120 485,111 505,111" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#ar-amber)"/>
+
+  <!-- Center badge -->
+  <circle cx="565" cy="157" r="22" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+  <text x="565" y="153" text-anchor="middle" font-size="14" fill="#d97706" font-weight="600">↻</text>
+  <text x="565" y="168" text-anchor="middle" font-size="8" fill="#d97706">每轮推理</text>
+
+  <line x1="565" y1="220" x2="565" y2="240" stroke="#d97706" stroke-width="1.5"/>
+  <polygon points="560,240 565,248 570,240" fill="#d97706"/>
+
+  <rect x="426" y="252" width="280" height="44" rx="6" fill="#fef3c7" stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="566" y="272" text-anchor="middle" font-size="12" font-weight="600" fill="#d97706">信任在每轮推理中重新建立</text>
+  <text x="566" y="288" text-anchor="middle" font-size="10" fill="#a8a29e">工具描述、RAG 语料均在运行时动态获取和解释</text>
+
+  <rect x="426" y="312" width="280" height="102" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="442" y="332" font-size="10" fill="#d97706" font-weight="600">关键特征</text>
+  <circle cx="444" cy="346" r="3" fill="#d97706"/>
+  <text x="456" y="350" font-size="10" fill="#78716c">依赖选择是概率性的（语义匹配）</text>
+  <circle cx="444" cy="366" r="3" fill="#d97706"/>
+  <text x="456" y="370" font-size="10" fill="#78716c">代码与元数据在推理时融合</text>
+  <circle cx="444" cy="386" r="3" fill="#d97706"/>
+  <text x="456" y="390" font-size="10" fill="#78716c">信任决策持续在运行时发生</text>
+
+  <rect x="20" y="432" width="740" height="24" rx="4" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+  <text x="390" y="448" text-anchor="middle" font-size="10" fill="#a8a29e">
+    <tspan fill="#d97706" font-weight="600">关键差异：</tspan>
+    <tspan>传统安全在构建时锁定信任，Agent 安全在运行时持续协商信任。</tspan>
+  </text>
+</svg>

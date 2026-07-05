@@ -1,0 +1,72 @@
+<svg viewBox="0 0 880 560" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 6" refX="9.5" refY="3" markerWidth="7" markerHeight="4.5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#a8a29e"/>
+    </marker>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#292524" flood-opacity="0.04"/>
+    </filter>
+  </defs>
+  <rect width="880" height="560" fill="#faf8f5"/>
+  <text x="440" y="32" font-size="17" font-weight="700" fill="#292524" text-anchor="middle">Claude Code 四层架构</text>
+
+  <!-- Layer 1: Entrypoints -->
+  <rect x="25" y="60" width="830" height="88" rx="8" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+  <rect x="25" y="60" width="3" height="88" fill="#d97706"/>
+  <text x="42" y="84" font-size="13" font-weight="600" fill="#d97706">Entrypoints</text>
+  <text x="135" y="84" font-size="11" fill="#a8a29e">│ CLI 快速路径与初始化</text>
+  <!-- 2 cards: cli.tsx, init.ts -->
+  <rect x="75" y="102" width="350" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="250" y="121" font-size="12" font-weight="500" fill="#292524" text-anchor="middle">entrypoints/cli.tsx</text>
+  <rect x="452" y="102" width="350" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="627" y="121" font-size="12" font-weight="500" fill="#292524" text-anchor="middle">entrypoints/init.ts</text>
+
+  <!-- Arrow Layer 1 → 2 -->
+  <line x1="440" y1="148" x2="440" y2="184" stroke="#a8a29e" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="458" y="171" font-size="10" fill="#a8a29e">Commander 解析 → 分发</text>
+
+  <!-- Layer 2: Main Orchestrator -->
+  <rect x="25" y="188" width="830" height="88" rx="8" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+  <rect x="25" y="188" width="3" height="88" fill="#d97706"/>
+  <text x="42" y="212" font-size="13" font-weight="600" fill="#d97706">Main Orchestrator</text>
+  <text x="165" y="212" font-size="11" fill="#a8a29e">│ 启动总闸与 Session 管理</text>
+  <!-- 2 cards: main.tsx, setup.ts -->
+  <rect x="75" y="230" width="350" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="250" y="249" font-size="12" font-weight="500" fill="#292524" text-anchor="middle">main.tsx (4,684 行)</text>
+  <rect x="452" y="230" width="350" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="627" y="249" font-size="12" font-weight="500" fill="#292524" text-anchor="middle">setup.ts · migration</text>
+
+  <!-- Arrow Layer 2 → 3 -->
+  <line x1="440" y1="276" x2="440" y2="312" stroke="#a8a29e" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="458" y="299" font-size="10" fill="#a8a29e">REPL / Headless 分发</text>
+
+  <!-- Layer 3: UI / Screens -->
+  <rect x="25" y="316" width="830" height="88" rx="8" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+  <rect x="25" y="316" width="3" height="88" fill="#d97706"/>
+  <text x="42" y="340" font-size="13" font-weight="600" fill="#d97706">UI / Screens</text>
+  <text x="125" y="340" font-size="11" fill="#a8a29e">│ 终端渲染与交互组件</text>
+  <!-- 3 cards: REPL.tsx, Hooks, Components -->
+  <rect x="83" y="358" width="220" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="193" y="377" font-size="12" font-weight="500" fill="#292524" text-anchor="middle">screens/REPL.tsx</text>
+  <rect x="330" y="358" width="220" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="440" y="377" font-size="12" font-weight="500" fill="#292524" text-anchor="middle">hooks/ (85+)</text>
+  <rect x="577" y="358" width="220" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="687" y="377" font-size="12" font-weight="500" fill="#292524" text-anchor="middle">components/ (144+)</text>
+
+  <!-- Arrow Layer 3 → 4 -->
+  <line x1="440" y1="404" x2="440" y2="440" stroke="#a8a29e" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="458" y="427" font-size="10" fill="#a8a29e">Hook · QueryEngine · Tool 回调</text>
+
+  <!-- Layer 4: Core Services -->
+  <rect x="25" y="444" width="830" height="88" rx="8" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+  <rect x="25" y="444" width="3" height="88" fill="#d97706"/>
+  <text x="42" y="468" font-size="13" font-weight="600" fill="#d97706">Core Services</text>
+  <text x="135" y="468" font-size="11" fill="#a8a29e">│ AI 交互循环与工具执行</text>
+  <!-- 3 cards: QueryEngine, Tools, MCP -->
+  <rect x="83" y="486" width="220" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="193" y="505" font-size="12" font-weight="500" fill="#292524" text-anchor="middle">QueryEngine + query()</text>
+  <rect x="330" y="486" width="220" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="440" y="505" font-size="12" font-weight="500" fill="#292524" text-anchor="middle">Tool System (43)</text>
+  <rect x="577" y="486" width="220" height="30" rx="5" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="687" y="505" font-size="12" font-weight="500" fill="#292524" text-anchor="middle">MCP · Analytics · LSP</text>
+</svg>

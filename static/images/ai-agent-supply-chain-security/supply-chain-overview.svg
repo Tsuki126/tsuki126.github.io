@@ -1,0 +1,127 @@
+<svg viewBox="0 0 860 620" xmlns="http://www.w3.org/2000/svg"
+     font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 6" refX="9.5" refY="3"
+            markerWidth="8" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#78716c"/>
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4"
+                    flood-color="#292524" flood-opacity="0.07"/>
+    </filter>
+    <filter id="shadow-light" x="-5%" y="-5%" width="115%" height="130%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2"
+                    flood-color="#292524" flood-opacity="0.04"/>
+    </filter>
+  </defs>
+
+  <rect width="860" height="620" fill="#faf8f5"/>
+
+  <text x="430" y="36" font-size="17" font-weight="700" fill="#292524"
+        text-anchor="middle" letter-spacing="1">AI Agent 供应链四层风险全景</text>
+  <text x="430" y="53" font-size="12" fill="#a8a29e" text-anchor="middle">
+    模型层 → 工具层 → 运行时层 → 知识层（逐层递进）
+  </text>
+
+  <!-- ====== L1: 模型层 ====== -->
+  <g transform="translate(0, 65)">
+    <rect x="25" width="810" height="96" rx="8"
+          fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow-light)"/>
+    <rect x="25" width="4" height="96" rx="2" fill="#78716c"/>
+    <text x="45" y="22" font-size="15" font-weight="700" fill="#78716c">模型层</text>
+    <text x="107" y="22" font-size="12" fill="#a8a29e">│ 权重 · LoRA · Chat Template</text>
+
+    <g filter="url(#shadow)">
+      <rect x="61" y="42" width="224" height="34" rx="6" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+      <text x="173" y="64" font-size="14" font-weight="500" fill="#292524" text-anchor="middle">权重二进制投毒</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="318" y="42" width="224" height="34" rx="6" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+      <text x="430" y="64" font-size="14" font-weight="500" fill="#292524" text-anchor="middle">LoRA 适配器后门</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="575" y="42" width="224" height="34" rx="6" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+      <text x="687" y="64" font-size="14" font-weight="500" fill="#292524" text-anchor="middle">Chat Template 后门</text>
+    </g>
+  </g>
+
+  <!-- 连接点 L1→L2 -->
+  <circle cx="430" cy="163" r="3" fill="#a8a29e" opacity="0.5"/>
+  <line x1="430" y1="163" x2="430" y2="195" stroke="#78716c" stroke-width="1.5" marker-end="url(#ar)"/>
+  <circle cx="430" cy="195" r="3" fill="#a8a29e" opacity="0.5"/>
+
+  <!-- ====== L2: 工具层 (主题色) ====== -->
+  <g transform="translate(0, 201)">
+    <rect x="25" width="810" height="96" rx="8"
+          fill="#ffffff" stroke="#d97706" stroke-width="0.8" filter="url(#shadow-light)"/>
+    <rect x="25" width="4" height="96" rx="2" fill="#d97706"/>
+    <text x="45" y="22" font-size="15" font-weight="700" fill="#d97706">工具层</text>
+    <text x="107" y="22" font-size="12" fill="#a8a29e">│ MCP · Skill · 插件</text>
+
+    <g filter="url(#shadow)">
+      <rect x="61" y="42" width="224" height="34" rx="6" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+      <text x="173" y="64" font-size="14" font-weight="500" fill="#292524" text-anchor="middle">工具语义投毒</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="318" y="42" width="224" height="34" rx="6" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+      <text x="430" y="64" font-size="14" font-weight="500" fill="#292524" text-anchor="middle">幻觉抢注攻击</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="575" y="42" width="224" height="34" rx="6" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+      <text x="687" y="64" font-size="14" font-weight="500" fill="#292524" text-anchor="middle">Skill 静默覆盖</text>
+    </g>
+  </g>
+
+  <circle cx="430" cy="299" r="3" fill="#a8a29e" opacity="0.5"/>
+  <line x1="430" y1="299" x2="430" y2="331" stroke="#78716c" stroke-width="1.5" marker-end="url(#ar)"/>
+  <circle cx="430" cy="331" r="3" fill="#a8a29e" opacity="0.5"/>
+
+  <!-- ====== L3: 运行时层 ====== -->
+  <g transform="translate(0, 337)">
+    <rect x="25" width="810" height="96" rx="8"
+          fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow-light)"/>
+    <rect x="25" width="4" height="96" rx="2" fill="#78716c"/>
+    <text x="45" y="22" font-size="15" font-weight="700" fill="#78716c">运行时层</text>
+    <text x="107" y="22" font-size="12" fill="#a8a29e">│ 框架 · 沙箱 · 身份</text>
+
+    <g filter="url(#shadow)">
+      <rect x="61" y="42" width="224" height="34" rx="6" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+      <text x="173" y="64" font-size="14" font-weight="500" fill="#292524" text-anchor="middle">依赖级联投毒</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="318" y="42" width="224" height="34" rx="6" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+      <text x="430" y="64" font-size="14" font-weight="500" fill="#292524" text-anchor="middle">沙箱逃逸攻击</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="575" y="42" width="224" height="34" rx="6" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+      <text x="687" y="64" font-size="14" font-weight="500" fill="#292524" text-anchor="middle">NHI 凭证滥用</text>
+    </g>
+  </g>
+
+  <circle cx="430" cy="435" r="3" fill="#a8a29e" opacity="0.5"/>
+  <line x1="430" y1="435" x2="430" y2="467" stroke="#78716c" stroke-width="1.5" marker-end="url(#ar)"/>
+  <circle cx="430" cy="467" r="3" fill="#a8a29e" opacity="0.5"/>
+
+  <!-- ====== L4: 知识层 ====== -->
+  <g transform="translate(0, 473)">
+    <rect x="25" width="810" height="96" rx="8"
+          fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow-light)"/>
+    <rect x="25" width="4" height="96" rx="2" fill="#78716c"/>
+    <text x="45" y="22" font-size="15" font-weight="700" fill="#78716c">知识层</text>
+    <text x="107" y="22" font-size="12" fill="#a8a29e">│ 语料 · 向量 · Prompt</text>
+
+    <g filter="url(#shadow)">
+      <rect x="61" y="42" width="224" height="34" rx="6" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+      <text x="173" y="64" font-size="14" font-weight="500" fill="#292524" text-anchor="middle">RAG 语料投毒</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="318" y="42" width="224" height="34" rx="6" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+      <text x="430" y="64" font-size="14" font-weight="500" fill="#292524" text-anchor="middle">临近嵌入攻击</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="575" y="42" width="224" height="34" rx="6" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+      <text x="687" y="64" font-size="14" font-weight="500" fill="#292524" text-anchor="middle">Prompt 模板注入</text>
+    </g>
+  </g>
+
+</svg>

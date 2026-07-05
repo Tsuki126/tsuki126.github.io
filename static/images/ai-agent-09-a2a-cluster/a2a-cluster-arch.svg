@@ -1,0 +1,159 @@
+<svg viewBox="0 0 880 590" xmlns="http://www.w3.org/2000/svg"
+     font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 6" refX="9.5" refY="3"
+            markerWidth="7" markerHeight="4.5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#a8a29e"/>
+    </marker>
+    <marker id="ar-theme" viewBox="0 0 10 6" refX="9.5" refY="3"
+            markerWidth="7" markerHeight="4.5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#d97706"/>
+    </marker>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2"
+                    flood-color="#292524" flood-opacity="0.04"/>
+    </filter>
+  </defs>
+
+  <rect width="880" height="590" fill="#faf8f5"/>
+
+  <!-- Title -->
+  <text x="440" y="32" font-size="17" font-weight="700" fill="#292524"
+        text-anchor="middle">A2A Agent 集群架构</text>
+
+  <!-- ============ Layer 1: 接入层 ============ -->
+  <rect x="25" y="60" width="830" height="88" rx="8"
+        fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+  <rect x="25" y="60" width="3" height="88" fill="#d97706"/>
+  <text x="42" y="84" font-size="13" font-weight="600" fill="#d97706">接入层</text>
+  <text x="80" y="84" font-size="11" fill="#a8a29e">│ 统一入口，请求路由与鉴权</text>
+
+  <!-- Card 1 -->
+  <rect x="61" y="102" width="220" height="30" rx="5" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="171" y="121" font-size="12" font-weight="500" fill="#292524"
+        text-anchor="middle">API Gateway</text>
+
+  <!-- Card 2 -->
+  <rect x="330" y="102" width="220" height="30" rx="5" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="440" y="121" font-size="12" font-weight="500" fill="#292524"
+        text-anchor="middle">Load Balancer</text>
+
+  <!-- Card 3 -->
+  <rect x="599" y="102" width="220" height="30" rx="5" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="709" y="121" font-size="12" font-weight="500" fill="#292524"
+        text-anchor="middle">Auth Service</text>
+
+  <!-- Layer 1 → Layer 2 arrows -->
+  <line x1="171" y1="150" x2="171" y2="182" stroke="#a8a29e" stroke-width="1.5"
+        marker-end="url(#ar)"/>
+  <line x1="440" y1="150" x2="440" y2="182" stroke="#a8a29e" stroke-width="1.5"
+        marker-end="url(#ar)"/>
+  <line x1="709" y1="150" x2="709" y2="182" stroke="#a8a29e" stroke-width="1.5"
+        marker-end="url(#ar)"/>
+
+  <text x="440" y="170" font-size="10" fill="#a8a29e" text-anchor="middle"
+        font-style="italic">请求路由</text>
+
+  <!-- ============ Layer 2: 编排集群 ============ -->
+  <rect x="25" y="188" width="830" height="88" rx="8"
+        fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+  <rect x="25" y="188" width="3" height="88" fill="#d97706"/>
+  <text x="42" y="212" font-size="13" font-weight="600" fill="#d97706">编排集群</text>
+  <text x="80" y="212" font-size="11" fill="#a8a29e">│ 多节点水平扩展，A2A 协议委派任务</text>
+
+  <!-- Card 1 -->
+  <rect x="61" y="230" width="220" height="30" rx="5" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="171" y="249" font-size="12" font-weight="500" fill="#292524"
+        text-anchor="middle">Orchestrator 1</text>
+
+  <!-- Card 2 -->
+  <rect x="330" y="230" width="220" height="30" rx="5" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="440" y="249" font-size="12" font-weight="500" fill="#292524"
+        text-anchor="middle">Orchestrator 2</text>
+
+  <!-- Card 3 -->
+  <rect x="599" y="230" width="220" height="30" rx="5" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="709" y="249" font-size="12" font-weight="500" fill="#292524"
+        text-anchor="middle">Orchestrator 3</text>
+
+  <!-- Layer 2 → Layer 3 arrows -->
+  <line x1="171" y1="278" x2="171" y2="310" stroke="#a8a29e" stroke-width="1.5"
+        marker-end="url(#ar)"/>
+  <line x1="440" y1="278" x2="440" y2="310" stroke="#a8a29e" stroke-width="1.5"
+        marker-end="url(#ar)"/>
+  <line x1="709" y1="278" x2="709" y2="310" stroke="#a8a29e" stroke-width="1.5"
+        marker-end="url(#ar)"/>
+
+  <text x="440" y="298" font-size="10" fill="#a8a29e" text-anchor="middle"
+        font-style="italic">A2A 协议委派</text>
+
+  <!-- ============ Layer 3: Agent 池 ============ -->
+  <rect x="25" y="316" width="830" height="88" rx="8"
+        fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+  <rect x="25" y="316" width="3" height="88" fill="#d97706"/>
+  <text x="42" y="340" font-size="13" font-weight="600" fill="#d97706">Agent 专业服务池</text>
+  <text x="136" y="340" font-size="11" fill="#a8a29e">│ 多副本部署，按技能标签注册</text>
+
+  <!-- 4 cards, 170px each, gap 26 -->
+  <rect x="61" y="358" width="170" height="30" rx="5" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="146" y="377" font-size="12" font-weight="500" fill="#292524"
+        text-anchor="middle">KYC Agent</text>
+
+  <rect x="257" y="358" width="170" height="30" rx="5" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="342" y="377" font-size="12" font-weight="500" fill="#292524"
+        text-anchor="middle">Code Review</text>
+
+  <rect x="453" y="358" width="170" height="30" rx="5" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="538" y="377" font-size="12" font-weight="500" fill="#292524"
+        text-anchor="middle">Data Analysis</text>
+
+  <rect x="649" y="358" width="170" height="30" rx="5" fill="#ffffff"
+        stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow)"/>
+  <text x="734" y="377" font-size="12" font-weight="500" fill="#292524"
+        text-anchor="middle">Security</text>
+
+  <!-- Replica badges -->
+  <circle cx="237" cy="374" r="10" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+  <text x="237" y="378" font-size="9" font-weight="600" fill="#d97706" text-anchor="middle">×2</text>
+  <circle cx="433" cy="374" r="10" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+  <text x="433" y="378" font-size="9" font-weight="600" fill="#d97706" text-anchor="middle">×3</text>
+  <circle cx="629" cy="374" r="10" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+  <text x="629" y="378" font-size="9" font-weight="600" fill="#d97706" text-anchor="middle">×2</text>
+  <circle cx="825" cy="374" r="10" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+  <text x="825" y="378" font-size="9" font-weight="600" fill="#d97706" text-anchor="middle">×2</text>
+
+  <!-- ============ Bottom: Registry ============ -->
+  <rect x="25" y="434" width="830" height="52" rx="8"
+        fill="#ffffff" stroke="#e8e4de" stroke-width="0.8"/>
+  <rect x="25" y="434" width="3" height="52" fill="#d97706"/>
+  <text x="42" y="454" font-size="13" font-weight="600" fill="#d97706">服务注册中心</text>
+  <text x="120" y="454" font-size="11" fill="#a8a29e">│ Agent Registry / Service Discovery</text>
+
+  <text x="440" y="474" font-size="11" fill="#78716c" text-anchor="middle">
+    Agent 启动时注册能力 → Orchestrator 通过技能标签发现可用 Agent → 按负载策略路由
+  </text>
+
+  <!-- Registry ↔ Cluster connection -->
+  <line x1="440" y1="404" x2="440" y2="430" stroke="#d97706" stroke-width="1.5"
+        stroke-dasharray="4 3" marker-end="url(#ar-theme)"/>
+  <text x="456" y="422" font-size="9" fill="#d97706" font-weight="500">注册 / 发现</text>
+
+  <!-- ============ Bottom tag ============ -->
+  <rect x="280" y="508" width="320" height="28" rx="4"
+        fill="#fef3c7" stroke="#d97706" stroke-width="0.8"/>
+  <text x="440" y="527" font-size="11" font-weight="600" fill="#d97706"
+        text-anchor="middle">每个 Specialist Agent 通过 MCP 连接底层工具系统</text>
+
+  <text x="440" y="565" font-size="10" fill="#a8a29e" text-anchor="middle">
+    编排集群水平扩展 × N 副本  /  Agent 池根据负载自动扩缩 × M 副本
+  </text>
+</svg>

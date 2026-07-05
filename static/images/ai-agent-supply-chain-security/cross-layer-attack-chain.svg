@@ -1,0 +1,149 @@
+<svg viewBox="0 0 860 520" xmlns="http://www.w3.org/2000/svg"
+     font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 6" refX="9.5" refY="3"
+            markerWidth="8" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#78716c"/>
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4"
+                    flood-color="#292524" flood-opacity="0.07"/>
+    </filter>
+    <filter id="shadow-light" x="-5%" y="-5%" width="115%" height="130%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2"
+                    flood-color="#292524" flood-opacity="0.04"/>
+    </filter>
+  </defs>
+
+  <rect width="860" height="520" fill="#faf8f5"/>
+
+  <text x="430" y="36" font-size="17" font-weight="700" fill="#292524"
+        text-anchor="middle" letter-spacing="1">跨层攻击链模型</text>
+  <text x="430" y="53" font-size="12" fill="#a8a29e" text-anchor="middle">
+    投毒 → 传导 → 利用 三个阶段跨越四层供应链
+  </text>
+
+  <!-- ====== 阶段 1：投毒 ====== -->
+  <g transform="translate(30, 68)">
+    <rect width="255" height="120" rx="8" fill="#ffffff" stroke="#d97706" stroke-width="0.8" filter="url(#shadow)"/>
+    <rect width="255" height="36" rx="8" fill="#fef3c7"/>
+    <rect width="255" height="4" fill="#d97706"/>
+    <text x="127" y="24" font-size="15" font-weight="700" fill="#d97706" text-anchor="middle">投毒阶段 (P)</text>
+
+    <text x="127" y="58" font-size="14" fill="#78716c" text-anchor="middle">攻击者在任一层供应链中</text>
+    <text x="127" y="74" font-size="14" fill="#78716c" text-anchor="middle">植入恶意载荷</text>
+
+    <rect x="30" y="90" width="62" height="18" rx="4" fill="#f5f5f4" stroke="#e8e4de" stroke-width="0.6"/>
+    <text x="61" y="103" font-size="12" fill="#78716c" text-anchor="middle">模型层</text>
+    <rect x="100" y="90" width="62" height="18" rx="4" fill="#f5f5f4" stroke="#e8e4de" stroke-width="0.6"/>
+    <text x="131" y="103" font-size="12" fill="#78716c" text-anchor="middle">工具层</text>
+    <rect x="170" y="90" width="62" height="18" rx="4" fill="#f5f5f4" stroke="#e8e4de" stroke-width="0.6"/>
+    <text x="201" y="103" font-size="12" fill="#78716c" text-anchor="middle">运行时</text>
+  </g>
+
+  <line x1="288" y1="128" x2="304" y2="128" stroke="#a8a29e" stroke-width="1.8" marker-end="url(#ar)"/>
+
+  <!-- ====== 阶段 2：传导 ====== -->
+  <g transform="translate(310, 68)">
+    <rect width="240" height="120" rx="8" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow-light)"/>
+    <rect width="240" height="36" rx="8" fill="#f5f5f4"/>
+    <rect width="240" height="4" fill="#78716c"/>
+    <text x="120" y="24" font-size="15" font-weight="700" fill="#78716c" text-anchor="middle">传导阶段 (T)</text>
+
+    <text x="120" y="58" font-size="14" fill="#78716c" text-anchor="middle">恶意载荷通过正常分发渠道</text>
+    <text x="120" y="74" font-size="14" fill="#78716c" text-anchor="middle">向下游传播</text>
+
+    <rect x="26" y="90" width="56" height="18" rx="4" fill="#f5f5f4" stroke="#e8e4de" stroke-width="0.6"/>
+    <text x="54" y="103" font-size="12" fill="#78716c" text-anchor="middle">HF Hub</text>
+    <rect x="90" y="90" width="56" height="18" rx="4" fill="#f5f5f4" stroke="#e8e4de" stroke-width="0.6"/>
+    <text x="118" y="103" font-size="12" fill="#78716c" text-anchor="middle">PyPI</text>
+    <rect x="154" y="90" width="56" height="18" rx="4" fill="#f5f5f4" stroke="#e8e4de" stroke-width="0.6"/>
+    <text x="182" y="103" font-size="12" fill="#78716c" text-anchor="middle">MCP Reg</text>
+  </g>
+
+  <line x1="553" y1="128" x2="569" y2="128" stroke="#a8a29e" stroke-width="1.8" marker-end="url(#ar)"/>
+
+  <!-- ====== 阶段 3：利用 ====== -->
+  <g transform="translate(575, 68)">
+    <rect width="255" height="120" rx="8" fill="#ffffff" stroke="#d97706" stroke-width="0.8" filter="url(#shadow)"/>
+    <rect width="255" height="36" rx="8" fill="#fef3c7"/>
+    <rect width="255" height="4" fill="#d97706"/>
+    <text x="127" y="24" font-size="15" font-weight="700" fill="#d97706" text-anchor="middle">利用阶段 (E)</text>
+
+    <text x="127" y="58" font-size="14" fill="#78716c" text-anchor="middle">恶意载荷在目标层或</text>
+    <text x="127" y="74" font-size="14" fill="#78716c" text-anchor="middle">跨层触发</text>
+
+    <rect x="30" y="90" width="56" height="18" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="0.6"/>
+    <text x="58" y="103" font-size="12" fill="#d97706" text-anchor="middle">数据外泄</text>
+    <rect x="94" y="90" width="48" height="18" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="0.6"/>
+    <text x="118" y="103" font-size="12" fill="#d97706" text-anchor="middle">RCE</text>
+    <rect x="150" y="90" width="62" height="18" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="0.6"/>
+    <text x="181" y="103" font-size="12" fill="#d97706" text-anchor="middle">凭证泄露</text>
+  </g>
+
+  <!-- 分割线 -->
+  <line x1="30" y1="210" x2="830" y2="210" stroke="#e8e4de" stroke-width="0.8" stroke-dasharray="4 3"/>
+  <text x="430" y="228" font-size="14" font-weight="700" fill="#78716c" text-anchor="middle">实例攻击链</text>
+
+  <!-- ====== 实例 1 ====== -->
+  <g transform="translate(30, 244)">
+    <rect width="800" height="52" rx="7" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow-light)"/>
+    <rect x="12" y="15" width="24" height="22" rx="4" fill="#d97706"/>
+    <text x="24" y="31" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">P</text>
+    <rect x="44" y="15" width="210" height="22" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="0.6"/>
+    <text x="149" y="31" font-size="12" fill="#d97706" text-anchor="middle">Chat Template 后门 (模型层)</text>
+    <line x1="256" y1="26" x2="268" y2="26" stroke="#78716c" stroke-width="1.2" marker-end="url(#ar)"/>
+    <rect x="274" y="15" width="24" height="22" rx="4" fill="#78716c"/>
+    <text x="286" y="31" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">T</text>
+    <rect x="306" y="15" width="210" height="22" rx="4" fill="#f5f5f4" stroke="#e8e4de" stroke-width="0.6"/>
+    <text x="411" y="31" font-size="12" fill="#78716c" text-anchor="middle">框架拉取 → 每次推理执行模板</text>
+    <line x1="518" y1="26" x2="530" y2="26" stroke="#78716c" stroke-width="1.2" marker-end="url(#ar)"/>
+    <rect x="536" y="15" width="24" height="22" rx="4" fill="#d97706"/>
+    <text x="548" y="31" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">E</text>
+    <rect x="568" y="15" width="220" height="22" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="0.6"/>
+    <text x="678" y="31" font-size="12" fill="#d97706" text-anchor="middle">URL 外泄 / 环境变量泄露</text>
+  </g>
+
+  <!-- ====== 实例 2 ====== -->
+  <g transform="translate(30, 306)">
+    <rect width="800" height="52" rx="7" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow-light)"/>
+    <rect x="12" y="15" width="24" height="22" rx="4" fill="#d97706"/>
+    <text x="24" y="31" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">P</text>
+    <rect x="44" y="15" width="210" height="22" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="0.6"/>
+    <text x="149" y="31" font-size="12" fill="#d97706" text-anchor="middle">框架依赖投毒 (litellm)</text>
+    <line x1="256" y1="26" x2="268" y2="26" stroke="#78716c" stroke-width="1.2" marker-end="url(#ar)"/>
+    <rect x="274" y="15" width="24" height="22" rx="4" fill="#78716c"/>
+    <text x="286" y="31" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">T</text>
+    <rect x="306" y="15" width="210" height="22" rx="4" fill="#f5f5f4" stroke="#e8e4de" stroke-width="0.6"/>
+    <text x="411" y="31" font-size="12" fill="#78716c" text-anchor="middle">pip install → .pth 持久化</text>
+    <line x1="518" y1="26" x2="530" y2="26" stroke="#78716c" stroke-width="1.2" marker-end="url(#ar)"/>
+    <rect x="536" y="15" width="24" height="22" rx="4" fill="#d97706"/>
+    <text x="548" y="31" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">E</text>
+    <rect x="568" y="15" width="220" height="22" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="0.6"/>
+    <text x="678" y="31" font-size="12" fill="#d97706" text-anchor="middle">全层 API 凭证加密外泄</text>
+  </g>
+
+  <!-- ====== 实例 3 ====== -->
+  <g transform="translate(30, 368)">
+    <rect width="800" height="52" rx="7" fill="#ffffff" stroke="#e8e4de" stroke-width="0.8" filter="url(#shadow-light)"/>
+    <rect x="12" y="15" width="24" height="22" rx="4" fill="#d97706"/>
+    <text x="24" y="31" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">P</text>
+    <rect x="44" y="15" width="210" height="22" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="0.6"/>
+    <text x="149" y="31" font-size="12" fill="#d97706" text-anchor="middle">LoRA → 依赖混淆 (完整 4 层链)</text>
+    <line x1="256" y1="26" x2="268" y2="26" stroke="#78716c" stroke-width="1.2" marker-end="url(#ar)"/>
+    <rect x="274" y="15" width="24" height="22" rx="4" fill="#78716c"/>
+    <text x="286" y="31" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">T</text>
+    <rect x="306" y="15" width="210" height="22" rx="4" fill="#f5f5f4" stroke="#e8e4de" stroke-width="0.6"/>
+    <text x="411" y="31" font-size="12" fill="#78716c" text-anchor="middle">HF → PyPI → 框架 → 工具</text>
+    <line x1="518" y1="26" x2="530" y2="26" stroke="#78716c" stroke-width="1.2" marker-end="url(#ar)"/>
+    <rect x="536" y="15" width="24" height="22" rx="4" fill="#d97706"/>
+    <text x="548" y="31" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">E</text>
+    <rect x="568" y="15" width="220" height="22" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="0.6"/>
+    <text x="678" y="31" font-size="12" fill="#d97706" text-anchor="middle">DNS 隧道外泄 + 凭证泄露</text>
+  </g>
+
+  <!-- 底部说明 -->
+  <text x="430" y="502" font-size="12" fill="#a8a29e" text-anchor="middle">
+    防御含义：单层防御无效，必须在每层假设其他层已被攻破的前提下设计
+  </text>
+</svg>

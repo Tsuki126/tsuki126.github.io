@@ -28,7 +28,7 @@ hasCJKLanguage = true
 
 [markup]
   [markup.highlight]
-    style = "friendly"
+    style = "monokai"
     lineNos = true
     lineNumbersInTable = false
     codeFences = true

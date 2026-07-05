@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 570" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
+  <defs>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#1e293b" flood-opacity="0.06"/>
+    </filter>
+    <marker id="ar-blue" viewBox="0 0 10 6" refX="9.5" refY="3" markerWidth="7" markerHeight="4.5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#3b82f6"/>
+    </marker>
+    <marker id="ar-gray" viewBox="0 0 10 6" refX="9.5" refY="3" markerWidth="7" markerHeight="4.5" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="570" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="440" y="36" text-anchor="middle" font-size="17" font-weight="700" fill="#1e293b">IAST Agent 内部架构：四层协作模型</text>
+
+  <!-- === Layer 1: Application === -->
+  <rect x="25" y="64" width="830" height="88" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="25" y="64" width="3" height="88" rx="0" fill="#3b82f6"/>
+  <text x="440" y="90" text-anchor="middle" font-size="13" font-weight="600" fill="#3b82f6">业务应用层</text>
+  <text x="440" y="106" text-anchor="middle" font-size="11" fill="#64748b">被插桩后的运行时代码——每个关键方法入口/出口自动调用 SpyAPI</text>
+
+  <!-- L1 Cards -->
+  <rect x="61" y="116" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="146" y="135" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">HTTP 请求处理</text>
+  <rect x="251" y="116" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="336" y="135" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">数据库操作</text>
+  <rect x="441" y="116" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="526" y="135" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">文件 / 命令执行</text>
+  <rect x="631" y="116" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="716" y="135" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">表达式 / 反序列化</text>
+
+  <!-- Arrow L1→L2 -->
+  <line x1="440" y1="152" x2="440" y2="178" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar-gray)"/>
+  <text x="454" y="170" font-size="10" fill="#94a3b8">方法入口/出口回调</text>
+
+  <!-- === Layer 2: Hook === -->
+  <rect x="25" y="192" width="830" height="88" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="25" y="192" width="3" height="88" rx="0" fill="#3b82f6"/>
+  <text x="440" y="218" text-anchor="middle" font-size="13" font-weight="600" fill="#3b82f6">Hook 拦截层</text>
+  <text x="440" y="234" text-anchor="middle" font-size="11" fill="#64748b">字节码插桩注入的监控逻辑——在关键 API 调用前后采集上下文</text>
+
+  <!-- L2 Cards -->
+  <rect x="61" y="244" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="146" y="263" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">Source Hook</text>
+  <rect x="251" y="244" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="336" y="263" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">Propagation Hook</text>
+  <rect x="441" y="244" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="526" y="263" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">Sink Hook</text>
+  <rect x="631" y="244" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="716" y="263" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">Sanitizer Hook</text>
+
+  <!-- Arrow L2→L3 -->
+  <line x1="440" y1="280" x2="440" y2="306" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar-gray)"/>
+  <text x="454" y="298" font-size="10" fill="#94a3b8">事件 + 调用栈 + 参数值</text>
+
+  <!-- === Layer 3: Taint Engine === -->
+  <rect x="25" y="320" width="830" height="88" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="25" y="320" width="3" height="88" rx="0" fill="#3b82f6"/>
+  <text x="440" y="346" text-anchor="middle" font-size="13" font-weight="600" fill="#3b82f6">污点追踪引擎</text>
+  <text x="440" y="362" text-anchor="middle" font-size="11" fill="#64748b">ThreadLocal TraceId → Source→Sink 全链路 → 消毒器识别 → 漏洞判定</text>
+
+  <!-- L3 Cards -->
+  <rect x="61" y="372" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="146" y="391" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">Taint Map 维护</text>
+  <rect x="251" y="372" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="336" y="391" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">传播路径追踪</text>
+  <rect x="441" y="372" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="526" y="391" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">消毒器匹配</text>
+  <rect x="631" y="372" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="716" y="391" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">漏洞规则引擎</text>
+
+  <!-- Arrow L3→L4 -->
+  <line x1="440" y1="408" x2="440" y2="434" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar-gray)"/>
+  <text x="454" y="426" font-size="10" fill="#94a3b8">漏洞事件（含 TraceId + 污点路径）</text>
+
+  <!-- === Layer 4: Analysis & Report === -->
+  <rect x="25" y="448" width="830" height="88" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="25" y="448" width="3" height="88" rx="0" fill="#3b82f6"/>
+  <text x="440" y="474" text-anchor="middle" font-size="13" font-weight="600" fill="#3b82f6">分析与上报层</text>
+  <text x="440" y="490" text-anchor="middle" font-size="11" fill="#64748b">异步批量上报 → 主动验证（可选）→ 结果聚合 → DevSecOps 平台集成</text>
+
+  <!-- L4 Cards -->
+  <rect x="91" y="500" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="176" y="519" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">RingBuffer 缓冲</text>
+  <rect x="291" y="500" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="376" y="519" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">主动重放验证</text>
+  <rect x="491" y="500" width="170" height="30" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/>
+  <text x="576" y="519" text-anchor="middle" font-size="12" font-weight="500" fill="#1e293b">结果去重聚合</text>
+
+  <!-- spy.jar bridge annotation -->
+  <rect x="25" y="2" width="200" height="20" rx="4" fill="#fef3c7" stroke="#fde68a" stroke-width="0.8"/>
+  <text x="125" y="16" text-anchor="middle" font-size="9" font-weight="600" fill="#92400e">spy.jar — Bootstrap ClassLoader 桥接</text>
+</svg>
