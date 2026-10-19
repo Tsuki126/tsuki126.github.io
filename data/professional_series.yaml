@@ -1,18 +1,1 @@
 # 专业专题线：direction 表示所属安全分类，name 对应文章 front matter 的 series
-- slug: agent-security
-  name: 智能体安全
-  direction: application-security
-  status: 进行中
-  description: 从工具权限、运行时隔离到执行边界，梳理智能体安全的设计与落地。
-
-- slug: llm-principles
-  name: LLM 基础原理
-  direction: application-security
-  status: 进行中
-  description: 从神经网络、训练流程到对齐与推理，建立大模型的基础理解。
-
-- slug: cloud-native-security
-  name: 云原生安全落地
-  direction: base-security
-  status: 进行中
-  description: 从云上配置审计到交付准入，梳理云原生环境中的关键安全控制点。
