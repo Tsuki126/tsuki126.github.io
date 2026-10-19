@@ -581,7 +581,70 @@ document.addEventListener('DOMContentLoaded', function () {
 
   <div class="view is-on" data-panel="time" data-search-hide>
   
-  <p class="list-empty">还没有日常随笔，从今天开始记。</p>
+  
+  
+  
+  
+  <div class="timeline-explorer" data-search-hide>
+    <aside class="timeline-minimap" aria-label="按年份和月份浏览日常随笔">
+      <div class="timeline-minimap-label">TIME MAP</div>
+      <div class="timeline-minimap-scroll" data-timeline-minimap>
+        
+        <section class="timeline-year-group">
+          <span class="timeline-year-label">2026</span>
+          <div class="timeline-ticks">
+            
+            
+            
+            <button class="timeline-tick is-active" type="button"
+              data-year="2026" data-month="10"
+              data-count="1"
+              data-target="timeline-panel-2026-10"
+              aria-label="2026 年 10 月"
+              aria-pressed="true">
+              <span class="timeline-tick-label">10月</span>
+            </button>
+            
+          </div>
+        </section>
+        
+      </div>
+    </aside>
+
+    <section class="timeline-panel-shell" aria-label="选中月份日常随笔">
+      <div class="timeline-panel-head">
+        <span class="timeline-current-year" data-timeline-year>2026</span>
+        <span class="timeline-current-month" data-timeline-month>10月</span>
+      </div>
+      <div class="timeline-panels">
+        
+        
+        
+        
+        <section class="timeline-month-panel is-active"
+          id="timeline-panel-2026-10"
+          data-year="2026" data-month="10"
+          data-count="1"
+          aria-hidden="false">
+          
+          
+          
+          <a class="timeline-article" href="/daily/vulnerability-review-and-application-security-gap/">
+            <span class="timeline-article-meta">
+              <time class="timeline-article-date" datetime="2026-10-19">2026.10.19</time>
+            </span>
+            <span class="timeline-article-title">漏洞复核之后，我看见更深的缺口</span>
+            <span class="timeline-article-summary">一次漏洞复核，让我重新看见应用安全建设中的真实缺口。</span>
+            <span class="timeline-article-arrow" aria-hidden="true">↗</span>
+          </a>
+          
+        </section>
+        
+        
+      </div>
+    </section>
+  </div>
+  <div class="visually-hidden" data-timeline-live aria-live="polite"></div>
   
   </div>
 </div>

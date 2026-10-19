@@ -13,5 +13,12 @@
 		
 		
 			<atom:link href="https://tsuki126.github.io/daily/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>漏洞复核之后，我看见更深的缺口</title>
+				<link>https://tsuki126.github.io/daily/vulnerability-review-and-application-security-gap/</link>
+				<pubDate>Mon, 19 Oct 2026 00:00:00 +0000</pubDate>
+				<guid>https://tsuki126.github.io/daily/vulnerability-review-and-application-security-gap/</guid>
+				<description>&lt;p&gt;今天一整天都在整理上周 ARTEX 主动与被动扫描出来的漏洞。看似只是复核，真正做起来却远比想象中复杂。&lt;/p&gt;&#xA;&lt;p&gt;扫描器基于测试环境，而生产与测试经常存在代码版本差异。网络是否开放、问题是否具有通用性、是否会波及其他同类服务，都需要逐项确认；为了推动业务修复，还要评估漏洞的实际影响面。遇到涉及验签、鉴权和复杂业务逻辑的问题，最终仍然需要找研发确认。每一步都依赖人工判断，处理效率很低。&lt;/p&gt;</description>
+			</item>
 	</channel>
 </rss>
