@@ -1,0 +1,158 @@
+<mxfile host="app.diagrams.net"><diagram id="ft9ovcar-sd4o" name="Page-1"><mxGraphModel dx="880" dy="620" grid="1" gridSize="8" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="880" pageHeight="620" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    
+    <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f9fc;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="0" y="0" width="880" height="620" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="title" value="预训练：几万亿次「猜下一个词」循环" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1a1f36;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="190" y="16" width="500" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="sub" value="Pre-training Loop — Predict Next Token × Trillions of Iterations" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="190" y="44" width="500" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="titleLine" value="" style="endArrow=none;html=1;strokeColor=#3b82f6;strokeWidth=2.5;rounded=1;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="290" y="46" as="sourcePoint"/>
+        <mxPoint x="590" y="46" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Four nodes in diamond -->
+    <!-- Node 1: 输入文本 (top) -->
+    <mxCell id="n1" value="① 输入文本" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=10;shadow=1;verticalAlign=top;spacingTop=8;spacingLeft=12;fontSize=10;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;align=left;" vertex="1" parent="1">
+      <mxGeometry x="352" y="76" width="176" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="n1_text" value="取一段文字，遮掉最后一个词  &lt;br&gt;&lt;font color=&quot;#1e293b&quot;&gt;「法国的首都是 ___」&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=12;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;whiteSpace=wrap;" vertex="1" parent="1">
+      <mxGeometry x="352" y="100" width="176" height="48" as="geometry"/>
+    </mxCell>
+    
+    <!-- Node 2: 模型预测 (right) -->
+    <mxCell id="n2" value="② 模型预测" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=10;shadow=1;verticalAlign=top;spacingTop=8;spacingLeft=12;fontSize=10;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;align=left;" vertex="1" parent="1">
+      <mxGeometry x="556" y="196" width="176" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="n2_text" value="计算每个可能词的概率分布&lt;br&gt;&lt;font color=&quot;#10b981&quot;&gt;巴黎 92%  ·  伦敦 3%  ·  其他 5%&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=12;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;whiteSpace=wrap;" vertex="1" parent="1">
+      <mxGeometry x="556" y="220" width="176" height="48" as="geometry"/>
+    </mxCell>
+    
+    <!-- Node 3: 计算 Loss (bottom, accent) -->
+    <mxCell id="n3" value="③ 计算 Loss" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;arcSize=10;shadow=1;verticalAlign=top;spacingTop=8;spacingLeft=12;fontSize=10;fontStyle=1;fontColor=#ffffff;fontFamily=Inter;align=left;" vertex="1" parent="1">
+      <mxGeometry x="352" y="380" width="176" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="n3_text" value="对比预测与真实答案&lt;br&gt;&lt;font color=&quot;#ffffff&quot;&gt;猜错了 · loss 很高&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=12;fontSize=9;fontColor=rgba(255,255,255,0.7);fontFamily=Inter;whiteSpace=wrap;" vertex="1" parent="1">
+      <mxGeometry x="352" y="404" width="176" height="48" as="geometry"/>
+    </mxCell>
+    
+    <!-- Node 4: 更新参数 (left) -->
+    <mxCell id="n4" value="④ 更新参数" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=10;shadow=1;verticalAlign=top;spacingTop=8;spacingLeft=12;fontSize=10;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;align=left;" vertex="1" parent="1">
+      <mxGeometry x="148" y="196" width="176" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="n4_text" value="反向传播，微调全部参数&lt;br&gt;&lt;font color=&quot;#94a3b8&quot;&gt;每步幅度微小到可忽略&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=12;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;whiteSpace=wrap;" vertex="1" parent="1">
+      <mxGeometry x="148" y="220" width="176" height="48" as="geometry"/>
+    </mxCell>
+    
+    <!-- Arrows -->
+    <mxCell id="a1" value="前向传播" style="endArrow=classic;html=1;strokeColor=#3b82f6;strokeWidth=2;curved=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontColor=#3b82f6;fontSize=9;fontStyle=1;fontFamily=Inter;" edge="1" parent="1" source="n1" target="n2">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="528" y="116" as="sourcePoint"/>
+        <mxPoint x="556" y="236" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="a2" value="预测结果" style="endArrow=classic;html=1;strokeColor=#3b82f6;strokeWidth=2;curved=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#3b82f6;fontSize=9;fontStyle=1;fontFamily=Inter;" edge="1" parent="1" source="n2" target="n3">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="644" y="276" as="sourcePoint"/>
+        <mxPoint x="440" y="380" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="a3" value="梯度回传" style="endArrow=classic;html=1;strokeColor=#f59e0b;strokeWidth=2;curved=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontColor=#f59e0b;fontSize=9;fontStyle=1;fontFamily=Inter;" edge="1" parent="1" source="n3" target="n4">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="352" y="420" as="sourcePoint"/>
+        <mxPoint x="324" y="236" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="a4" value="参数更新" style="endArrow=classic;html=1;strokeColor=#3b82f6;strokeWidth=2;curved=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontColor=#3b82f6;fontSize=9;fontStyle=1;fontFamily=Inter;" edge="1" parent="1" source="n4" target="n1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="236" y="196" as="sourcePoint"/>
+        <mxPoint x="440" y="156" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Center text -->
+    <mxCell id="centerText" value="猜下一个词" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="340" y="270" width="200" height="30" as="geometry"/>
+    </mxCell>
+    <mxCell id="centerSub" value="GPT-4 预训练：~$1亿 · 3-6 个月 · 数万 GPU 昼夜运转" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="240" y="300" width="400" height="18" as="geometry"/>
+    </mxCell>
+    
+    <!-- Dashed outer loop -->
+    <mxCell id="outerLoop" value="重复几万亿次" style="endArrow=classic;html=1;strokeColor=#8b5cf6;strokeWidth=1.5;curved=1;dashed=1;dashPattern=8 6;fontColor=#8b5cf6;fontSize=10;fontStyle=1;fontFamily=Inter;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="440" y="62" as="sourcePoint"/>
+        <mxPoint x="440" y="474" as="targetPoint"/>
+        <Array as="points">
+          <mxPoint x="600" y="62"/>
+          <mxPoint x="600" y="474"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Three pillars -->
+    <mxCell id="p1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="32" y="500" width="256" height="56" as="geometry"/>
+    </mxCell>
+    <mxCell id="p1_accent" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="32" y="500" width="4" height="56" as="geometry"/>
+    </mxCell>
+    <mxCell id="p1_t" value="Warmup · 学习率从零缓升" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;fontSize=10;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="44" y="502" width="236" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="p1_d" value="Embedding 梯度极端稀疏，优化器需积累梯度历史" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;fontSize=8;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="44" y="526" width="236" height="20" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="p2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="312" y="500" width="256" height="56" as="geometry"/>
+    </mxCell>
+    <mxCell id="p2_accent" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f59e0b;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="312" y="500" width="4" height="56" as="geometry"/>
+    </mxCell>
+    <mxCell id="p2_t" value="梯度裁剪 · 限制单步更新上限" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;fontSize=10;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="324" y="502" width="236" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="p2_d" value="将梯度范数 clip 到 1.0，防止异常 token 单步毁掉训练" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;fontSize=8;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="324" y="526" width="236" height="20" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="p3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="592" y="500" width="256" height="56" as="geometry"/>
+    </mxCell>
+    <mxCell id="p3_accent" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#10b981;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="592" y="500" width="4" height="56" as="geometry"/>
+    </mxCell>
+    <mxCell id="p3_t" value="Weight Decay · 分层衰减策略" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;fontSize=10;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="604" y="502" width="236" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="p3_d" value="2D 权重衰减防止过拟合，1D 参数（LayerNorm）不衰减" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;fontSize=8;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="604" y="526" width="236" height="20" as="geometry"/>
+    </mxCell>
+    
+    <!-- Bottom insight -->
+    <mxCell id="insight" value="模型从未被教过什么是语法或逻辑——所有能力都从「猜下一个词」中涌现" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=none;arcSize=4;fontSize=9;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;align=center;" vertex="1" parent="1">
+      <mxGeometry x="160" y="580" width="560" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Legend -->
+    <mxCell id="leg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fafbfc;strokeColor=#e2e8f0;arcSize=6;" vertex="1" parent="1">
+      <mxGeometry x="690" y="572" width="158" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="leg_t" value="— 前向/更新  — 梯度回传  ··· 循环" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=8;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="698" y="580" width="142" height="16" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel></diagram></mxfile>

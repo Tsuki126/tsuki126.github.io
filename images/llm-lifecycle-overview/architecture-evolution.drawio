@@ -1,0 +1,218 @@
+<mxfile host="app.diagrams.net"><diagram id="9i1ihvk1-b7m4" name="Page-1"><mxGraphModel dx="1100" dy="620" grid="1" gridSize="8" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="620" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    
+    <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f9fc;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="0" y="0" width="1100" height="620" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="title" value="架构演进：推理成本如何重塑模型设计" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1a1f36;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="250" y="16" width="600" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="sub" value="从 GPT-2 的 Dense+MHA 到 DeepSeek-V3 的 MoE+MLA——驱动力不是「更强」，是「能在硬件上跑」" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="150" y="44" width="800" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="titleLine" value="" style="endArrow=none;html=1;strokeColor=#3b82f6;strokeWidth=2.5;rounded=1;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="380" y="46" as="sourcePoint"/>
+        <mxPoint x="720" y="46" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Four stage cards -->
+    <!-- Stage 1: GPT-2 -->
+    <mxCell id="s1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="24" y="88" width="236" height="176" as="geometry"/>
+    </mxCell>
+    <mxCell id="s1hdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="24" y="88" width="236" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="s1hdrFill" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="24" y="112" width="236" height="8" as="geometry"/>
+    </mxCell>
+    <mxCell id="s1t" value="GPT-2 · Dense + MHA" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="24" y="94" width="236" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="s1d1" value="1.5B 参数 · 100% 全部激活" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="24" y="130" width="236" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="s1d2" value="KV Cache = O(Nh × L)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="24" y="150" width="236" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="s1note" value="瓶颈：无（规模太小）" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=8;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="24" y="180" width="236" height="16" as="geometry"/>
+    </mxCell>
+    
+    <!-- Evolve arrow 1 -->
+    <mxCell id="ea1" value="" style="endArrow=classic;html=1;strokeColor=#94a3b8;strokeWidth=1.5;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="268" y="176" as="sourcePoint"/>
+        <mxPoint x="296" y="176" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Stage 2: GPT-3/4 -->
+    <mxCell id="s2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="304" y="88" width="236" height="176" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2hdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="304" y="88" width="236" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2hdrFill" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="304" y="112" width="236" height="8" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2t" value="GPT-3/4 · Dense + MHA" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="304" y="94" width="236" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2d1" value="175B → ~1.8T 参数" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="304" y="130" width="236" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2d2" value="规模扩大 100-1000×" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="304" y="150" width="236" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2note" value="瓶颈：KV Cache 成为瓶颈" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=none;fontSize=8;fontStyle=1;fontColor=#ef4444;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="304" y="180" width="236" height="20" as="geometry"/>
+    </mxCell>
+    
+    <!-- Evolve arrow 2 (key innovation) -->
+    <mxCell id="ea2" value="推理倒逼" style="endArrow=classic;html=1;strokeColor=#3b82f6;strokeWidth=2;fontColor=#3b82f6;fontSize=9;fontStyle=1;fontFamily=Inter;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="548" y="176" as="sourcePoint"/>
+        <mxPoint x="580" y="176" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Stage 3: Llama 3 / Mixtral -->
+    <mxCell id="s3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="588" y="88" width="236" height="176" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3hdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="588" y="88" width="236" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3hdrFill" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="588" y="112" width="236" height="8" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3t" value="Llama 3 / Mixtral · GQA+MoE" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="588" y="94" width="236" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3d1" value="GQA: Cache ↓ 75%" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontStyle=1;fontColor=#10b981;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="588" y="130" width="236" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3d2" value="MoE: 671B→激活 ~6%" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontStyle=1;fontColor=#10b981;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="588" y="150" width="236" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3note" value="知识↑ 推理成本↓" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=8;fontColor=#10b981;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="588" y="180" width="236" height="16" as="geometry"/>
+    </mxCell>
+    
+    <!-- Evolve arrow 3 -->
+    <mxCell id="ea3" value="" style="endArrow=classic;html=1;strokeColor=#3b82f6;strokeWidth=2;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="832" y="176" as="sourcePoint"/>
+        <mxPoint x="860" y="176" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Stage 4: DeepSeek-V3 (accent) -->
+    <mxCell id="s4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#3b82f6;strokeWidth=1.5;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="868" y="88" width="208" height="176" as="geometry"/>
+    </mxCell>
+    <mxCell id="s4hdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="868" y="88" width="208" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="s4hdrFill" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="868" y="112" width="208" height="8" as="geometry"/>
+    </mxCell>
+    <mxCell id="s4t" value="DeepSeek-V3 · MoE+MLA" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#ffffff;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="868" y="94" width="208" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="s4d1" value="MLA: Cache 再压缩" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontStyle=1;fontColor=#10b981;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="868" y="130" width="208" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="s4d2" value="671B 总 · 37B 活跃" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="868" y="150" width="208" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="s4note" value="极致推理效率" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=8;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="868" y="180" width="208" height="16" as="geometry"/>
+    </mxCell>
+    
+    <!-- Comparison table -->
+    <mxCell id="tableTitle" value="四代推理性能对比" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="400" y="300" width="300" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Table header -->
+    <mxCell id="th0" value="指标" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#64748b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="64" y="332" width="152" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="th1" value="GPT-2 (MHA)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#64748b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="224" y="332" width="152" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="th2" value="GPT-4 (MHA)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#64748b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="384" y="332" width="152" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="th3" value="Llama 3 (GQA)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#7c3aed;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="544" y="332" width="152" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="th4" value="DeepSeek-V3 (MLA)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=#3b82f6;fontSize=9;fontStyle=1;fontColor=#ffffff;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="704" y="332" width="180" height="26" as="geometry"/>
+    </mxCell>
+    
+    <!-- Row 1 -->
+    <mxCell id="r1h" value="KV Cache / token" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=9;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="64" y="362" width="152" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="r1c1" value="1×（基线）" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="224" y="362" width="152" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="r1c2" value="~100×" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#ef4444;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="384" y="362" width="152" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="r1c3" value="~0.25×" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#10b981;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="544" y="362" width="152" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="r1c4" value="≪ 0.25×" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="704" y="362" width="180" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Row 2 -->
+    <mxCell id="r2h" value="激活参数比例" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;fontSize=9;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="64" y="390" width="152" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="r2c1" value="100%" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="224" y="390" width="152" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="r2c2" value="100%" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#ef4444;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="384" y="390" width="152" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="r2c3" value="~6%" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#10b981;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="544" y="390" width="152" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="r2c4" value="~6%" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="704" y="390" width="180" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Row 3 -->
+    <mxCell id="r3h" value="推理成本" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=9;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="64" y="418" width="152" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="r3c1" value="很低" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#10b981;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="224" y="418" width="152" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="r3c2" value="极高" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#ef4444;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="384" y="418" width="152" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="r3c3" value="低" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#10b981;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="544" y="418" width="152" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="r3c4" value="很低" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=9;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="704" y="418" width="180" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Bottom insight -->
+    <mxCell id="insight" value="共同方向不是「更强」——是能在现有 GPU 上跑得动。效果是副产品，推理可行性才是主驱动" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=none;fontSize=10;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="180" y="468" width="740" height="32" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel></diagram></mxfile>

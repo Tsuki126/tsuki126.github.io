@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://tsuki126.github.io/images/favicon.svg" />
+<title>Directions | Tsuki126</title>
+<meta name="title" content="Directions" />
+<meta name="description" content="安全工程师 · 企业安全体系 · AI 安全 · 云原生 · 数据安全" />
+<meta name="keywords" content="" />
+
+
+<meta property="og:url" content="https://tsuki126.github.io/directions/">
+	<meta property="og:site_name" content="Tsuki126">
+	<meta property="og:title" content="Directions">
+	<meta property="og:description" content="安全工程师 · 企业安全体系 · AI 安全 · 云原生 · 数据安全">
+	<meta property="og:locale" content="zh_CN">
+	<meta property="og:type" content="website">
+
+
+
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Directions">
+	<meta name="twitter:description" content="安全工程师 · 企业安全体系 · AI 安全 · 云原生 · 数据安全">
+
+
+
+
+	<meta itemprop="name" content="Directions">
+	<meta itemprop="description" content="安全工程师 · 企业安全体系 · AI 安全 · 云原生 · 数据安全">
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <link rel="alternate" type="application/rss+xml" href="https://tsuki126.github.io/directions/index.xml" title="Tsuki126" />
+  <style>
+  :root {
+    --width: 720px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: Verdana, sans-serif;
+    --font-scale: 1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  time {
+    font-family: monospace;
+    font-style: normal;
+    font-size: 15px;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--blockquote-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  .highlight pre,
+  .code pre {
+    min-width: 100%;
+    width: max-content;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: var(--visited-color);
+  }
+
+</style>
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/chroma.css">
+<meta name="search-index" content="/index.json">
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+   
+  document.querySelectorAll('.doc figure img, .doc img').forEach(function (img) {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', function () {
+      var overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.86);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;animation:fadeIn .2s;';
+      overlay.addEventListener('click', function () { overlay.remove(); });
+      var full = document.createElement('img');
+      full.src = img.src;
+      full.style.cssText = 'max-width:90%;max-height:90%;box-shadow:0 4px 24px rgba(0,0,0,.4);';
+      overlay.appendChild(full);
+      document.body.appendChild(overlay);
+    });
+  });
+
+   
+  var input = document.querySelector('[data-search]');
+  var box = document.querySelector('[data-search-results]');
+  var hint = document.querySelector('[data-search-hint]');
+  var hidable = Array.prototype.slice.call(document.querySelectorAll('[data-search-hide]'));
+  var viewbar = document.querySelector('.viewbar');
+  var seriesGrid = document.querySelector('.series-grid');
+  var seriesItems = seriesGrid ? Array.prototype.slice.call(seriesGrid.children) : [];
+  var seriesPager = document.querySelector('.series-pager');
+  var seriesEmpty = document.querySelector('[data-series-search-empty]');
+  var seriesSavedDisplay = null;
+  var seriesSavedPagerDisplay = null;
+  if (!input || !box) return;
+
+  var data = null;
+  var endpoint = (document.querySelector('meta[name="search-index"]') || {}).content || '/index.json';
+
+  function load() {
+    if (data) return Promise.resolve(data);
+    return fetch(endpoint).then(function (r) { return r.json(); }).then(function (json) { data = json; return json; });
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  function currentView() {
+    var active = document.querySelector('.view.is-on');
+    return active ? active.dataset.panel : 'time';
+  }
+
+  function clearSeriesSearch() {
+    if (seriesSavedDisplay) {
+      seriesItems.forEach(function (item, index) {
+        item.style.display = seriesSavedDisplay[index] || '';
+      });
+    }
+    if (seriesPager && seriesSavedPagerDisplay !== null) {
+      seriesPager.style.display = seriesSavedPagerDisplay;
+    }
+    if (seriesEmpty) seriesEmpty.hidden = true;
+    seriesSavedDisplay = null;
+    seriesSavedPagerDisplay = null;
+  }
+
+  function searchSeries(query) {
+    if (!seriesItems.length) return;
+    if (!seriesSavedDisplay) {
+      seriesSavedDisplay = seriesItems.map(function (item) { return item.style.display; });
+      seriesSavedPagerDisplay = seriesPager ? seriesPager.style.display : null;
+    }
+    var matches = 0;
+    seriesItems.forEach(function (item) {
+      var name = item.querySelector('.serie-n');
+      var latest = item.querySelector('.serie-t');
+      var haystack = [
+        name ? name.textContent : '',
+        latest ? latest.textContent : '',
+        item.dataset.searchTerms || ''
+      ].join(' ').toLowerCase();
+      var matched = !query || haystack.indexOf(query) !== -1;
+      item.style.display = matched ? '' : 'none';
+      if (matched) matches += 1;
+    });
+    if (seriesPager) seriesPager.style.display = query ? 'none' : '';
+    if (seriesEmpty) seriesEmpty.hidden = !query || matches > 0;
+    box.innerHTML = '';
+    hidable.forEach(function (el) { el.style.display = ''; });
+    if (viewbar) viewbar.classList.remove('is-searching');
+  }
+
+  function show(list, query) {
+    if (!query) {
+      box.innerHTML = '';
+      hidable.forEach(function (el) { el.style.display = ''; });
+      if (viewbar) viewbar.classList.remove('is-searching');
+      if (hint) hint.textContent = (data ? data.length : 0) + ' 条记录';
+      return;
+    }
+    hidable.forEach(function (el) { el.style.display = 'none'; });
+    if (viewbar) viewbar.classList.add('is-searching');
+    if (hint) hint.textContent = list.length + ' 条结果';
+    if (!list.length) {
+      box.innerHTML = '<p class="hub-search-empty">没有匹配的内容。</p>';
+      return;
+    }
+    if (input.dataset.searchSection === 'life' || input.dataset.searchSection === 'daily') {
+      box.innerHTML = '<div class="list-search-summary"><span>搜索结果</span><span>' + list.length + ' 篇</span></div>' +
+        '<div class="list-search-list">' + list.map(function (p) {
+          return '<a class="timeline-article" href="' + esc(p.url) + '">' +
+            '<span class="timeline-article-meta">' +
+              '<span class="timeline-article-date">' + esc(p.date) + '</span>' +
+            '</span>' +
+            '<span class="timeline-article-title">' + esc(p.title) + '</span>' +
+            ((p.summary || p.desc) ? '<span class="timeline-article-summary">' + esc(p.summary || p.desc) + '</span>' : '') +
+            '<span class="timeline-article-arrow" aria-hidden="true">↗</span>' +
+          '</a>';
+        }).join('') + '</div>';
+      return;
+    }
+    if (input.dataset.searchSection === 'professional') {
+      box.innerHTML = '<div class="list-search-summary"><span>搜索结果</span><span>' + list.length + ' 篇</span></div>' +
+        '<div class="list-search-list">' + list.map(function (p) {
+          return '<a class="timeline-article" href="' + esc(p.url) + '">' +
+            '<span class="timeline-article-meta">' +
+              (p.series ? '<span class="timeline-article-series">' + esc(p.series) + '</span>' : '') +
+              '<span class="timeline-article-date">' + esc(p.date) + '</span>' +
+            '</span>' +
+            '<span class="timeline-article-title">' + esc(p.title) + '</span>' +
+            (p.desc ? '<span class="timeline-article-summary">' + esc(p.desc) + '</span>' : '') +
+            '<span class="timeline-article-arrow" aria-hidden="true">↗</span>' +
+          '</a>';
+        }).join('') + '</div>';
+      return;
+    }
+    box.innerHTML = '<ul class="entries">' + list.map(function (p) {
+      return '<li><a class="entry" href="' + esc(p.url) + '">' +
+        '<span class="entry-title">' + esc(p.title) + '</span>' +
+        '<span class="entry-meta">' + esc(p.date) + ' · ' + (p.section === 'blog' ? '文章' : '随笔') + '</span>' +
+        (p.desc ? '<span class="entry-sum">' + esc(p.desc) + '</span>' : '') +
+        '</a></li>';
+    }).join('') + '</ul>';
+  }
+
+  function run() {
+    var q = input.value.trim().toLowerCase();
+    if (currentView() === 'series') {
+      if (!q) {
+        clearSeriesSearch();
+        box.innerHTML = '';
+        hidable.forEach(function (el) { el.style.display = ''; });
+        if (viewbar) viewbar.classList.remove('is-searching');
+        return;
+      }
+      searchSeries(q);
+      return;
+    }
+    clearSeriesSearch();
+    load().then(function (list) {
+      if (!q) { show([], ''); return; }
+      var scoped = input.dataset.searchSection ? list.filter(function (p) {
+        return p.section === input.dataset.searchSection;
+      }) : list;
+      var hits = scoped.filter(function (p) {
+        var directions = Array.isArray(p.directions) ? p.directions : (p.direction || []);
+        var tracks = Array.isArray(p.tracks) ? p.tracks : (p.track || []);
+        var hay = [
+          p.title, p.desc, p.summary, p.series, p.note_type_name,
+          p.life_series_name,
+          (p.tags || []).join(' '), (p.track_names || []).join(' '),
+          directions.join(' '), tracks.join(' ')
+        ].join(' ').toLowerCase();
+        return hay.indexOf(q) !== -1;
+      });
+      show(hits, q);
+    });
+  }
+
+  load().then(function (list) { show([], ''); }).catch(function () {
+    if (hint) hint.textContent = '';
+  });
+  input.addEventListener('input', run);
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { input.value = ''; run(); }
+  });
+
+   
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault(); input.focus(); input.select();
+    }
+  });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+   
+  var tabs = document.querySelectorAll('.viewtabs button');
+  if (tabs.length) {
+    var panels = document.querySelectorAll('[data-panel]');
+    function showView(v, animate) {
+      tabs.forEach(function (b) { b.classList.toggle('is-on', b.dataset.view === v); });
+      panels.forEach(function (p) {
+        var active = p.dataset.panel === v;
+        p.classList.toggle('is-on', active);
+        p.classList.remove('is-switching');
+        if (active && animate !== false) {
+          void p.offsetWidth;
+          p.classList.add('is-switching');
+        }
+      });
+      var searchInput = document.querySelector('[data-search]');
+      if (searchInput) {
+        var seriesPlaceholder = searchInput.dataset.placeholderSeries || '搜索专题…';
+        searchInput.placeholder = v === 'series' ? seriesPlaceholder : searchInput.dataset.placeholderTime || '搜索标题、系列、标签…';
+      }
+      try {
+        if (v === 'time') history.replaceState(null, '', location.pathname + '?view=time' + location.hash);
+        else history.replaceState(null, '', location.pathname + '?view=series' + location.hash);
+      } catch (e) {}
+    }
+    tabs.forEach(function (b) {
+      b.addEventListener('click', function () {
+        showView(b.dataset.view);
+        var searchInput = document.querySelector('[data-search]');
+        if (searchInput && searchInput.value) {
+          searchInput.value = '';
+          searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      });
+    });
+    var requestedView = new URLSearchParams(location.search).get('view');
+    if (requestedView === 'time' || requestedView === 'series') showView(requestedView, false);
+  }
+
+   
+  var grid = document.querySelector('.series-grid');
+  var pager = document.querySelector('.series-pager');
+  if (grid && pager) {
+    var items = Array.prototype.slice.call(grid.children);
+    var size = Number(grid.dataset.pageSize) || 9;
+    var pages = Math.ceil(items.length / size);
+    var cur = 1;
+    function render() {
+      items.forEach(function (el, i) {
+        el.style.display = (i >= (cur - 1) * size && i < cur * size) ? '' : 'none';
+      });
+      if (pages <= 1) { pager.innerHTML = ''; return; }
+      var nums = '';
+      for (var i = 1; i <= pages; i++) {
+        nums += i === cur ? '<b>' + i + '</b>' : '<a href="#" data-p="' + i + '">' + i + '</a>';
+      }
+      pager.innerHTML = '<span>共 ' + items.length + ' 个系列 · 每页 ' + size + ' 个</span>' +
+                        '<span class="nums">' + nums + '</span>';
+      pager.querySelectorAll('a[data-p]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          e.preventDefault(); cur = Number(a.dataset.p); render();
+        });
+      });
+    }
+    render();
+  }
+
+   
+  var articleGrid = document.querySelector('.article-grid');
+  var articlePager = document.querySelector('.article-pager');
+  if (articleGrid && articlePager) {
+    var articleItems = Array.prototype.slice.call(articleGrid.children);
+    var articleSize = Number(articleGrid.dataset.pageSize) || 6;
+    var articlePages = Math.ceil(articleItems.length / articleSize);
+    var articleCurrent = 1;
+
+    function articlePageLink(page, label, className) {
+      return '<a href="#" data-page="' + page + '"' + (className ? ' class="' + className + '"' : '') + '>' + label + '</a>';
+    }
+
+    function renderArticlePager() {
+      articleItems.forEach(function (el, index) {
+        el.style.display = index >= (articleCurrent - 1) * articleSize && index < articleCurrent * articleSize ? '' : 'none';
+      });
+      if (articlePages <= 1) {
+        articlePager.innerHTML = '';
+        return;
+      }
+
+      var start = Math.max(1, articleCurrent - 2);
+      var end = Math.min(articlePages, articleCurrent + 2);
+      var nums = articleCurrent > 1 ? articlePageLink(articleCurrent - 1, '←', 'step') : '<span class="step is-off">←</span>';
+      if (start > 1) {
+        nums += articlePageLink(1, '1');
+        if (start > 2) nums += '<span class="gap">…</span>';
+      }
+      for (var page = start; page <= end; page += 1) {
+        nums += page === articleCurrent
+          ? '<b aria-current="page">' + page + '</b>'
+          : articlePageLink(page, String(page));
+      }
+      if (end < articlePages) {
+        if (end < articlePages - 1) nums += '<span class="gap">…</span>';
+        nums += articlePageLink(articlePages, String(articlePages));
+      }
+      nums += articleCurrent < articlePages ? articlePageLink(articleCurrent + 1, '→', 'step') : '<span class="step is-off">→</span>';
+
+      articlePager.innerHTML = '<span>共 ' + articleItems.length + ' 篇文章 · 每页 ' + articleSize + ' 篇</span>' +
+                                '<span class="nums">' + nums + '</span>';
+      articlePager.querySelectorAll('a[data-page]').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+          articleCurrent = Number(link.dataset.page);
+          renderArticlePager();
+          articlePager.scrollIntoView({ block: 'nearest' });
+        });
+      });
+    }
+
+    renderArticlePager();
+  }
+});
+</script>
+</head>
+
+<body>
+  <header><nav aria-label="站点导航">
+  
+  
+  
+  
+  <a href="/">首页</a>
+  
+  
+  <a href="/overview/">目录</a>
+  
+  
+  <a href="/professional/">专业</a>
+  
+  
+  <a href="/life/">生活</a>
+  
+  
+  <a href="/daily/">日常</a>
+  
+  
+  <a href="/about/">关于</a>
+  
+</nav>
+</header>
+  <main>
+
+
+<div class="list-page">
+  <div class="list-head">
+    <h1>Directions</h1>
+    <p>共 0 个条目。</p>
+  </div>
+  <div class="tag-cloud">
+    
+  </div>
+</div>
+
+
+
+
+  </main>
+  <footer><span>© 2026 Tsuki126</span>
+<span class="footer-links">
+  <a href="https://github.com/Tsuki126">GitHub</a>
+  <a href="/index.xml">RSS</a>
+  <a href="/professional/index.xml">专业订阅</a>
+  <a href="/life/index.xml">生活订阅</a>
+  <a href="/daily/index.xml">日常订阅</a>
+</span>
+</footer>
+
+  
+</body>
+
+</html>

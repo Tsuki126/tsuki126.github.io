@@ -1,0 +1,221 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="ai-agent-security" name="AI Agent 安全风险全景">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        
+        <!-- 背景容器 -->
+        <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;opacity=30;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="1120" height="820" as="geometry"/>
+        </mxCell>
+        
+        <!-- 标题 -->
+        <mxCell id="title" value="AI Agent 安全风险全景图" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#1a1a1a;" vertex="1" parent="1">
+          <mxGeometry x="400" y="60" width="400" height="40" as="geometry"/>
+        </mxCell>
+        
+        <!-- 中心：AI Agent 核心架构 -->
+        <mxCell id="core-container" value="AI Agent 核心" style="swimlane;startSize=40;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="320" width="320" height="280" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="llm" value="LLM 推理引擎" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="core-container">
+          <mxGeometry x="20" y="60" width="120" height="50" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="memory" value="记忆系统" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="core-container">
+          <mxGeometry x="180" y="60" width="120" height="50" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="tools" value="工具调用层" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="core-container">
+          <mxGeometry x="20" y="140" width="120" height="50" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="rag" value="RAG 知识库" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="core-container">
+          <mxGeometry x="180" y="140" width="120" height="50" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="orchestrator" value="编排控制器" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="core-container">
+          <mxGeometry x="100" y="210" width="120" height="50" as="geometry"/>
+        </mxCell>
+        
+        <!-- 左侧：输入层威胁 -->
+        <mxCell id="input-threats" value="输入层威胁" style="swimlane;startSize=40;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="320" width="280" height="280" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="prompt-injection" value="提示注入&#xa;Prompt Injection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="input-threats">
+          <mxGeometry x="20" y="60" width="240" height="45" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="jailbreak" value="越狱攻击&#xa;Jailbreak" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="input-threats">
+          <mxGeometry x="20" y="120" width="240" height="45" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="data-poisoning" value="数据投毒&#xa;Data Poisoning" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="input-threats">
+          <mxGeometry x="20" y="180" width="240" height="45" as="geometry"/>
+        </mxCell>
+        
+        <!-- 右侧：输出层威胁 -->
+        <mxCell id="output-threats" value="输出层威胁" style="swimlane;startSize=40;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="840" y="320" width="280" height="280" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="data-leakage" value="数据泄露&#xa;Data Leakage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="output-threats">
+          <mxGeometry x="20" y="60" width="240" height="45" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="hallucination" value="幻觉输出&#xa;Hallucination" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="output-threats">
+          <mxGeometry x="20" y="120" width="240" height="45" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="harmful-content" value="有害内容生成&#xa;Harmful Content" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="output-threats">
+          <mxGeometry x="20" y="180" width="240" height="45" as="geometry"/>
+        </mxCell>
+        
+        <!-- 上方：基础设施层威胁 -->
+        <mxCell id="infra-threats" value="基础设施层威胁" style="swimlane;startSize=40;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="120" width="320" height="140" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="supply-chain" value="供应链攻击" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="infra-threats">
+          <mxGeometry x="20" y="60" width="130" height="60" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="model-vuln" value="模型漏洞" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="infra-threats">
+          <mxGeometry x="170" y="60" width="130" height="60" as="geometry"/>
+        </mxCell>
+        
+        <!-- 下方：运行时威胁 -->
+        <mxCell id="runtime-threats" value="运行时威胁" style="swimlane;startSize=40;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="660" width="320" height="180" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="privilege-escalation" value="权限提升" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="runtime-threats">
+          <mxGeometry x="20" y="60" width="85" height="50" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="tool-abuse" value="工具滥用" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="runtime-threats">
+          <mxGeometry x="120" y="60" width="85" height="50" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="sandbox-escape" value="沙箱逃逸" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="runtime-threats">
+          <mxGeometry x="215" y="60" width="85" height="50" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="resource-exhaustion" value="资源耗尽 DoS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1;" vertex="1" parent="runtime-threats">
+          <mxGeometry x="70" y="120" width="180" height="40" as="geometry"/>
+        </mxCell>
+        
+        <!-- 攻击路径箭头 -->
+        <mxCell id="arrow1" value="" style="endArrow=classic;html=1;strokeColor=#d79b00;strokeWidth=2;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="prompt-injection" target="llm">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="450" as="sourcePoint"/>
+            <mxPoint x="450" y="400" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow2" value="" style="endArrow=classic;html=1;strokeColor=#d79b00;strokeWidth=2;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="jailbreak">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="450" as="sourcePoint"/>
+            <mxPoint x="460" y="425" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow3" value="" style="endArrow=classic;html=1;strokeColor=#d79b00;strokeWidth=2;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="data-poisoning" target="rag">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="550" as="sourcePoint"/>
+            <mxPoint x="450" y="500" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow4" value="" style="endArrow=classic;html=1;strokeColor=#d79b00;strokeWidth=2;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="memory" target="data-leakage">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="450" as="sourcePoint"/>
+            <mxPoint x="750" y="400" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow5" value="" style="endArrow=classic;html=1;strokeColor=#d79b00;strokeWidth=2;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="llm">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="700" y="450" as="sourcePoint"/>
+            <mxPoint x="860" y="425" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow6" value="" style="endArrow=classic;html=1;strokeColor=#d79b00;strokeWidth=2;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="supply-chain" target="llm">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="500" y="300" as="sourcePoint"/>
+            <mxPoint x="550" y="250" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow7" value="" style="endArrow=classic;html=1;strokeColor=#d79b00;strokeWidth=2;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="model-vuln" target="memory">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="650" y="300" as="sourcePoint"/>
+            <mxPoint x="700" y="250" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow8" value="" style="endArrow=classic;html=1;strokeColor=#d79b00;strokeWidth=2;dashed=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="privilege-escalation" target="tools">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="500" y="650" as="sourcePoint"/>
+            <mxPoint x="550" y="600" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow9" value="" style="endArrow=classic;html=1;strokeColor=#d79b00;strokeWidth=2;dashed=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="tool-abuse" target="orchestrator">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="550" y="650" as="sourcePoint"/>
+            <mxPoint x="600" y="600" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow10" value="" style="endArrow=classic;html=1;strokeColor=#d79b00;strokeWidth=2;dashed=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="sandbox-escape">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="650" y="650" as="sourcePoint"/>
+            <mxPoint x="680" y="600" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- 图例 -->
+        <mxCell id="legend-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="720" width="280" height="120" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="legend-title" value="图例" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="730" width="60" height="30" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="legend-threat" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="100" y="765" width="30" height="20" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="legend-threat-text" value="安全威胁" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="140" y="762" width="80" height="25" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="legend-core" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="100" y="795" width="30" height="20" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="legend-core-text" value="核心组件" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="140" y="792" width="80" height="25" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="legend-arrow" value="" style="endArrow=classic;html=1;strokeColor=#d79b00;strokeWidth=2;dashed=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="240" y="775" as="sourcePoint"/>
+            <mxPoint x="300" y="775" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="legend-arrow-text" value="攻击路径" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="240" y="785" width="80" height="25" as="geometry"/>
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

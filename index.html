@@ -6,41 +6,33 @@
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="shortcut icon" href="https://tsuki126.github.io/images/avatar.png" />
+<link rel="shortcut icon" href="https://tsuki126.github.io/images/favicon.svg" />
 <title>首页 | Tsuki126</title>
 <meta name="title" content="首页" />
-<meta name="description" content="安全工程师的技术思考与实践笔记" />
-<meta name="keywords" content="llm 基础,ai 智能体,llm 数学基础," />
+<meta name="description" content="安全工程师 · 企业安全体系 · AI 安全 · 云原生 · 数据安全" />
+<meta name="keywords" content="" />
 
 
 <meta property="og:url" content="https://tsuki126.github.io/">
 	<meta property="og:site_name" content="Tsuki126">
 	<meta property="og:title" content="首页">
-	<meta property="og:description" content="Write what I think.
-探索未知，思考本质，实践真知。">
+	<meta property="og:description" content="安全工程师 · 企业安全体系 · AI 安全 · 云原生 · 数据安全">
 	<meta property="og:locale" content="zh_CN">
 	<meta property="og:type" content="website">
-		<meta property="og:image" content="https://tsuki126.github.io/images/avatar.png">
 
 
 
 
-	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:image" content="https://tsuki126.github.io/images/avatar.png">
+	<meta name="twitter:card" content="summary">
 	<meta name="twitter:title" content="首页">
-	<meta name="twitter:description" content="Write what I think.
-探索未知，思考本质，实践真知。">
+	<meta name="twitter:description" content="安全工程师 · 企业安全体系 · AI 安全 · 云原生 · 数据安全">
 
 
 
 
 	<meta itemprop="name" content="首页">
-	<meta itemprop="description" content="Write what I think.
-探索未知，思考本质，实践真知。">
-	<meta itemprop="datePublished" content="2026-06-14T00:00:00+00:00">
-	<meta itemprop="dateModified" content="2026-06-14T00:00:00+00:00">
-	<meta itemprop="wordCount" content="19">
-	<meta itemprop="image" content="https://tsuki126.github.io/images/avatar.png">
+	<meta itemprop="description" content="安全工程师 · 企业安全体系 · AI 安全 · 云原生 · 数据安全">
+	<meta itemprop="dateModified" content="2026-10-19T09:15:15+08:00">
 <meta name="referrer" content="no-referrer-when-downgrade" />
 
   <link rel="alternate" type="application/rss+xml" href="https://tsuki126.github.io/index.xml" title="Tsuki126" />
@@ -204,291 +196,491 @@
 
 </style>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
 
 
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" onload="mermaid.initialize({startOnLoad: true, theme: 'base', themeVariables: {primaryColor: '#e8f0fe', primaryTextColor: '#1a1a2e', primaryBorderColor: '#a0b4d0', lineColor: '#6b7b8d', secondaryColor: '#f0f4f8', tertiaryColor: '#fafbfc', fontFamily: '-apple-system, sans-serif', fontSize: '14px'}});"></script>
 
-<style>
- 
-a { color: #2563eb; }
-a:hover { color: #1d4ed8; }
-body { line-height: 1.8; max-width: 900px; padding: 20px 40px; }
-pre { border-radius: 4px; }
-hr { border: none; border-top: 1px solid #e5e7eb; margin: 1.5em 0; }
 
- 
-@media (min-width: 1200px) {
-    body { max-width: 960px; }
-}
 
- 
-img[src*="cover"] {
-    width: 100%;
-    border-radius: 6px;
-}
 
- 
-main img {
-    display: block;
-    height: auto;
-    margin: 1.4em auto;
-    border-radius: 6px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-    max-width: 100%;
-}
- 
 
- 
-.mermaid {
-    text-align: center;
-    margin: 1.5em 0;
-    overflow-x: auto;
-}
-.language-mermaid {
-    display: none;
-}
 
- 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background-color: #fff !important;
-        --heading-color: #222 !important;
-        --text-color: #444 !important;
-        --link-color: #3273dc !important;
-        --visited-color: #8b6fcb !important;
-        --blockquote-color: #222 !important;
+
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/chroma.css">
+<meta name="search-index" content="/index.json">
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+   
+  document.querySelectorAll('.doc figure img, .doc img').forEach(function (img) {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', function () {
+      var overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.86);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;animation:fadeIn .2s;';
+      overlay.addEventListener('click', function () { overlay.remove(); });
+      var full = document.createElement('img');
+      full.src = img.src;
+      full.style.cssText = 'max-width:90%;max-height:90%;box-shadow:0 4px 24px rgba(0,0,0,.4);';
+      overlay.appendChild(full);
+      document.body.appendChild(overlay);
+    });
+  });
+
+   
+  var input = document.querySelector('[data-search]');
+  var box = document.querySelector('[data-search-results]');
+  var hint = document.querySelector('[data-search-hint]');
+  var hidable = Array.prototype.slice.call(document.querySelectorAll('[data-search-hide]'));
+  var viewbar = document.querySelector('.viewbar');
+  var seriesGrid = document.querySelector('.series-grid');
+  var seriesItems = seriesGrid ? Array.prototype.slice.call(seriesGrid.children) : [];
+  var seriesPager = document.querySelector('.series-pager');
+  var seriesEmpty = document.querySelector('[data-series-search-empty]');
+  var seriesSavedDisplay = null;
+  var seriesSavedPagerDisplay = null;
+  if (!input || !box) return;
+
+  var data = null;
+  var endpoint = (document.querySelector('meta[name="search-index"]') || {}).content || '/index.json';
+
+  function load() {
+    if (data) return Promise.resolve(data);
+    return fetch(endpoint).then(function (r) { return r.json(); }).then(function (json) { data = json; return json; });
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  function currentView() {
+    var active = document.querySelector('.view.is-on');
+    return active ? active.dataset.panel : 'time';
+  }
+
+  function clearSeriesSearch() {
+    if (seriesSavedDisplay) {
+      seriesItems.forEach(function (item, index) {
+        item.style.display = seriesSavedDisplay[index] || '';
+      });
     }
-    body { background-color: #fff !important; }
-    header { background-color: #fff !important; }
-    footer { color: #999 !important; }
-}
-
- 
-main code { white-space: nowrap; }
- 
-.katex { font-size: 0.95em; }
- 
-main .highlight code { white-space: pre; }
- 
- 
-main pre code { font-size: 1em; }
-
- 
-main table {
-    border-collapse: collapse;
-    margin: 1.5em auto;
-    font-size: 0.92em;
-    min-width: 55%;
-    display: table;
-}
-main th, main td {
-    border: 1px solid #e5e7eb;
-    padding: 8px 14px;
-    text-align: left;
-}
-main th {
-    background: #f8fafc;
-    font-weight: 600;
-    color: #1e293b;
-}
-main tr:nth-child(even) { background: #fafbfc; }
-main tr:hover { background: #f1f5f9; }
-
- 
-footer {
-    padding: 40px 0 20px;
-    font-size: 0.85em;
-    color: #999;
-}
-
- 
-
- 
-.category-list {
-    margin: 0.5em 0 0.8em;
-    line-height: 1.6;
-}
-.category-list a {
-    color: #374151;
-    text-decoration: none;
-    font-size: 0.88em;
-}
-.category-list a:hover {
-    color: #2563eb;
-}
-.category-list .sep {
-    color: #d1d5db;
-    font-size: 0.7em;
-    margin: 0 6px;
-}
-
- 
-.blog-list {
-    margin-top: 1em;
-}
-.blog-item {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    margin-bottom: 0.5em;
-    padding-bottom: 0.5em;
-    border-bottom: 1px solid #eee;
-    line-height: 1.6;
-}
-.blog-item:last-child {
-    border-bottom: none;
-}
-.blog-meta {
-    font-size: 0.85em;
-    color: #999;
-    flex-shrink: 0;
-}
-.blog-title {
-    font-size: 0.85em;
-    color: #2563eb;
-    text-decoration: none;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-.blog-title:hover {
-    color: #1d4ed8;
-}
-.blog-body {
-    font-size: 0.85em;
-    color: #666;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    flex: 1;
-    min-width: 0;
-    max-width: 360px;
-}
-
- 
-.notes-list {
-    margin-top: 1em;
-}
-.note-year {
-    font-weight: bold;
-    font-size: 0.95em;
-    margin: 1.2em 0 0.4em;
-    color: #222;
-}
-.note-item {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    margin-bottom: 0.5em;
-    padding-bottom: 0.5em;
-    border-bottom: 1px solid #eee;
-    line-height: 1.6;
-}
-.note-item:last-child {
-    border-bottom: none;
-}
-.note-meta {
-    font-size: 0.85em;
-    color: #999;
-    flex-shrink: 0;
-}
-.note-title {
-    font-size: 0.85em;
-    color: #2563eb;
-    text-decoration: none;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-.note-title:hover {
-    color: #1d4ed8;
-}
-.note-body {
-    font-size: 0.85em;
-    color: #666;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    flex: 1;
-    min-width: 0;
-    max-width: 360px;
-}
-
- 
-.note-date {
-    font-size: 0.85em;
-    color: #999;
-    margin-top: 0;
-}
-
- 
-.about-page {
-    margin: 2em 0;
-}
-.about-page .about-header {
-    margin-bottom: 1.5em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid #e5e7eb;
-}
-.about-page .about-header p {
-    margin: 0;
-}
-.about-page .about-exp p {
-    margin: 0.3em 0;
-}
-.about-page .about-exp p + p {
-    margin-top: 1em;
-}
-.about-page .about-contact {
-    margin-top: 1.5em;
-    padding-top: 1em;
-    border-top: 1px solid #e5e7eb;
-    font-size: 0.9em;
-    color: #666;
-}
-.about-page .about-contact code {
-    font-size: 0.85em;
-    background: #f5f5f5;
-    padding: 2px 6px;
-    border-radius: 3px;
-}
-
- 
-@media (max-width: 600px) {
-    .blog-body, .note-body {
-        display: none;
+    if (seriesPager && seriesSavedPagerDisplay !== null) {
+      seriesPager.style.display = seriesSavedPagerDisplay;
     }
-    .blog-item, .note-item {
-        gap: 8px;
+    if (seriesEmpty) seriesEmpty.hidden = true;
+    seriesSavedDisplay = null;
+    seriesSavedPagerDisplay = null;
+  }
+
+  function searchSeries(query) {
+    if (!seriesItems.length) return;
+    if (!seriesSavedDisplay) {
+      seriesSavedDisplay = seriesItems.map(function (item) { return item.style.display; });
+      seriesSavedPagerDisplay = seriesPager ? seriesPager.style.display : null;
     }
-}
-</style></head>
+    var matches = 0;
+    seriesItems.forEach(function (item) {
+      var name = item.querySelector('.serie-n');
+      var latest = item.querySelector('.serie-t');
+      var haystack = [
+        name ? name.textContent : '',
+        latest ? latest.textContent : '',
+        item.dataset.searchTerms || ''
+      ].join(' ').toLowerCase();
+      var matched = !query || haystack.indexOf(query) !== -1;
+      item.style.display = matched ? '' : 'none';
+      if (matched) matches += 1;
+    });
+    if (seriesPager) seriesPager.style.display = query ? 'none' : '';
+    if (seriesEmpty) seriesEmpty.hidden = !query || matches > 0;
+    box.innerHTML = '';
+    hidable.forEach(function (el) { el.style.display = ''; });
+    if (viewbar) viewbar.classList.remove('is-searching');
+  }
+
+  function show(list, query) {
+    if (!query) {
+      box.innerHTML = '';
+      hidable.forEach(function (el) { el.style.display = ''; });
+      if (viewbar) viewbar.classList.remove('is-searching');
+      if (hint) hint.textContent = (data ? data.length : 0) + ' 条记录';
+      return;
+    }
+    hidable.forEach(function (el) { el.style.display = 'none'; });
+    if (viewbar) viewbar.classList.add('is-searching');
+    if (hint) hint.textContent = list.length + ' 条结果';
+    if (!list.length) {
+      box.innerHTML = '<p class="hub-search-empty">没有匹配的内容。</p>';
+      return;
+    }
+    if (input.dataset.searchSection === 'life' || input.dataset.searchSection === 'daily') {
+      box.innerHTML = '<div class="list-search-summary"><span>搜索结果</span><span>' + list.length + ' 篇</span></div>' +
+        '<div class="list-search-list">' + list.map(function (p) {
+          return '<a class="timeline-article" href="' + esc(p.url) + '">' +
+            '<span class="timeline-article-meta">' +
+              '<span class="timeline-article-date">' + esc(p.date) + '</span>' +
+            '</span>' +
+            '<span class="timeline-article-title">' + esc(p.title) + '</span>' +
+            ((p.summary || p.desc) ? '<span class="timeline-article-summary">' + esc(p.summary || p.desc) + '</span>' : '') +
+            '<span class="timeline-article-arrow" aria-hidden="true">↗</span>' +
+          '</a>';
+        }).join('') + '</div>';
+      return;
+    }
+    if (input.dataset.searchSection === 'professional') {
+      box.innerHTML = '<div class="list-search-summary"><span>搜索结果</span><span>' + list.length + ' 篇</span></div>' +
+        '<div class="list-search-list">' + list.map(function (p) {
+          return '<a class="timeline-article" href="' + esc(p.url) + '">' +
+            '<span class="timeline-article-meta">' +
+              (p.series ? '<span class="timeline-article-series">' + esc(p.series) + '</span>' : '') +
+              '<span class="timeline-article-date">' + esc(p.date) + '</span>' +
+            '</span>' +
+            '<span class="timeline-article-title">' + esc(p.title) + '</span>' +
+            (p.desc ? '<span class="timeline-article-summary">' + esc(p.desc) + '</span>' : '') +
+            '<span class="timeline-article-arrow" aria-hidden="true">↗</span>' +
+          '</a>';
+        }).join('') + '</div>';
+      return;
+    }
+    box.innerHTML = '<ul class="entries">' + list.map(function (p) {
+      return '<li><a class="entry" href="' + esc(p.url) + '">' +
+        '<span class="entry-title">' + esc(p.title) + '</span>' +
+        '<span class="entry-meta">' + esc(p.date) + ' · ' + (p.section === 'blog' ? '文章' : '随笔') + '</span>' +
+        (p.desc ? '<span class="entry-sum">' + esc(p.desc) + '</span>' : '') +
+        '</a></li>';
+    }).join('') + '</ul>';
+  }
+
+  function run() {
+    var q = input.value.trim().toLowerCase();
+    if (currentView() === 'series') {
+      if (!q) {
+        clearSeriesSearch();
+        box.innerHTML = '';
+        hidable.forEach(function (el) { el.style.display = ''; });
+        if (viewbar) viewbar.classList.remove('is-searching');
+        return;
+      }
+      searchSeries(q);
+      return;
+    }
+    clearSeriesSearch();
+    load().then(function (list) {
+      if (!q) { show([], ''); return; }
+      var scoped = input.dataset.searchSection ? list.filter(function (p) {
+        return p.section === input.dataset.searchSection;
+      }) : list;
+      var hits = scoped.filter(function (p) {
+        var directions = Array.isArray(p.directions) ? p.directions : (p.direction || []);
+        var tracks = Array.isArray(p.tracks) ? p.tracks : (p.track || []);
+        var hay = [
+          p.title, p.desc, p.summary, p.series, p.note_type_name,
+          p.life_series_name,
+          (p.tags || []).join(' '), (p.track_names || []).join(' '),
+          directions.join(' '), tracks.join(' ')
+        ].join(' ').toLowerCase();
+        return hay.indexOf(q) !== -1;
+      });
+      show(hits, q);
+    });
+  }
+
+  load().then(function (list) { show([], ''); }).catch(function () {
+    if (hint) hint.textContent = '';
+  });
+  input.addEventListener('input', run);
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { input.value = ''; run(); }
+  });
+
+   
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault(); input.focus(); input.select();
+    }
+  });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+   
+  var tabs = document.querySelectorAll('.viewtabs button');
+  if (tabs.length) {
+    var panels = document.querySelectorAll('[data-panel]');
+    function showView(v, animate) {
+      tabs.forEach(function (b) { b.classList.toggle('is-on', b.dataset.view === v); });
+      panels.forEach(function (p) {
+        var active = p.dataset.panel === v;
+        p.classList.toggle('is-on', active);
+        p.classList.remove('is-switching');
+        if (active && animate !== false) {
+          void p.offsetWidth;
+          p.classList.add('is-switching');
+        }
+      });
+      var searchInput = document.querySelector('[data-search]');
+      if (searchInput) {
+        var seriesPlaceholder = searchInput.dataset.placeholderSeries || '搜索专题…';
+        searchInput.placeholder = v === 'series' ? seriesPlaceholder : searchInput.dataset.placeholderTime || '搜索标题、系列、标签…';
+      }
+      try {
+        if (v === 'time') history.replaceState(null, '', location.pathname + '?view=time' + location.hash);
+        else history.replaceState(null, '', location.pathname + '?view=series' + location.hash);
+      } catch (e) {}
+    }
+    tabs.forEach(function (b) {
+      b.addEventListener('click', function () {
+        showView(b.dataset.view);
+        var searchInput = document.querySelector('[data-search]');
+        if (searchInput && searchInput.value) {
+          searchInput.value = '';
+          searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      });
+    });
+    var requestedView = new URLSearchParams(location.search).get('view');
+    if (requestedView === 'time' || requestedView === 'series') showView(requestedView, false);
+  }
+
+   
+  var grid = document.querySelector('.series-grid');
+  var pager = document.querySelector('.series-pager');
+  if (grid && pager) {
+    var items = Array.prototype.slice.call(grid.children);
+    var size = Number(grid.dataset.pageSize) || 9;
+    var pages = Math.ceil(items.length / size);
+    var cur = 1;
+    function render() {
+      items.forEach(function (el, i) {
+        el.style.display = (i >= (cur - 1) * size && i < cur * size) ? '' : 'none';
+      });
+      if (pages <= 1) { pager.innerHTML = ''; return; }
+      var nums = '';
+      for (var i = 1; i <= pages; i++) {
+        nums += i === cur ? '<b>' + i + '</b>' : '<a href="#" data-p="' + i + '">' + i + '</a>';
+      }
+      pager.innerHTML = '<span>共 ' + items.length + ' 个系列 · 每页 ' + size + ' 个</span>' +
+                        '<span class="nums">' + nums + '</span>';
+      pager.querySelectorAll('a[data-p]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          e.preventDefault(); cur = Number(a.dataset.p); render();
+        });
+      });
+    }
+    render();
+  }
+
+   
+  var articleGrid = document.querySelector('.article-grid');
+  var articlePager = document.querySelector('.article-pager');
+  if (articleGrid && articlePager) {
+    var articleItems = Array.prototype.slice.call(articleGrid.children);
+    var articleSize = Number(articleGrid.dataset.pageSize) || 6;
+    var articlePages = Math.ceil(articleItems.length / articleSize);
+    var articleCurrent = 1;
+
+    function articlePageLink(page, label, className) {
+      return '<a href="#" data-page="' + page + '"' + (className ? ' class="' + className + '"' : '') + '>' + label + '</a>';
+    }
+
+    function renderArticlePager() {
+      articleItems.forEach(function (el, index) {
+        el.style.display = index >= (articleCurrent - 1) * articleSize && index < articleCurrent * articleSize ? '' : 'none';
+      });
+      if (articlePages <= 1) {
+        articlePager.innerHTML = '';
+        return;
+      }
+
+      var start = Math.max(1, articleCurrent - 2);
+      var end = Math.min(articlePages, articleCurrent + 2);
+      var nums = articleCurrent > 1 ? articlePageLink(articleCurrent - 1, '←', 'step') : '<span class="step is-off">←</span>';
+      if (start > 1) {
+        nums += articlePageLink(1, '1');
+        if (start > 2) nums += '<span class="gap">…</span>';
+      }
+      for (var page = start; page <= end; page += 1) {
+        nums += page === articleCurrent
+          ? '<b aria-current="page">' + page + '</b>'
+          : articlePageLink(page, String(page));
+      }
+      if (end < articlePages) {
+        if (end < articlePages - 1) nums += '<span class="gap">…</span>';
+        nums += articlePageLink(articlePages, String(articlePages));
+      }
+      nums += articleCurrent < articlePages ? articlePageLink(articleCurrent + 1, '→', 'step') : '<span class="step is-off">→</span>';
+
+      articlePager.innerHTML = '<span>共 ' + articleItems.length + ' 篇文章 · 每页 ' + articleSize + ' 篇</span>' +
+                                '<span class="nums">' + nums + '</span>';
+      articlePager.querySelectorAll('a[data-page]').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+          articleCurrent = Number(link.dataset.page);
+          renderArticlePager();
+          articlePager.scrollIntoView({ block: 'nearest' });
+        });
+      });
+    }
+
+    renderArticlePager();
+  }
+});
+</script>
+</head>
 
 <body>
-  <header><a href="/" class="title">
-  <h2>Tsuki126</h2>
-</a>
-<nav>
-<a href="/">首页</a>
-
-<a href="/notes/">随笔</a>
-
-<a href="/blog/">博客</a>
-
-<a href="/about/">关于</a>
-
+  <header><nav aria-label="站点导航">
+  
+  
+  
+  
+  <a href="/" aria-current="page">首页</a>
+  
+  
+  <a href="/overview/">目录</a>
+  
+  
+  <a href="/professional/">专业</a>
+  
+  
+  <a href="/life/">生活</a>
+  
+  
+  <a href="/daily/">日常</a>
+  
+  
+  <a href="/about/">关于</a>
+  
 </nav>
 </header>
   <main>
-<p><img src="/images/cover.jpg" alt="cover"></p>
-<p><strong>Write what I think.</strong></p>
-<p>探索未知，思考本质，实践真知。</p>
+<div class="home">
+  <section class="hero">
+    <h1 class="wordmark">Tsuki126</h1>
+    <div class="rule"></div>
+    <p class="hero-motto">探索未知，思考本质，实践真知</p>
+    <p class="hero-identity">安全工程师，记录企业安全体系建设实践</p>
+  </section>
 
+  
+<div class="sg-wrap">
+  <svg class="sg" viewBox="0 -28 1250 480" role="img" aria-label="安全架构网状图谱：身份与权限、入口与边界、运行时约束、数据与内容、感知与追溯、工程与运营、体系范式七个层及其代表机制">
+    <g>
+      <line class="sg-m" x1="731.4" y1="352.0" x2="440.4" y2="281.8"/>
+      <line class="sg-m" x1="440.4" y1="281.8" x2="185.4" y2="178.6"/>
+      <line class="sg-m" x1="185.4" y1="178.6" x2="481.7" y2="184.4"/>
+      <line class="sg-m" x1="481.7" y1="184.4" x2="706.8" y2="78.1"/>
+      <line class="sg-m" x1="706.8" y1="78.1" x2="864.8" y2="230.7"/>
+      <line class="sg-m" x1="864.8" y1="230.7" x2="977" y2="84.6"/>
+      <line class="sg-e" x1="731.4" y1="352.0" x2="697.0" y2="442.0"/>
+      <line class="sg-e" x1="731.4" y1="352.0" x2="570.2" y2="363.4"/>
+      <line class="sg-e" x1="440.4" y1="281.8" x2="367.0" y2="365.3"/>
+      <line class="sg-e" x1="440.4" y1="281.8" x2="268.5" y2="278.8"/>
+      <line class="sg-e" x1="185.4" y1="178.6" x2="25.7" y2="216.0"/>
+      <line class="sg-e" x1="185.4" y1="178.6" x2="148.7" y2="85.4"/>
+      <line class="sg-e" x1="481.7" y1="184.4" x2="358.8" y2="117.8"/>
+      <line class="sg-e" x1="481.7" y1="184.4" x2="539.1" y2="106.0"/>
+      <line class="sg-e" x1="706.8" y1="78.1" x2="563.2" y2="14.6"/>
+      <line class="sg-e" x1="706.8" y1="78.1" x2="752.0" y2="-12.0"/>
+      <line class="sg-e" x1="864.8" y1="230.7" x2="798.5" y2="155.4"/>
+      <line class="sg-e" x1="864.8" y1="230.7" x2="1025.9" y2="274.5"/>
+      <line class="sg-e" x1="977.0" y1="84.6" x2="1044.8" y2="168.0"/>
+      <line class="sg-e" x1="977.0" y1="84.6" x2="1140.3" y2="61.5"/>
+
+      <circle class="sg-ring" cx="731.4" cy="352.0" r="12.4"/>
+      <circle class="sg-hub" cx="731.4" cy="352.0" r="7.4"/>
+      <text class="sg-tl" x="752.3" y="357.9" text-anchor="start">身份与权限</text>
+      <circle class="sg-ring" cx="440.4" cy="281.8" r="12.4"/>
+      <circle class="sg-hub" cx="440.4" cy="281.8" r="7.4"/>
+      <text class="sg-tl" x="461.3" y="287.7" text-anchor="start">入口与边界</text>
+      <circle class="sg-ring" cx="185.4" cy="178.6" r="12.4"/>
+      <circle class="sg-hub" cx="185.4" cy="178.6" r="7.4"/>
+      <text class="sg-tl" x="206.3" y="218.6" text-anchor="start">运行时约束</text>
+      <circle class="sg-ring" cx="481.7" cy="184.4" r="12.4"/>
+      <circle class="sg-hub" cx="481.7" cy="184.4" r="7.4"/>
+      <text class="sg-tl" x="502.6" y="218.6" text-anchor="start">数据与内容</text>
+      <circle class="sg-ring" cx="706.8" cy="78.1" r="12.4"/>
+      <circle class="sg-hub" cx="706.8" cy="78.1" r="7.4"/>
+      <text class="sg-tl" x="727.7" y="83.9" text-anchor="start">感知与追溯</text>
+      <circle class="sg-ring" cx="864.8" cy="230.7" r="12.4"/>
+      <circle class="sg-hub" cx="864.8" cy="230.7" r="7.4"/>
+      <text class="sg-tl" x="885.7" y="236.5" text-anchor="start">工程与运营</text>
+      <circle class="sg-ring" cx="977.0" cy="84.6" r="12.4"/>
+      <circle class="sg-hub" cx="977.0" cy="84.6" r="7.4"/>
+      <text class="sg-tl" x="997.9" y="90.3" text-anchor="start">体系范式</text>
+
+      <circle class="sg-leaf" cx="697.0" cy="442.0" r="3.6"/>
+      <text class="sg-tc" x="709.2" y="446.9" text-anchor="start">零信任</text>
+      <circle class="sg-leaf" cx="570.2" cy="363.4" r="3.6"/>
+      <text class="sg-tc" x="558.2" y="368.3" text-anchor="end">IAM</text>
+      <circle class="sg-leaf" cx="367.0" cy="365.3" r="3.6"/>
+      <text class="sg-tc" x="355" y="370.2" text-anchor="end">WAF</text>
+      <circle class="sg-leaf" cx="268.5" cy="278.8" r="3.6"/>
+      <text class="sg-tc" x="256.6" y="283.7" text-anchor="end">API 网关</text>
+      <circle class="sg-leaf" cx="25.7" cy="216.0" r="3.6"/>
+      <text class="sg-tc" x="25.7" y="244.3" text-anchor="middle">RASP</text>
+      <circle class="sg-leaf" cx="148.7" cy="85.4" r="3.6"/>
+      <text class="sg-tc" x="161.0" y="90.2" text-anchor="start">EDR</text>
+      <circle class="sg-leaf" cx="358.8" cy="117.8" r="3.6"/>
+      <text class="sg-tc" x="346.8" y="122.8" text-anchor="end">DLP</text>
+      <circle class="sg-leaf" cx="539.1" cy="106.0" r="3.6"/>
+      <text class="sg-tc" x="551.3" y="110.9" text-anchor="start">加密</text>
+      <circle class="sg-leaf" cx="563.2" cy="14.6" r="3.6"/>
+      <text class="sg-tc" x="551.2" y="19.5" text-anchor="end">可观测</text>
+      <circle class="sg-leaf" cx="752.0" cy="-12.0" r="3.6"/>
+      <text class="sg-tc" x="764.2" y="-7.0" text-anchor="start">审计留痕</text>
+      <circle class="sg-leaf" cx="798.5" cy="155.4" r="3.6"/>
+      <text class="sg-tc" x="786.5" y="160.3" text-anchor="end">SDL</text>
+      <circle class="sg-leaf" cx="1025.9" cy="274.5" r="3.6"/>
+      <text class="sg-tc" x="1038.1" y="279.4" text-anchor="start">漏洞管理</text>
+      <circle class="sg-leaf" cx="1044.8" cy="168.0" r="3.6"/>
+      <text class="sg-tc" x="1057.0" y="172.9" text-anchor="start">纵深防御</text>
+      <circle class="sg-leaf" cx="1140.3" cy="61.5" r="3.6"/>
+      <text class="sg-tc" x="1152.5" y="66.4" text-anchor="start">原生安全</text>
+    </g>
+  </svg>
+</div>
+
+
+  
+  
+  
+  
+  
+
+  <section class="home-block">
+    <div class="hb-col">
+      <h2 class="sec-head">最近更新 <a href="/overview/">全部 →</a></h2>
+      <ul class="recent">
+        
+        <li class="empty">还没有内容</li>
+        
+      </ul>
+    </div>
+
+    <div class="hb-col">
+      <h2 class="sec-head">专题文章 <a href="/professional/?view=series">全部 →</a></h2>
+      <ul class="series-list">
+        
+        <li class="empty">还没有内容</li>
+        
+      </ul>
+    </div>
+  </section>
+</div>
 
   </main>
-  <footer>© 2026 Tsuki126 · <a href="https://github.com/Tsuki126">GitHub</a></footer>
+  <footer><span>© 2026 Tsuki126</span>
+<span class="footer-links">
+  <a href="https://github.com/Tsuki126">GitHub</a>
+  <a href="/index.xml">RSS</a>
+  <a href="/professional/index.xml">专业订阅</a>
+  <a href="/life/index.xml">生活订阅</a>
+  <a href="/daily/index.xml">日常订阅</a>
+</span>
+</footer>
 
   
 </body>

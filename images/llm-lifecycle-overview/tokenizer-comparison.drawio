@@ -1,0 +1,194 @@
+<mxfile host="app.diagrams.net"><diagram id="20srbbvz-q9cf" name="Page-1"><mxGraphModel dx="880" dy="540" grid="1" gridSize="8" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="880" pageHeight="540" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    
+    <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f9fc;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="0" y="0" width="880" height="540" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="title" value="Tokenizer 语言效率：英文 vs 中文" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1a1f36;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="190" y="16" width="500" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="sub" value="同一个 Tokenizer 对不同语言的编码效率差异巨大——直接影响推理成本和响应速度" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="140" y="44" width="600" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="titleLine" value="" style="endArrow=none;html=1;strokeColor=#3b82f6;strokeWidth=2.5;rounded=1;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="310" y="46" as="sourcePoint"/>
+        <mxPoint x="570" y="46" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Left Panel: English -->
+    <mxCell id="leftPanel" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="32" y="80" width="392" height="260" as="geometry"/>
+    </mxCell>
+    <mxCell id="leftHdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="32" y="80" width="392" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="leftHdrFill" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="32" y="108" width="392" height="8" as="geometry"/>
+    </mxCell>
+    <mxCell id="leftTitle" value="英文文本（英文为主 Tokenizer）" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="32" y="86" width="392" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Left: input -->
+    <mxCell id="leftInputLabel" value="输入" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="48" y="130" width="32" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="leftInputBox" value="The capital of France is Paris" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fc;strokeColor=#e2e8f0;fontSize=12;fontColor=#1e293b;fontFamily=Inter;align=left;spacingLeft=8;" vertex="1" parent="1">
+      <mxGeometry x="88" y="124" width="320" height="28" as="geometry"/>
+    </mxCell>
+    
+    <!-- Left: tokens -->
+    <mxCell id="leftTokenLabel" value="分词" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="48" y="176" width="32" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="left_t1" value="The" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#10b981;fontSize=10;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="88" y="170" width="44" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="left_t2" value="capital" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#10b981;fontSize=10;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="138" y="170" width="56" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="left_t3" value="of" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#10b981;fontSize=10;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="200" y="170" width="30" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="left_t4" value="France" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#10b981;fontSize=10;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="236" y="170" width="56" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="left_t5" value="is" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#10b981;fontSize=10;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="298" y="170" width="26" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="left_t6" value="Paris" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#10b981;fontSize=10;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="330" y="170" width="48" height="26" as="geometry"/>
+    </mxCell>
+    
+    <!-- Left: result -->
+    <mxCell id="leftResult" value="结果：6 tokens → 高效编码（≈1 token/词）" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#10b981;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="48" y="220" width="360" height="18" as="geometry"/>
+    </mxCell>
+    <mxCell id="leftDesc" value="序列短 → 注意力计算开销小 → 推理快且成本低" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="48" y="242" width="360" height="16" as="geometry"/>
+    </mxCell>
+    
+    <!-- Left: bar -->
+    <mxCell id="leftBar" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#10b981;strokeColor=none;opacity=15;" vertex="1" parent="1">
+      <mxGeometry x="88" y="276" width="40" height="28" as="geometry"/>
+    </mxCell>
+    <mxCell id="leftBarVal" value="6 tokens" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#10b981;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="136" y="278" width="100" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Right Panel: Chinese -->
+    <mxCell id="rightPanel" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="456" y="80" width="392" height="260" as="geometry"/>
+    </mxCell>
+    <mxCell id="rightHdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="456" y="80" width="392" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="rightHdrFill" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="456" y="108" width="392" height="8" as="geometry"/>
+    </mxCell>
+    <mxCell id="rightTitle" value="中文文本（英文为主 Tokenizer）" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="456" y="86" width="392" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Right: input -->
+    <mxCell id="rightInputLabel" value="输入" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="472" y="130" width="32" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="rightInputBox" value="法国的首都是巴黎" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f9fc;strokeColor=#e2e8f0;fontSize=14;fontColor=#1e293b;fontFamily=Inter;align=left;spacingLeft=8;" vertex="1" parent="1">
+      <mxGeometry x="512" y="124" width="320" height="28" as="geometry"/>
+    </mxCell>
+    
+    <!-- Right: fragmented tokens -->
+    <mxCell id="rightTokenLabel" value="分词" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="472" y="176" width="32" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="right_t1" value="æ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;fontSize=8;fontColor=#92400e;fontFamily=monospace;" vertex="1" parent="1">
+      <mxGeometry x="512" y="170" width="24" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="right_t2" value="ĭ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;fontSize=8;fontColor=#92400e;fontFamily=monospace;" vertex="1" parent="1">
+      <mxGeometry x="542" y="170" width="24" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="right_t3" value="å" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;fontSize=8;fontColor=#92400e;fontFamily=monospace;" vertex="1" parent="1">
+      <mxGeometry x="572" y="170" width="24" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="right_t4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;fontSize=8;fontColor=#92400e;fontFamily=monospace;" vertex="1" parent="1">
+      <mxGeometry x="602" y="170" width="24" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="right_t5" value="..." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;fontSize=10;fontColor=#92400e;fontFamily=monospace;" vertex="1" parent="1">
+      <mxGeometry x="632" y="170" width="28" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="right_t6" value="é»" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;fontSize=8;fontColor=#92400e;fontFamily=monospace;" vertex="1" parent="1">
+      <mxGeometry x="666" y="170" width="24" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="right_t7" value="Ž" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;fontSize=8;fontColor=#92400e;fontFamily=monospace;" vertex="1" parent="1">
+      <mxGeometry x="696" y="170" width="24" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="right_t8" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;fontSize=8;fontColor=#92400e;fontFamily=monospace;" vertex="1" parent="1">
+      <mxGeometry x="726" y="170" width="24" height="26" as="geometry"/>
+    </mxCell>
+    
+    <!-- Right: result -->
+    <mxCell id="rightResult" value="结果：~30 tokens → 低效编码（≈3-6 token/字）" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#f59e0b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="472" y="220" width="360" height="18" as="geometry"/>
+    </mxCell>
+    <mxCell id="rightDesc" value="序列长 → O(n²) 注意力开销 ↑ → 推理慢且成本高" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="472" y="242" width="360" height="16" as="geometry"/>
+    </mxCell>
+    
+    <!-- Right: bar -->
+    <mxCell id="rightBar" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f59e0b;strokeColor=none;opacity=15;" vertex="1" parent="1">
+      <mxGeometry x="512" y="276" width="160" height="28" as="geometry"/>
+    </mxCell>
+    <mxCell id="rightBarVal" value="~30 tokens" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#f59e0b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="680" y="278" width="140" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Bottom: Solution -->
+    <mxCell id="solPanel" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="32" y="366" width="816" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="solAccent" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="32" y="366" width="816" height="6" as="geometry"/>
+    </mxCell>
+    <mxCell id="solTitle" value="中文优化 Tokenizer（Qwen · DeepSeek 的做法）" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="48" y="384" width="400" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="solDesc" value="训练 Tokenizer 时大幅提高中文数据配比 → 同样 7 字仅需 ~7 tokens（≈1 token/字），效率提升 4-5×，推理速度 ↑4× · 成本 ↓75%" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="48" y="406" width="784" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="solBadge" value="7 tokens" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=#3b82f6;fontSize=10;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="48" y="424" width="56" height="16" as="geometry"/>
+    </mxCell>
+    
+    <!-- Legend -->
+    <mxCell id="legBox" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fafbfc;strokeColor=#e2e8f0;arcSize=6;" vertex="1" parent="1">
+      <mxGeometry x="620" y="474" width="228" height="42" as="geometry"/>
+    </mxCell>
+    <mxCell id="legTitle" value="图例" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=8;fontStyle=1;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="632" y="478" width="28" height="12" as="geometry"/>
+    </mxCell>
+    <mxCell id="leg1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#10b981;strokeColor=none;opacity=20;" vertex="1" parent="1">
+      <mxGeometry x="632" y="494" width="16" height="10" as="geometry"/>
+    </mxCell>
+    <mxCell id="leg1t" value="高效编码" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=8;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="652" y="492" width="52" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="leg2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f59e0b;strokeColor=none;opacity=20;" vertex="1" parent="1">
+      <mxGeometry x="708" y="494" width="16" height="10" as="geometry"/>
+    </mxCell>
+    <mxCell id="leg2t" value="低效编码" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=8;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="728" y="492" width="52" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="leg3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;opacity=20;" vertex="1" parent="1">
+      <mxGeometry x="784" y="494" width="16" height="10" as="geometry"/>
+    </mxCell>
+    <mxCell id="leg3t" value="优化方案" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=8;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="804" y="492" width="40" height="14" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel></diagram></mxfile>
