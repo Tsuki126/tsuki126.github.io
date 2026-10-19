@@ -187,7 +187,11 @@ body:has(.hub) footer { margin-top: 20px; }
   flex: 0 0 auto; font-family: var(--mono); font-size: .7rem;
   color: var(--ink-3); transition: color .12s ease;
 }
-.recent .empty { font-size: .86rem; color: var(--ink-3); padding: 7px 0; border-bottom: 1px solid var(--border); }
+.recent .empty,
+.series-list .empty {
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+  color: var(--ink-3); font-size: .86rem;
+}
 
 /* 首屏安全架构图谱：独占一个整宽区块，比正文列宽 */
 .sg-wrap { margin: 28px 0 0; }
