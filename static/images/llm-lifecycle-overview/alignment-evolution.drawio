@@ -1,0 +1,167 @@
+<mxfile host="app.diagrams.net"><diagram id="has6ahet-nd1v" name="Page-1"><mxGraphModel dx="1100" dy="600" grid="1" gridSize="8" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="600" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    
+    <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f9fc;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="0" y="0" width="1100" height="600" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="title" value="对齐技术三阶段：RLHF → DPO → GRPO" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1a1f36;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="300" y="16" width="500" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="sub" value="三年三次简化——减掉的不是功能，是有人发现了更简洁的数学等价形式" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="250" y="44" width="600" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="titleLine" value="" style="endArrow=none;html=1;strokeColor=#3b82f6;strokeWidth=2.5;rounded=1;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="400" y="46" as="sourcePoint"/>
+        <mxPoint x="700" y="46" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Timeline -->
+    <mxCell id="timeline" value="" style="endArrow=none;html=1;strokeColor=#e2e8f0;strokeWidth=2;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="200" y="80" as="sourcePoint"/>
+        <mxPoint x="900" y="80" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="tl_2022" value="2022" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontStyle=1;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="170" y="64" width="60" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="tl_2023" value="2023" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontStyle=1;fontColor=#f59e0b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="520" y="64" width="60" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="tl_2024" value="2024" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="870" y="64" width="60" height="16" as="geometry"/>
+    </mxCell>
+    
+    <!-- Evolution arrows between columns -->
+    <mxCell id="ev1" value="数学等价重构" style="endArrow=classic;html=1;strokeColor=#3b82f6;strokeWidth=2;fontColor=#3b82f6;fontSize=9;fontStyle=1;fontFamily=Inter;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="370" y="260" as="sourcePoint"/>
+        <mxPoint x="400" y="260" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="ev2" value="进一步化简" style="endArrow=classic;html=1;strokeColor=#3b82f6;strokeWidth=2;fontColor=#3b82f6;fontSize=9;fontStyle=1;fontFamily=Inter;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="720" y="260" as="sourcePoint"/>
+        <mxPoint x="750" y="260" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Column 1: RLHF -->
+    <mxCell id="col1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="40" y="100" width="300" height="310" as="geometry"/>
+    </mxCell>
+    <mxCell id="col1hdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="40" y="100" width="300" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="col1hdrFill" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="40" y="128" width="300" height="8" as="geometry"/>
+    </mxCell>
+    <mxCell id="col1t" value="RLHF · 四个网络协同" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="40" y="106" width="300" height="24" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="c1b1" value="Policy Model（策略模型）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=10;fontColor=#1e293b;fontFamily=Inter;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="56" y="150" width="268" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="c1b2" value="Reference Model（参考模型）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=10;fontColor=#1e293b;fontFamily=Inter;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="56" y="190" width="268" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="c1b3" value="Reward Model（奖励模型）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=10;fontColor=#1e293b;fontFamily=Inter;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="56" y="230" width="268" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="c1b4" value="Value Model（价值模型）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=10;fontColor=#1e293b;fontFamily=Inter;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="56" y="270" width="268" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="c1models" value="代表: InstructGPT · ChatGPT" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="56" y="320" width="268" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="c1tag" value="4 个网络 · 训练复杂" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=none;fontSize=9;fontColor=#64748b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="110" y="350" width="160" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Column 2: DPO -->
+    <mxCell id="col2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="400" y="100" width="300" height="310" as="geometry"/>
+    </mxCell>
+    <mxCell id="col2hdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="400" y="100" width="300" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="col2hdrFill" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="400" y="128" width="300" height="8" as="geometry"/>
+    </mxCell>
+    <mxCell id="col2t" value="DPO · 两个网络" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="400" y="106" width="300" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="col2insight" value="砍掉独立的 Reward / Value Model" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=none;fontSize=9;fontStyle=1;fontColor=#92400e;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="420" y="150" width="260" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="c2b1" value="Policy Model（策略模型）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=10;fontColor=#1e293b;fontFamily=Inter;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="416" y="184" width="268" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="c2b2" value="Reference Model（参考模型）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafd;strokeColor=#e2e8f0;fontSize=10;fontColor=#1e293b;fontFamily=Inter;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="416" y="224" width="268" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="c2models" value="代表: Zephyr · Llama 3" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="416" y="320" width="268" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="c2tag" value="2 个网络 · 训练简化" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=none;fontSize=9;fontColor=#7c3aed;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="470" y="350" width="160" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Column 3: GRPO (accent) -->
+    <mxCell id="col3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#3b82f6;strokeWidth=1.5;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="760" y="100" width="300" height="310" as="geometry"/>
+    </mxCell>
+    <mxCell id="col3hdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="760" y="100" width="300" height="36" as="geometry"/>
+    </mxCell>
+    <mxCell id="col3hdrFill" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="760" y="128" width="300" height="8" as="geometry"/>
+    </mxCell>
+    <mxCell id="col3t" value="GRPO · 一个网络 + 组内归一化" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#ffffff;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="760" y="106" width="300" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="col3insight" value="组内互评 → 无需独立参考模型" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=none;fontSize=9;fontStyle=1;fontColor=#065f46;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="780" y="150" width="260" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="c3b1" value="Policy Model（策略模型）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;fontSize=10;fontColor=#ffffff;fontFamily=Inter;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="776" y="184" width="268" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="c3models" value="代表: DeepSeek-R1 · Qwen 3" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="776" y="320" width="268" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="c3tag" value="1 个网络 · 极致简化" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;fontSize=9;fontColor=#ffffff;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="830" y="350" width="160" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Bottom insight -->
+    <mxCell id="insight" value="每一步减掉的不是功能——有人发现了更简洁的数学等价形式" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=none;fontSize=11;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="250" y="444" width="600" height="32" as="geometry"/>
+    </mxCell>
+    
+    <!-- Legend -->
+    <mxCell id="leg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fafbfc;strokeColor=#e2e8f0;arcSize=6;" vertex="1" parent="1">
+      <mxGeometry x="40" y="510" width="200" height="42" as="geometry"/>
+    </mxCell>
+    <mxCell id="leg_t" value="图例" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=8;fontStyle=1;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="48" y="514" width="32" height="12" as="geometry"/>
+    </mxCell>
+    <mxCell id="leg1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="48" y="530" width="16" height="10" as="geometry"/>
+    </mxCell>
+    <mxCell id="leg1t" value="上一代方案" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;fontSize=8;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="68" y="528" width="56" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="leg2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="128" y="530" width="16" height="10" as="geometry"/>
+    </mxCell>
+    <mxCell id="leg2t" value="当前最优" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;fontSize=8;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="148" y="528" width="52" height="14" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel></diagram></mxfile>

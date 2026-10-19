@@ -1,0 +1,8 @@
+<nav aria-label="站点导航">
+  {{ $cur := strings.TrimSuffix "/" .RelPermalink }}
+  {{ $sec := "" }}{{ with .Section }}{{ $sec = printf "/%s" . }}{{ end }}
+  {{ range .Site.Menus.main }}
+  {{ $url := strings.TrimSuffix "/" .URL }}
+  <a href="{{ .URL | relURL }}"{{ if or (eq $url $cur) (and $sec (eq $url $sec)) }} aria-current="page"{{ end }}>{{ .Name }}</a>
+  {{ end }}
+</nav>

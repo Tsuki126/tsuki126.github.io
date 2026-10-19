@@ -1,0 +1,23 @@
+{{- $pages := where .Site.RegularPages "Section" "in" (slice "professional" "life" "daily") -}}
+[
+{{- range $i, $p := $pages -}}
+{{- if $i }},{{ end }}
+{{- $noteType := $p.Params.note_type | default "essay" -}}
+{{- $noteTypeMeta := partial "partition.html" (dict "plural" "note_types" "slug" $noteType) -}}
+{{- $summary := $p.Description -}}
+{{- if and (not $summary) (ne $p.Section "professional") -}}
+  {{- $summary = $p.Summary | plainify | htmlUnescape | strings.TrimSpace | strings.TrimPrefix "见闻 " | truncate 120 -}}
+{{- end -}}
+{{- $trackNames := slice -}}
+{{- range $p.Params.tracks -}}
+  {{- $trackMeta := partial "partition.html" (dict "plural" "tracks" "slug" .) -}}
+  {{- $trackNames = $trackNames | append $trackMeta.name -}}
+{{- end -}}
+{{- $lifeSeriesName := "" -}}
+{{- with $p.Params.life_series -}}
+  {{- $lifeSeriesMeta := partial "life-series.html" (dict "slug" .) -}}
+  {{- $lifeSeriesName = $lifeSeriesMeta.name -}}
+{{- end -}}
+{"title":{{ $p.Title | jsonify }},"url":{{ $p.RelPermalink | jsonify }},"date":{{ $p.Date.Format "2006-01-02" | jsonify }},"section":{{ $p.Section | jsonify }},"desc":{{ $p.Description | jsonify }},"summary":{{ $summary | jsonify }},"series":{{ $p.Params.series | jsonify }},"life_series":{{ $p.Params.life_series | jsonify }},"life_series_name":{{ $lifeSeriesName | jsonify }},"note_type":{{ $noteType | jsonify }},"note_type_name":{{ $noteTypeMeta.name | jsonify }},"tags":{{ $p.Params.tags | jsonify }},"track_names":{{ $trackNames | jsonify }},"directions":{{ $p.Params.directions | jsonify }},"tracks":{{ $p.Params.tracks | jsonify }}}
+{{- end -}}
+]

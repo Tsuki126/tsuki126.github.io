@@ -1,56 +1,648 @@
 {{ define "main" }}
-<content>
-  {{ if .Data.Singular }}
-  <h3 style="margin-bottom:0">{{ .Title }}</h3>
-  <small>
-    <a href="{{ .Page.Parent.Permalink }}">查看全部</a>
-  </small>
-  {{ else }}
-  <h3 style="margin-bottom:0">{{ .Title }}</h3>
-  {{ end }}
+{{ if eq .Kind "taxonomy" }}
+{{ if eq .Data.Plural "tags" }}
+{{ $ignoredTags := slice "测试数据" "压力测试" }}
+<div class="list-page">
+  <div class="list-head section-head">
+    <h1>标签</h1>
+    <p>按专业文章与生活文章中的关键词检索。</p>
+  </div>
+  <div class="tag-cloud">
+    {{ range .Data.Terms.Alphabetical }}
+      {{ $tagName := .Page.Title }}
+      {{ $tagCount := 0 }}
+      {{ range .Pages }}
+        {{ if or (eq .Page.Section "professional") (eq .Page.Section "life") }}
+          {{ $tagCount = add $tagCount 1 }}
+        {{ end }}
+      {{ end }}
+      {{ if and (gt $tagCount 0) (not (in $ignoredTags $tagName)) }}
+      <a href="{{ .Page.RelPermalink }}">{{ $tagName }}<b>{{ $tagCount }}</b></a>
+      {{ end }}
+    {{ end }}
+  </div>
+</div>
 
-  {{ if eq .Section "blog" }}
-  {{ with .Site.Taxonomies.categories }}
-  <p class="category-list">
-    {{ $first := true }}
-    {{ range . }}
-    {{ if gt .Count 0 }}
-    {{ if not $first }}<span class="sep">/</span>{{ end }}
-    <a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a>
-    {{ $first = false }}
-    {{ end }}
-    {{ end }}
-  </p>
+{{ else if eq .Data.Plural "life_series" }}
+{{ $lifePages := where .Site.RegularPages "Section" "life" }}
+{{ $activeSeries := slice }}
+{{ range hugo.Data.life_series }}
+  {{ if where $lifePages "Params.life_series" .slug }}
+    {{ $activeSeries = $activeSeries | append . }}
   {{ end }}
-  {{ end }}
-
-  {{ if eq .Section "notes" }}
-  <div class="notes-list">
-    {{ range .Pages.GroupByDate "2006" }}
-    <div class="note-year">{{ .Key }}</div>
-    {{ range .Pages }}
-    <div class="note-item">
-      <span class="note-meta">{{ .Date.Format "01-02" }}</span>
-      <a href="{{ .Permalink }}" class="note-title">{{ .Title }}</a>
-      <span class="note-body">{{ .Summary | plainify | truncate 55 }}</span>
-    </div>
-    {{ end }}
-    {{ else }}
-    <p>暂无随笔</p>
+{{ end }}
+<div class="list-page">
+  <div class="list-head section-head">
+    <h1>生活专题线</h1>
+    <p>围绕具体问题持续记录的生活专题。</p>
+  </div>
+  {{ if $activeSeries }}
+  <div class="series-grid">
+    {{ range $activeSeries }}
+    {{ partial "life-series-card.html" (dict "series" . "pages" $lifePages "showTrack" true) }}
     {{ end }}
   </div>
   {{ else }}
-  <div class="blog-list">
-    {{ range .Pages }}
-    <div class="blog-item">
-      <span class="blog-meta">{{ .Date.Format "2006-01-02" }}</span>
-      <a href="{{ .Permalink }}" class="blog-title">{{ .Title }}</a>
-      <span class="blog-body">{{ .Summary | plainify | truncate 55 }}</span>
-    </div>
-    {{ else }}
-    <p>暂无文章</p>
+  <p class="list-empty">还没有形成生活专题线。</p>
+  {{ end }}
+</div>
+{{ else }}
+<div class="list-page">
+  <div class="list-head">
+    <h1>{{ .Title }}</h1>
+    <p>共 {{ len .Data.Terms }} 个条目。</p>
+  </div>
+  <div class="tag-cloud">
+    {{ range .Data.Terms.Alphabetical }}
+    {{ $meta := partial "partition.html" (dict "plural" $.Data.Plural "slug" .Page.Data.Term) }}
+    <a href="{{ .Page.RelPermalink }}">{{ $meta.name }}<b> {{ .Count }}</b></a>
+    {{ end }}
+  </div>
+</div>
+{{ end }}
+
+{{ else if eq .Kind "term" }}
+{{ if eq .Data.Plural "tags" }}
+{{ $ignoredTags := slice "测试数据" "压力测试" }}
+{{ $professionalPages := sort (where .Pages "Section" "professional") "Date" "desc" }}
+{{ $lifePages := sort (where .Pages "Section" "life") "Date" "desc" }}
+{{ $tagCount := add (len $professionalPages) (len $lifePages) }}
+<div class="list-page">
+  <div class="list-head section-head">
+    <h1>{{ .Title }}</h1>
+    <p>{{ if $tagCount }}{{ $tagCount }} 篇相关内容{{ else }}暂无公开内容{{ end }}</p>
+  </div>
+  {{ if in $ignoredTags .Title }}
+  <p class="list-empty">这个标签不参与站内标签展示。</p>
+  {{ else }}
+  {{ if $professionalPages }}
+  <div class="track-subhead"><span>专业文章</span><i>{{ len $professionalPages }} 篇</i></div>
+  <ul class="entries">
+    {{ range $professionalPages }}<li>{{ partial "entry.html" . }}</li>{{ end }}
+  </ul>
+  {{ end }}
+  {{ if $lifePages }}
+  <div class="track-subhead"><span>生活文章</span><i>{{ len $lifePages }} 篇</i></div>
+  <ul class="entries">
+    {{ range $lifePages }}<li>{{ partial "entry.html" . }}</li>{{ end }}
+  </ul>
+  {{ end }}
+  {{ if not $tagCount }}<p class="list-empty">这个标签下还没有文章。</p>{{ end }}
+  {{ end }}
+</div>
+
+{{ else if eq .Data.Plural "series" }}
+{{ $series := partial "professional-series.html" (dict "name" .Data.Term) }}
+{{ $directionMeta := partial "partition.html" (dict "plural" "directions" "slug" $series.direction) }}
+{{ $orderedPages := sort .Pages "Params.series_order" "asc" }}
+<div class="list-page">
+  <div class="list-head section-head">
+    <h1>{{ $series.name }}</h1>
+    {{ with $series.description }}<p>{{ . }}</p>{{ end }}
+  </div>
+  {{ if $series.slug }}
+  <div class="term-note">
+    <a href="{{ "professional/?view=series" | relURL }}">专业专题线</a>
+    <span>/</span>
+    <a href="{{ printf "directions/%s/" $series.direction | relURL }}">{{ $directionMeta.name }}</a>
+    <span>·</span>
+    <span>{{ len .Pages }} 篇</span>
+  </div>
+  {{ end }}
+  <ul class="entries">
+    {{ range $orderedPages }}
+    <li>{{ partial "entry.html" . }}</li>
+    {{ end }}
+  </ul>
+</div>
+
+{{ else if eq .Data.Plural "life_series" }}
+{{ $series := partial "life-series.html" (dict "slug" .Data.Term) }}
+{{ $trackMeta := partial "partition.html" (dict "plural" "tracks" "slug" $series.track) }}
+{{ $orderedPages := sort .Pages "Params.series_order" "asc" }}
+<div class="list-page">
+  <div class="list-head section-head">
+    <h1>{{ $series.name }}</h1>
+    {{ with $series.description }}<p>{{ . }}</p>{{ end }}
+  </div>
+  <div class="term-note">
+    <a href="{{ "life/?view=series" | relURL }}">生活专题线</a>
+    <span>/</span>
+    <a href="{{ printf "tracks/%s/" $series.track | relURL }}">{{ $trackMeta.name }}</a>
+    <span>·</span>
+    <span>{{ len .Pages }} 篇</span>
+  </div>
+  <ul class="entries">
+    {{ range $orderedPages }}
+    <li>{{ partial "entry.html" . }}</li>
+    {{ end }}
+  </ul>
+</div>
+
+{{ else if eq .Data.Plural "directions" }}
+{{ $meta := partial "partition.html" (dict "plural" "directions" "slug" .Data.Term) }}
+{{ $directionSlug := .Data.Term }}
+{{ $professionalPages := where .Pages "Section" "professional" }}
+{{ $seriesList := slice }}
+{{ range hugo.Data.professional_series }}
+  {{ if and (eq .direction $directionSlug) (where $professionalPages "Params.series" .name) }}
+    {{ $seriesList = $seriesList | append . }}
+  {{ end }}
+{{ end }}
+{{ $singles := slice }}
+{{ range $professionalPages }}
+  {{ $hasKnownSeries := false }}
+  {{ with .Params.series }}
+    {{ $seriesMeta := partial "professional-series.html" (dict "name" .) }}
+    {{ if $seriesMeta.slug }}{{ $hasKnownSeries = true }}{{ end }}
+  {{ end }}
+  {{ if and (not $hasKnownSeries) (ne .Params.series "时间线测试") }}
+    {{ $singles = $singles | append . }}
+  {{ end }}
+{{ end }}
+{{ $singles = sort $singles "Date" "desc" }}
+<div class="list-page">
+  <div class="list-head section-head">
+    <h1>{{ $meta.name }}</h1>
+    {{ with $meta.desc }}<p>{{ . }}</p>{{ end }}
+  </div>
+  {{ if $seriesList }}
+  <div class="track-subhead">
+    <span>专题线</span>
+    <i>{{ len $seriesList }} 条</i>
+  </div>
+  <div class="series-grid">
+    {{ range $seriesList }}
+    {{ partial "professional-series-card.html" (dict "series" . "pages" $professionalPages "showDirection" false) }}
     {{ end }}
   </div>
   {{ end }}
-</content>
+  {{ if $singles }}
+  <div class="track-subhead is-secondary">
+    <span>其他文章</span>
+    <i>{{ len $singles }} 篇</i>
+  </div>
+  <div class="article-grid" data-page-size="6">
+    {{ range $singles }}
+    {{ partial "article-card.html" . }}
+    {{ end }}
+  </div>
+  <div class="article-pager" data-pager aria-label="其他文章分页"></div>
+  {{ end }}
+  {{ if and (not $seriesList) (not $singles) }}
+  <p class="list-empty">这个安全分类还没有内容。</p>
+  {{ end }}
+</div>
+
+{{ else if eq .Data.Plural "tracks" }}
+{{ $meta := partial "partition.html" (dict "plural" "tracks" "slug" .Data.Term) }}
+{{ $trackSlug := .Data.Term }}
+{{ $lifePages := where .Pages "Section" "life" }}
+{{ $seriesList := slice }}
+{{ range hugo.Data.life_series }}
+  {{ if and (eq .track $trackSlug) (where $lifePages "Params.life_series" .slug) }}
+    {{ $seriesList = $seriesList | append . }}
+  {{ end }}
+{{ end }}
+{{ $singles := slice }}
+{{ range $lifePages }}
+  {{ if not .Params.life_series }}{{ $singles = $singles | append . }}{{ end }}
+{{ end }}
+{{ $singles = sort $singles "Date" "desc" }}
+<div class="list-page">
+  <div class="list-head section-head">
+    <h1>{{ $meta.name }}</h1>
+    {{ with $meta.desc }}<p>{{ . }}</p>{{ end }}
+  </div>
+  {{ if $seriesList }}
+  <div class="track-subhead">
+    <span>专题线</span>
+    <i>{{ len $seriesList }} 条</i>
+  </div>
+  <div class="series-grid">
+    {{ range $seriesList }}
+    {{ partial "life-series-card.html" (dict "series" . "pages" $lifePages "showTrack" false) }}
+    {{ end }}
+  </div>
+  {{ end }}
+  {{ if $singles }}
+  <div class="track-subhead is-secondary">
+    <span>其他文章</span>
+    <i>{{ len $singles }} 篇</i>
+  </div>
+  <div class="article-grid" data-page-size="6">
+    {{ range $singles }}
+    {{ partial "article-card.html" . }}
+    {{ end }}
+  </div>
+  <div class="article-pager" data-pager aria-label="其他文章分页"></div>
+  {{ end }}
+  {{ if and (not $seriesList) (not $singles) }}
+  <p class="list-empty">这个生活领域还没有内容。</p>
+  {{ end }}
+</div>
+
+{{ else }}
+{{ $meta := partial "partition.html" (dict "plural" .Data.Plural "slug" .Data.Term) }}
+<div class="list-page">
+  <div class="list-head">
+    <h1>{{ $meta.name }}</h1>
+    {{ with $meta.desc }}<p>{{ . }}</p>{{ end }}
+  </div>
+  <ul class="entries">
+    {{ range .Pages }}
+    <li>{{ partial "entry.html" . }}</li>
+    {{ else }}
+    <li class="list-empty">这个分区还没有内容。</li>
+    {{ end }}
+  </ul>
+</div>
+{{ end }}
+
+{{ else if or (eq .Section "life") (eq .Section "daily") }}
+{{ $pages := .Pages }}
+{{ $section := .Section }}
+<div class="list-page">
+  <div class="list-head section-head">
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+  </div>
+  <div class="viewbar">
+    {{ if eq $section "life" }}
+    <div class="viewtabs">
+      <button class="is-on" data-view="time">时间线</button>
+      <button data-view="series">专题线</button>
+    </div>
+    {{ else }}
+    <span class="viewline-label">时间线</span>
+    {{ end }}
+    <label class="viewsearch">
+      <input type="search"
+        placeholder="{{ if eq $section "life" }}搜索生活文章…{{ else }}搜索日常随笔…{{ end }}"
+        {{ if eq $section "life" }}data-placeholder-time="搜索生活文章…" data-placeholder-series="搜索生活专题…"{{ end }}
+        data-search data-search-section="{{ .Section }}">
+      <span>⌘K</span>
+    </label>
+  </div>
+  <div class="list-search-results" data-search-results></div>
+
+  {{ if eq $section "life" }}
+  <div class="view" data-panel="series" data-search-hide>
+    {{ $activeSeries := slice }}
+    {{ range hugo.Data.life_series }}
+      {{ if where $pages "Params.life_series" .slug }}
+        {{ $activeSeries = $activeSeries | append . }}
+      {{ end }}
+    {{ end }}
+    {{ if $activeSeries }}
+    <div class="series-grid" data-page-size="9">
+      {{ range $activeSeries }}
+      {{ partial "life-series-card.html" (dict "series" . "pages" $pages "showTrack" true) }}
+      {{ end }}
+    </div>
+    <p class="list-empty series-search-empty" data-series-search-empty hidden>没有匹配的生活专题。</p>
+    <div class="series-pager" data-pager></div>
+    {{ else }}
+    <p class="list-empty">还没有形成生活专题线。</p>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  <div class="view is-on" data-panel="time" data-search-hide>
+  {{ if $pages }}
+  {{ $latestPage := index $pages 0 }}
+  {{ $initialYear := $latestPage.Date.Format "2006" }}
+  {{ $initialMonthKey := $latestPage.Date.Format "01" }}
+  {{ $initialMonth := strings.TrimLeft "0" $initialMonthKey }}
+  <div class="timeline-explorer" data-search-hide>
+    <aside class="timeline-minimap" aria-label="按年份和月份浏览{{ if eq $section "life" }}生活主题{{ else }}日常随笔{{ end }}">
+      <div class="timeline-minimap-label">TIME MAP</div>
+      <div class="timeline-minimap-scroll" data-timeline-minimap>
+        {{ range $yearGroup := $pages.GroupByDate "2006" }}
+        <section class="timeline-year-group">
+          <span class="timeline-year-label">{{ $yearGroup.Key }}</span>
+          <div class="timeline-ticks">
+            {{ range $monthGroup := $yearGroup.Pages.GroupByDate "01" }}
+            {{ $month := strings.TrimLeft "0" $monthGroup.Key }}
+            {{ $isActive := and (eq $yearGroup.Key $initialYear) (eq $monthGroup.Key $initialMonthKey) }}
+            <button class="timeline-tick{{ if $isActive }} is-active{{ end }}" type="button"
+              data-year="{{ $yearGroup.Key }}" data-month="{{ $month }}"
+              data-count="{{ len $monthGroup.Pages }}"
+              data-target="timeline-panel-{{ $yearGroup.Key }}-{{ $monthGroup.Key }}"
+              aria-label="{{ $yearGroup.Key }} 年 {{ $month }} 月"
+              aria-pressed="{{ $isActive }}">
+              <span class="timeline-tick-label">{{ $month }}月</span>
+            </button>
+            {{ end }}
+          </div>
+        </section>
+        {{ end }}
+      </div>
+    </aside>
+
+    <section class="timeline-panel-shell" aria-label="选中月份{{ if eq $section "life" }}生活主题{{ else }}日常随笔{{ end }}">
+      <div class="timeline-panel-head">
+        <span class="timeline-current-year" data-timeline-year>{{ $initialYear }}</span>
+        <span class="timeline-current-month" data-timeline-month>{{ $initialMonth }}月</span>
+      </div>
+      <div class="timeline-panels">
+        {{ range $yearGroup := $pages.GroupByDate "2006" }}
+        {{ range $monthGroup := $yearGroup.Pages.GroupByDate "01" }}
+        {{ $month := strings.TrimLeft "0" $monthGroup.Key }}
+        {{ $isActive := and (eq $yearGroup.Key $initialYear) (eq $monthGroup.Key $initialMonthKey) }}
+        <section class="timeline-month-panel{{ if $isActive }} is-active{{ end }}"
+          id="timeline-panel-{{ $yearGroup.Key }}-{{ $monthGroup.Key }}"
+          data-year="{{ $yearGroup.Key }}" data-month="{{ $month }}"
+          data-count="{{ len $monthGroup.Pages }}"
+          aria-hidden="{{ not $isActive }}">
+          {{ range $monthGroup.Pages }}
+          {{ $summary := .Description }}
+          {{ if not $summary }}
+          {{ $summary = .Summary | plainify | htmlUnescape | strings.TrimSpace | strings.TrimPrefix "见闻 " | truncate 90 }}
+          {{ end }}
+          <a class="timeline-article" href="{{ .RelPermalink }}">
+            <span class="timeline-article-meta">
+              <time class="timeline-article-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+            </span>
+            <span class="timeline-article-title">{{ .Title }}</span>
+            {{ with $summary }}<span class="timeline-article-summary">{{ . }}</span>{{ end }}
+            <span class="timeline-article-arrow" aria-hidden="true">↗</span>
+          </a>
+          {{ end }}
+        </section>
+        {{ end }}
+        {{ end }}
+      </div>
+    </section>
+  </div>
+  <div class="visually-hidden" data-timeline-live aria-live="polite"></div>
+  {{ else }}
+  <p class="list-empty">{{ if eq $section "life" }}还没有生活主题文章。{{ else }}还没有日常随笔，从今天开始记。{{ end }}</p>
+  {{ end }}
+  </div>
+</div>
+{{ partial "timeline-scripts.html" . }}
+
+{{ else }}
+{{ $pages := .Pages }}
+<div class="list-page">
+  <div class="list-head section-head">
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+  </div>
+
+  <div class="viewbar">
+    <div class="viewtabs">
+      <button class="is-on" data-view="time">时间线</button>
+      <button data-view="series">专题线</button>
+    </div>
+    <label class="viewsearch">
+      <input type="search" placeholder="搜索标题、系列、标签…"
+        data-placeholder-time="搜索标题、系列、标签…" data-placeholder-series="搜索专题…"
+        data-search data-search-section="professional">
+      <span>⌘K</span>
+    </label>
+  </div>
+
+  <div class="list-search-results" data-search-results></div>
+
+  <div class="view" data-panel="series" data-search-hide>
+    {{ $activeSeries := slice }}
+    {{ range hugo.Data.professional_series }}
+      {{ if where $pages "Params.series" .name }}
+        {{ $activeSeries = $activeSeries | append . }}
+      {{ end }}
+    {{ end }}
+    {{ if $activeSeries }}
+    <div class="series-grid" data-page-size="9">
+      {{ range $activeSeries }}
+      {{ partial "professional-series-card.html" (dict "series" . "pages" $pages "showDirection" true) }}
+      {{ end }}
+    </div>
+    <p class="list-empty series-search-empty" data-series-search-empty hidden>没有匹配的专题。</p>
+    <div class="series-pager" data-pager></div>
+    {{ else }}
+    <p class="list-empty">还没有形成专业专题线。</p>
+    {{ end }}
+  </div>
+
+  <div class="view is-on" data-panel="time" data-search-hide>
+    {{ if $pages }}
+    {{ $latestPage := index $pages 0 }}
+    {{ $initialYear := $latestPage.Date.Format "2006" }}
+    {{ $initialMonthKey := $latestPage.Date.Format "01" }}
+    {{ $initialMonth := strings.TrimLeft "0" $initialMonthKey }}
+    <div class="timeline-explorer">
+      <aside class="timeline-minimap" aria-label="按年份和月份浏览">
+        <div class="timeline-minimap-label">TIME MAP</div>
+        <div class="timeline-minimap-scroll" data-timeline-minimap>
+          {{ range $yearGroup := $pages.GroupByDate "2006" }}
+          <section class="timeline-year-group">
+            <span class="timeline-year-label">{{ $yearGroup.Key }}</span>
+            <div class="timeline-ticks">
+              {{ range $monthGroup := $yearGroup.Pages.GroupByDate "01" }}
+              {{ $month := strings.TrimLeft "0" $monthGroup.Key }}
+              {{ $isActive := and (eq $yearGroup.Key $initialYear) (eq $monthGroup.Key $initialMonthKey) }}
+              <button class="timeline-tick{{ if $isActive }} is-active{{ end }}" type="button"
+                data-year="{{ $yearGroup.Key }}" data-month="{{ $month }}"
+                data-count="{{ len $monthGroup.Pages }}"
+                data-target="timeline-panel-{{ $yearGroup.Key }}-{{ $monthGroup.Key }}"
+                aria-label="{{ $yearGroup.Key }} 年 {{ $month }} 月"
+                aria-pressed="{{ $isActive }}">
+                <span class="timeline-tick-label">{{ $month }}月</span>
+              </button>
+              {{ end }}
+            </div>
+          </section>
+          {{ end }}
+        </div>
+      </aside>
+
+      <section class="timeline-panel-shell" aria-label="选中月份文章">
+        <div class="timeline-panel-head">
+          <span class="timeline-current-year" data-timeline-year>{{ $initialYear }}</span>
+          <span class="timeline-current-month" data-timeline-month>{{ $initialMonth }}月</span>
+        </div>
+        <div class="timeline-panels">
+          {{ range $yearGroup := $pages.GroupByDate "2006" }}
+          {{ range $monthGroup := $yearGroup.Pages.GroupByDate "01" }}
+          {{ $month := strings.TrimLeft "0" $monthGroup.Key }}
+          {{ $isActive := and (eq $yearGroup.Key $initialYear) (eq $monthGroup.Key $initialMonthKey) }}
+          <section class="timeline-month-panel{{ if $isActive }} is-active{{ end }}"
+            id="timeline-panel-{{ $yearGroup.Key }}-{{ $monthGroup.Key }}"
+            data-year="{{ $yearGroup.Key }}" data-month="{{ $month }}"
+            data-count="{{ len $monthGroup.Pages }}"
+            aria-hidden="{{ not $isActive }}">
+            {{ range $monthGroup.Pages }}
+            <a class="timeline-article" href="{{ .RelPermalink }}">
+              <span class="timeline-article-meta">
+                {{ with .Params.series }}<span class="timeline-article-series">{{ . }}</span>{{ end }}
+                <time class="timeline-article-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+              </span>
+              <span class="timeline-article-title">{{ .Title }}</span>
+              {{ with .Description }}<span class="timeline-article-summary">{{ . }}</span>{{ end }}
+              <span class="timeline-article-arrow" aria-hidden="true">↗</span>
+            </a>
+            {{ end }}
+          </section>
+          {{ end }}
+          {{ end }}
+        </div>
+      </section>
+    </div>
+    <div class="visually-hidden" data-timeline-live aria-live="polite"></div>
+    {{ else }}
+    <p class="list-empty">还没有文章。</p>
+    {{ end }}
+  </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var explorer = document.querySelector(".timeline-explorer");
+  if (!explorer) return;
+
+  var minimap = explorer.querySelector("[data-timeline-minimap]");
+  var ticks = Array.prototype.slice.call(explorer.querySelectorAll(".timeline-tick"));
+  var panels = Array.prototype.slice.call(explorer.querySelectorAll(".timeline-month-panel"));
+  var yearLabel = explorer.querySelector("[data-timeline-year]");
+  var monthLabel = explorer.querySelector("[data-timeline-month]");
+  var live = document.querySelector("[data-timeline-live]");
+  var lastPointerY = null;
+  var edgeDirection = 0;
+  var edgeFrame = 0;
+
+  function findTick(year, month) {
+    return ticks.find(function (tick) {
+      return tick.dataset.year === String(year) && tick.dataset.month === String(Number(month));
+    });
+  }
+
+  function persistSelection(tick) {
+    var month = String(tick.dataset.month).padStart(2, "0");
+    try {
+      history.replaceState(null, "", location.pathname + "?view=time#timeline-" + tick.dataset.year + "-" + month);
+    } catch (error) {}
+  }
+
+  function activate(tick, options) {
+    if (!tick) return;
+    var opts = options || {};
+    var target = tick.dataset.target;
+    lastPointerY = null;
+    edgeDirection = 0;
+    ticks.forEach(function (item) {
+      var active = item === tick;
+      item.style.setProperty("--mag", "0");
+      item.style.removeProperty("--label");
+      item.style.removeProperty("--active-label");
+      item.classList.toggle("is-active", active);
+      item.setAttribute("aria-pressed", String(active));
+    });
+    panels.forEach(function (panel) {
+      var active = panel.id === target;
+      panel.classList.toggle("is-active", active);
+      panel.setAttribute("aria-hidden", String(!active));
+    });
+    yearLabel.textContent = tick.dataset.year;
+    monthLabel.textContent = tick.dataset.month + "月 · " + tick.dataset.count + " 篇";
+    if (live) live.textContent = "已选择 " + tick.dataset.year + " 年 " + tick.dataset.month + " 月";
+    if (opts.persist !== false) persistSelection(tick);
+    if (opts.scroll !== false) tick.scrollIntoView({ block: "nearest" });
+  }
+
+  var hashMatch = location.hash.match(/^#timeline-(\d{4})-(\d{1,2})$/);
+  var initialTick = hashMatch ? findTick(hashMatch[1], hashMatch[2]) : null;
+  if (!initialTick) initialTick = explorer.querySelector(".timeline-tick.is-active") || ticks[0];
+  activate(initialTick, { animate: false, persist: false });
+  initialTick.scrollIntoView({ block: "nearest" });
+
+  minimap.addEventListener("click", function (event) {
+    var tick = event.target.closest(".timeline-tick");
+    if (tick) activate(tick);
+  });
+
+  function updateMagnification(clientY) {
+    var nearest = null;
+    var nearestMagnitude = 0;
+    ticks.forEach(function (tick) {
+      var rect = tick.getBoundingClientRect();
+      var distance = Math.abs(clientY - (rect.top + rect.height / 2));
+      var magnitude = Math.exp(-Math.pow(distance / 25, 2));
+      tick.style.setProperty("--mag", magnitude.toFixed(3));
+      tick.style.setProperty("--label", "0");
+      tick.style.setProperty("--active-label", "0");
+      if (magnitude > nearestMagnitude) {
+        nearestMagnitude = magnitude;
+        nearest = tick;
+      }
+    });
+    if (nearest) {
+      nearest.style.setProperty("--label", "1");
+      nearest.style.setProperty("--active-label", "1");
+    }
+  }
+
+  function stepEdgeScroll() {
+    if (edgeDirection === 0) {
+      edgeFrame = 0;
+      return;
+    }
+    minimap.scrollTop += edgeDirection * 3;
+    if (lastPointerY !== null) updateMagnification(lastPointerY);
+    edgeFrame = requestAnimationFrame(stepEdgeScroll);
+  }
+
+  minimap.addEventListener("pointermove", function (event) {
+    if (event.pointerType === "touch") return;
+    lastPointerY = event.clientY;
+    var rect = minimap.getBoundingClientRect();
+    edgeDirection = event.clientY < rect.top + 26 ? -1 : event.clientY > rect.bottom - 26 ? 1 : 0;
+    updateMagnification(event.clientY);
+    if (edgeDirection !== 0 && edgeFrame === 0) edgeFrame = requestAnimationFrame(stepEdgeScroll);
+  });
+
+  minimap.addEventListener("pointerleave", function () {
+    lastPointerY = null;
+    edgeDirection = 0;
+    ticks.forEach(function (tick) {
+      tick.style.setProperty("--mag", "0");
+      tick.style.removeProperty("--label");
+      tick.style.removeProperty("--active-label");
+    });
+  });
+
+  minimap.addEventListener("keydown", function (event) {
+    if (["ArrowDown", "ArrowUp", "Home", "End"].indexOf(event.key) === -1) return;
+    var index = ticks.indexOf(document.activeElement);
+    if (index === -1) return;
+    var next = index;
+    if (event.key === "ArrowDown") next = Math.min(ticks.length - 1, index + 1);
+    if (event.key === "ArrowUp") next = Math.max(0, index - 1);
+    if (event.key === "Home") next = 0;
+    if (event.key === "End") next = ticks.length - 1;
+    event.preventDefault();
+    ticks[next].focus();
+    activate(ticks[next]);
+  });
+});
+</script>
+<script>
+document.addEventListener("click", function (event) {
+  var article = event.target.closest(".timeline-article");
+  if (!article) return;
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+  event.preventDefault();
+  document.querySelectorAll(".timeline-article.is-selected").forEach(function (item) {
+    item.classList.remove("is-selected");
+  });
+  article.classList.add("is-selected");
+  var title = article.querySelector(".timeline-article-title");
+  if (title) title.style.viewTransitionName = "article-title";
+  window.setTimeout(function () {
+    window.location.href = article.href;
+  }, 180);
+});
+</script>
+{{ end }}
 {{ end }}

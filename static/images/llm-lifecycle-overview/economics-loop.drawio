@@ -1,0 +1,197 @@
+<mxfile host="app.diagrams.net"><diagram id="c6bozdms-hxnp" name="Page-1"><mxGraphModel dx="880" dy="600" grid="1" gridSize="8" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="880" pageHeight="600" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    
+    <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f9fc;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="0" y="0" width="880" height="600" as="geometry"/>
+    </mxCell>
+    
+    <mxCell id="title" value="经济回路：推理成本如何反向重塑架构" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#1a1f36;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="190" y="16" width="500" height="32" as="geometry"/>
+    </mxCell>
+    <mxCell id="sub" value="训练是一次性投入，推理是永续成本——数月推理即超训练，谁占大头谁主导技术方向" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="90" y="44" width="700" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="titleLine" value="" style="endArrow=none;html=1;strokeColor=#3b82f6;strokeWidth=2.5;rounded=1;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="340" y="46" as="sourcePoint"/>
+        <mxPoint x="540" y="46" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Left: Training Cost -->
+    <mxCell id="trainCard" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="32" y="80" width="384" height="176" as="geometry"/>
+    </mxCell>
+    <mxCell id="trainAccent" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#94a3b8;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="32" y="80" width="4" height="176" as="geometry"/>
+    </mxCell>
+    <mxCell id="trainTitle" value="训练成本" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=14;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="52" y="88" width="200" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="trainSub" value="一次性投入 · 已经支付" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="52" y="112" width="200" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="trainBar" value="$1亿" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=#e2e8f0;fontSize=15;fontStyle=1;fontColor=#64748b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="52" y="140" width="56" height="48" as="geometry"/>
+    </mxCell>
+    <mxCell id="trainDetail" value="GPT-4 预训练&lt;br&gt;时长 3-6 个月 · GPU 数万张 · 占生命周期总算力 95%" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=0;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;whiteSpace=wrap;" vertex="1" parent="1">
+      <mxGeometry x="120" y="140" width="280" height="36" as="geometry"/>
+    </mxCell>
+    <!-- Training time bar -->
+    <mxCell id="trainTimeLabel" value="时间维度" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=8;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="52" y="204" width="56" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="trainTimeBg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="52" y="220" width="344" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="trainTimeFill" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#94a3b8;strokeColor=none;opacity=30;" vertex="1" parent="1">
+      <mxGeometry x="52" y="220" width="72" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="trainTimeText" value="3-6月 ———— 之后不再产生 ————" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;fontSize=8;fontColor=#64748b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="130" y="220" width="250" height="14" as="geometry"/>
+    </mxCell>
+    
+    <!-- Right: Inference Cost -->
+    <mxCell id="infCard" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e2e8f0;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="464" y="80" width="384" height="176" as="geometry"/>
+    </mxCell>
+    <mxCell id="infAccent" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="464" y="80" width="4" height="176" as="geometry"/>
+    </mxCell>
+    <mxCell id="infTitle" value="推理成本" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=14;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="484" y="88" width="200" height="24" as="geometry"/>
+    </mxCell>
+    <mxCell id="infSub" value="持续累积 · 永续增长" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=9;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="484" y="112" width="200" height="16" as="geometry"/>
+    </mxCell>
+    <mxCell id="infBar" value="→ ∞" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;opacity=12;fontSize=15;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="484" y="140" width="140" height="48" as="geometry"/>
+    </mxCell>
+    <mxCell id="infDetail" value="ChatGPT 日常服务&lt;br&gt;每日数亿次 · 瓶颈：参数搬运 + KV Cache" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=0;fontSize=9;fontColor=#94a3b8;fontFamily=Inter;whiteSpace=wrap;" vertex="1" parent="1">
+      <mxGeometry x="636" y="140" width="200" height="36" as="geometry"/>
+    </mxCell>
+    <!-- Inference time bar -->
+    <mxCell id="infTimeLabel" value="时间维度" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=8;fontColor=#94a3b8;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="484" y="204" width="56" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="infTimeBg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="484" y="220" width="344" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="infTimeFill" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3b82f6;strokeColor=none;opacity=12;" vertex="1" parent="1">
+      <mxGeometry x="484" y="220" width="344" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="infTimeText" value="持续增长 · 没有终点" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=8;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="484" y="220" width="344" height="14" as="geometry"/>
+    </mxCell>
+    
+    <!-- Crossover arrow -->
+    <mxCell id="crossover" value="数月后" style="endArrow=classic;html=1;strokeColor=#3b82f6;strokeWidth=2;fontColor=#3b82f6;fontSize=9;fontStyle=1;fontFamily=Inter;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="424" y="168" as="sourcePoint"/>
+        <mxPoint x="456" y="168" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="crossoverText" value="数月推理成本 ≈ 一次训练成本 → 此后推理持续超越训练" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="140" y="272" width="600" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Divider -->
+    <mxCell id="divider" value="" style="endArrow=none;html=1;strokeColor=#e2e8f0;strokeWidth=1;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="64" y="304" as="sourcePoint"/>
+        <mxPoint x="816" y="304" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <mxCell id="lowerTitle" value="推理成本驱动的架构创新回路" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#1e293b;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="290" y="316" width="300" height="24" as="geometry"/>
+    </mxCell>
+    
+    <!-- Node 1: Bottleneck -->
+    <mxCell id="node1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ef4444;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="32" y="352" width="224" height="96" as="geometry"/>
+    </mxCell>
+    <mxCell id="n1hdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="32" y="352" width="224" height="28" as="geometry"/>
+    </mxCell>
+    <mxCell id="n1hdrFill" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="32" y="372" width="224" height="8" as="geometry"/>
+    </mxCell>
+    <mxCell id="n1t" value="推理瓶颈" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#ef4444;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="32" y="356" width="224" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="n1d" value="KV Cache 太大 · 显存放不下&lt;br&gt;搬运时间 &gt;&gt; 计算时间" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;fontSize=9;fontColor=#1e293b;fontFamily=Inter;whiteSpace=wrap;" vertex="1" parent="1">
+      <mxGeometry x="32" y="388" width="224" height="44" as="geometry"/>
+    </mxCell>
+    
+    <!-- Arrow: 倒逼 -->
+    <mxCell id="arrow1" value="倒逼" style="endArrow=classic;html=1;strokeColor=#ef4444;strokeWidth=1.5;fontColor=#ef4444;fontSize=9;fontStyle=1;fontFamily=Inter;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="264" y="400" as="sourcePoint"/>
+        <mxPoint x="296" y="400" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Node 2: Innovation (accent) -->
+    <mxCell id="node2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#3b82f6;strokeWidth=1.5;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="304" y="352" width="256" height="96" as="geometry"/>
+    </mxCell>
+    <mxCell id="n2hdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="304" y="352" width="256" height="28" as="geometry"/>
+    </mxCell>
+    <mxCell id="n2hdrFill" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="304" y="372" width="256" height="8" as="geometry"/>
+    </mxCell>
+    <mxCell id="n2t" value="架构创新" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="304" y="356" width="256" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="n2d" value="GQA → Cache 减 75%&lt;br&gt;MoE → 只激活 ~6%&lt;br&gt;MLA → 缓存再压缩" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;fontSize=9;fontColor=#1e293b;fontFamily=Inter;whiteSpace=wrap;" vertex="1" parent="1">
+      <mxGeometry x="304" y="388" width="256" height="44" as="geometry"/>
+    </mxCell>
+    
+    <!-- Arrow: 降低 -->
+    <mxCell id="arrow2" value="降低" style="endArrow=classic;html=1;strokeColor=#10b981;strokeWidth=1.5;fontColor=#10b981;fontSize=9;fontStyle=1;fontFamily=Inter;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="568" y="400" as="sourcePoint"/>
+        <mxPoint x="600" y="400" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Node 3: Cost reduction -->
+    <mxCell id="node3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#10b981;strokeWidth=1;arcSize=8;shadow=1;" vertex="1" parent="1">
+      <mxGeometry x="608" y="352" width="240" height="96" as="geometry"/>
+    </mxCell>
+    <mxCell id="n3hdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=none;arcSize=8;" vertex="1" parent="1">
+      <mxGeometry x="608" y="352" width="240" height="28" as="geometry"/>
+    </mxCell>
+    <mxCell id="n3hdrFill" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="608" y="372" width="240" height="8" as="geometry"/>
+    </mxCell>
+    <mxCell id="n3t" value="推理成本下降" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#10b981;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="608" y="356" width="240" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="n3d" value="每 token 成本降低 · 服务更多用户&lt;br&gt;增长 → 新瓶颈出现" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=10;fontSize=9;fontColor=#1e293b;fontFamily=Inter;whiteSpace=wrap;" vertex="1" parent="1">
+      <mxGeometry x="608" y="388" width="240" height="44" as="geometry"/>
+    </mxCell>
+    
+    <!-- Feedback loop -->
+    <mxCell id="feedback" value="用户量增长 → 新一轮瓶颈 → 新一轮创新" style="endArrow=classic;html=1;strokeColor=#8b5cf6;strokeWidth=1.5;curved=1;dashed=1;dashPattern=8 6;fontColor=#8b5cf6;fontSize=9;fontStyle=1;fontFamily=Inter;" edge="1" parent="1">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <mxPoint x="432" y="470" as="sourcePoint"/>
+        <mxPoint x="432" y="500" as="targetPoint"/>
+        <Array as="points">
+          <mxPoint x="240" y="470"/>
+          <mxPoint x="240" y="500"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Bottom insight -->
+    <mxCell id="bottomInsight" value="驱动力重心：训练成本 → 推理成本。谁占总成本更多，谁主导技术方向" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=none;fontSize=10;fontStyle=1;fontColor=#3b82f6;fontFamily=Inter;" vertex="1" parent="1">
+      <mxGeometry x="140" y="540" width="600" height="32" as="geometry"/>
+    </mxCell>
+  </root>
+</mxGraphModel></diagram></mxfile>

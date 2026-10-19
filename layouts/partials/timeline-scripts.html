@@ -1,0 +1,149 @@
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var explorer = document.querySelector(".timeline-explorer");
+  if (!explorer) return;
+
+  var minimap = explorer.querySelector("[data-timeline-minimap]");
+  var ticks = Array.prototype.slice.call(explorer.querySelectorAll(".timeline-tick"));
+  var panels = Array.prototype.slice.call(explorer.querySelectorAll(".timeline-month-panel"));
+  var yearLabel = explorer.querySelector("[data-timeline-year]");
+  var monthLabel = explorer.querySelector("[data-timeline-month]");
+  var live = document.querySelector("[data-timeline-live]");
+  var lastPointerY = null;
+  var edgeDirection = 0;
+  var edgeFrame = 0;
+
+  function findTick(year, month) {
+    return ticks.find(function (tick) {
+      return tick.dataset.year === String(year) && tick.dataset.month === String(Number(month));
+    });
+  }
+
+  function persistSelection(tick) {
+    var month = String(tick.dataset.month).padStart(2, "0");
+    var query = document.querySelector(".viewtabs") ? "?view=time" : "";
+    try {
+      history.replaceState(null, "", location.pathname + query + "#timeline-" + tick.dataset.year + "-" + month);
+    } catch (error) {}
+  }
+
+  function activate(tick, options) {
+    if (!tick) return;
+    var opts = options || {};
+    var target = tick.dataset.target;
+    lastPointerY = null;
+    edgeDirection = 0;
+    ticks.forEach(function (item) {
+      var active = item === tick;
+      item.style.setProperty("--mag", "0");
+      item.style.removeProperty("--label");
+      item.style.removeProperty("--active-label");
+      item.classList.toggle("is-active", active);
+      item.setAttribute("aria-pressed", String(active));
+    });
+    panels.forEach(function (panel) {
+      var active = panel.id === target;
+      panel.classList.toggle("is-active", active);
+      panel.setAttribute("aria-hidden", String(!active));
+    });
+    yearLabel.textContent = tick.dataset.year;
+    monthLabel.textContent = tick.dataset.month + "月 · " + tick.dataset.count + " 篇";
+    if (live) live.textContent = "已选择 " + tick.dataset.year + " 年 " + tick.dataset.month + " 月";
+    if (opts.persist !== false) persistSelection(tick);
+    if (opts.scroll !== false) tick.scrollIntoView({ block: "nearest" });
+  }
+
+  var hashMatch = location.hash.match(/^#timeline-(\d{4})-(\d{1,2})$/);
+  var initialTick = hashMatch ? findTick(hashMatch[1], hashMatch[2]) : null;
+  if (!initialTick) initialTick = explorer.querySelector(".timeline-tick.is-active") || ticks[0];
+  activate(initialTick, { animate: false, persist: false });
+  initialTick.scrollIntoView({ block: "nearest" });
+
+  minimap.addEventListener("click", function (event) {
+    var tick = event.target.closest(".timeline-tick");
+    if (tick) activate(tick);
+  });
+
+  function updateMagnification(clientY) {
+    var nearest = null;
+    var nearestMagnitude = 0;
+    ticks.forEach(function (tick) {
+      var rect = tick.getBoundingClientRect();
+      var distance = Math.abs(clientY - (rect.top + rect.height / 2));
+      var magnitude = Math.exp(-Math.pow(distance / 25, 2));
+      tick.style.setProperty("--mag", magnitude.toFixed(3));
+      tick.style.setProperty("--label", "0");
+      tick.style.setProperty("--active-label", "0");
+      if (magnitude > nearestMagnitude) {
+        nearestMagnitude = magnitude;
+        nearest = tick;
+      }
+    });
+    if (nearest) {
+      nearest.style.setProperty("--label", "1");
+      nearest.style.setProperty("--active-label", "1");
+    }
+  }
+
+  function stepEdgeScroll() {
+    if (edgeDirection === 0) {
+      edgeFrame = 0;
+      return;
+    }
+    minimap.scrollTop += edgeDirection * 3;
+    if (lastPointerY !== null) updateMagnification(lastPointerY);
+    edgeFrame = requestAnimationFrame(stepEdgeScroll);
+  }
+
+  minimap.addEventListener("pointermove", function (event) {
+    if (event.pointerType === "touch") return;
+    lastPointerY = event.clientY;
+    var rect = minimap.getBoundingClientRect();
+    edgeDirection = event.clientY < rect.top + 26 ? -1 : event.clientY > rect.bottom - 26 ? 1 : 0;
+    updateMagnification(event.clientY);
+    if (edgeDirection !== 0 && edgeFrame === 0) edgeFrame = requestAnimationFrame(stepEdgeScroll);
+  });
+
+  minimap.addEventListener("pointerleave", function () {
+    lastPointerY = null;
+    edgeDirection = 0;
+    ticks.forEach(function (tick) {
+      tick.style.setProperty("--mag", "0");
+      tick.style.removeProperty("--label");
+      tick.style.removeProperty("--active-label");
+    });
+  });
+
+  minimap.addEventListener("keydown", function (event) {
+    if (["ArrowDown", "ArrowUp", "Home", "End"].indexOf(event.key) === -1) return;
+    var index = ticks.indexOf(document.activeElement);
+    if (index === -1) return;
+    var next = index;
+    if (event.key === "ArrowDown") next = Math.min(ticks.length - 1, index + 1);
+    if (event.key === "ArrowUp") next = Math.max(0, index - 1);
+    if (event.key === "Home") next = 0;
+    if (event.key === "End") next = ticks.length - 1;
+    event.preventDefault();
+    ticks[next].focus();
+    activate(ticks[next]);
+  });
+});
+</script>
+<script>
+document.addEventListener("click", function (event) {
+  var article = event.target.closest(".timeline-article");
+  if (!article) return;
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+  event.preventDefault();
+  document.querySelectorAll(".timeline-article.is-selected").forEach(function (item) {
+    item.classList.remove("is-selected");
+  });
+  article.classList.add("is-selected");
+  var title = article.querySelector(".timeline-article-title");
+  if (title) title.style.viewTransitionName = "article-title";
+  window.setTimeout(function () {
+    window.location.href = article.href;
+  }, 180);
+});
+</script>

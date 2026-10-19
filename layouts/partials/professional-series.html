@@ -1,0 +1,8 @@
+{{- $name := .name -}}
+{{- $meta := dict "slug" "" "name" $name "direction" "" "status" "" "description" "" -}}
+{{- range hugo.Data.professional_series -}}
+  {{- if eq .name $name -}}
+    {{- $meta = . -}}
+  {{- end -}}
+{{- end -}}
+{{- return $meta -}}

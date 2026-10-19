@@ -1,0 +1,20 @@
+{{- $series := .series -}}
+{{- $pages := .pages -}}
+{{- $showDirection := .showDirection | default false -}}
+{{- $seriesPages := where $pages "Params.series" $series.name -}}
+{{- $seriesPages = sort $seriesPages "Date" "desc" -}}
+{{- if $seriesPages -}}
+  {{- $latest := index $seriesPages 0 -}}
+  {{- $directionMeta := partial "partition.html" (dict "plural" "directions" "slug" $series.direction) -}}
+  {{- $seriesPage := site.GetPage (printf "/series/%s" $series.name) -}}
+  {{- $href := printf "series/%s/" ($series.name | urlize) | relURL -}}
+  {{- with $seriesPage }}{{ $href = .RelPermalink }}{{ end -}}
+  {{- $searchTerms := printf "%s %s %s" $series.name $series.description $directionMeta.name -}}
+  <a class="serie professional-serie" href="{{ $href }}" data-search-terms="{{ $searchTerms }}">
+    <span class="serie-h">
+      <span class="serie-n">{{ $series.name }}</span>
+      <span class="serie-meta">{{ len $seriesPages }} 篇 · {{ $latest.Date.Format "2006.01.02" }}</span>
+    </span>
+    <span class="serie-t">{{ $series.description }}</span>
+  </a>
+{{- end -}}

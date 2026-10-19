@@ -1,0 +1,8 @@
+{{- $slug := .slug -}}
+{{- $meta := dict "slug" $slug "name" $slug "track" "" "status" "" "description" "" -}}
+{{- range hugo.Data.life_series -}}
+  {{- if eq .slug $slug -}}
+    {{- $meta = . -}}
+  {{- end -}}
+{{- end -}}
+{{- return $meta -}}

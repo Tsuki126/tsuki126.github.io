@@ -1,0 +1,10 @@
+{{- $p := . -}}
+<a class="entry" href="{{ $p.RelPermalink }}">
+  <span class="entry-title">{{ $p.Title }}<span class="entry-tags">
+    {{- range $p.Params.directions }}{{ $m := partial "partition.html" (dict "plural" "directions" "slug" .) }}<span>{{ $m.name }}</span>{{ end -}}
+    {{- range $p.Params.tracks }}{{ $m := partial "partition.html" (dict "plural" "tracks" "slug" .) }}<span>{{ $m.name }}</span>{{ end -}}
+    {{- range $p.Params.stages }}{{ $m := partial "partition.html" (dict "plural" "stages" "slug" .) }}<span>{{ $m.name }}</span>{{ end -}}
+  </span></span>
+  <span class="entry-meta">{{ $p.Date.Format "2006-01-02" }}{{ with $p.Params.series }} · {{ . }} 系列{{ end }}</span>
+  {{ with $p.Description }}<span class="entry-sum">{{ . }}</span>{{ end }}
+</a>

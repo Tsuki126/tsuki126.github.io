@@ -1,1 +1,8 @@
-© {{ now.Year }} Tsuki126 · <a href="https://github.com/Tsuki126">GitHub</a>
+<span>© {{ now.Year }} {{ .Site.Title }}</span>
+<span class="footer-links">
+  <a href="https://github.com/Tsuki126">GitHub</a>
+  <a href="{{ "index.xml" | relURL }}">RSS</a>
+  <a href="{{ "professional/index.xml" | relURL }}">专业订阅</a>
+  <a href="{{ "life/index.xml" | relURL }}">生活订阅</a>
+  <a href="{{ "daily/index.xml" | relURL }}">日常订阅</a>
+</span>

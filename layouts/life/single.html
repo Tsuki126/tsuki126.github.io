@@ -1,0 +1,85 @@
+{{ define "main" }}
+{{ $seriesSlug := .Params.life_series }}
+{{ $seriesMeta := dict "name" "" }}
+{{ $seriesPages := slice }}
+{{ if $seriesSlug }}
+  {{ $seriesMeta = partial "life-series.html" (dict "slug" $seriesSlug) }}
+  {{ $seriesPages = sort (where .Site.RegularPages "Params.life_series" $seriesSlug) "Params.series_order" }}
+{{ end }}
+{{ $tracks := .Params.tracks }}
+{{ $related := slice }}
+{{ range .Site.RegularPages }}
+  {{ if and (ne .RelPermalink $.RelPermalink) (eq .Section "life") }}
+    {{ $sameTrack := false }}
+    {{ if and $tracks .Params.tracks }}{{ with intersect .Params.tracks $tracks }}{{ $sameTrack = true }}{{ end }}{{ end }}
+    {{ if $sameTrack }}{{ $related = $related | append . }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ $related = sort $related "Date" "desc" }}
+{{ $trackName := "生活领域" }}
+{{ with $tracks }}{{ $meta := partial "partition.html" (dict "plural" "tracks" "slug" (index . 0)) }}{{ $trackName = $meta.name }}{{ end }}
+
+<div class="doc-layout">
+  <article class="doc-main">
+    <nav class="crumbs" aria-label="面包屑">
+      <a href="{{ "" | relURL }}">首页</a> /
+      <a href="{{ "life/" | relURL }}">生活</a>
+      {{ with $tracks }} / <span>{{ $trackName }}</span>{{ end }}
+    </nav>
+    <h1 class="doc-title">{{ .Title }}</h1>
+    <p class="doc-meta">
+      <time datetime='{{ .Date.Format "2006-01-02" }}'>{{ .Date.Format "2006-01-02" }}</time>
+      {{ with $seriesSlug }}<a href="{{ printf "life/series/%s/" . | relURL }}">{{ $seriesMeta.name }}</a>{{ end }}
+      {{ range $tracks }}{{ $meta := partial "partition.html" (dict "plural" "tracks" "slug" .) }}<span>{{ $meta.name }}</span>{{ end }}
+    </p>
+
+    <div class="doc">
+      {{ .Content }}
+    </div>
+
+    <div class="doc-foot">
+      {{ with .PrevInSection }}<a href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ else }}<span class="off">← 已是第一篇</span>{{ end }}
+      {{ with .NextInSection }}<a href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ else }}<span class="off">已是最后一篇 →</span>{{ end }}
+    </div>
+
+    {{ with .GetTerms "tags" }}
+    <div class="post-tags">
+      <span class="post-tags-label">标签</span>
+      {{ range . }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
+    </div>
+    {{ end }}
+  </article>
+
+  <aside class="rail rail-right">
+    {{ if $seriesPages }}
+    <section class="rail-block" aria-label="专题文章">
+      <p class="rail-title">专题文章</p>
+      <p class="rail-sub">{{ $seriesMeta.name }} · {{ len $seriesPages }} 篇</p>
+      <ul class="rail-list">
+        {{ range $seriesPages }}
+        <li><a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $.RelPermalink }} class="is-current"{{ end }}>{{ .Title }}</a></li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ else }}
+    <section class="rail-block" aria-label="{{ $trackName }}">
+      <p class="rail-title">{{ $trackName }}</p>
+      <ul class="rail-list">
+        {{ range first 12 $related }}
+        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ else }}
+        <li class="rail-empty">还没有同领域的其他文章</li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+    {{ $toc := .TableOfContents }}
+    {{ if and $toc (strings.Contains $toc "<a href") }}
+    <section class="rail-block" aria-label="本文目录">
+      <p class="rail-title">本文目录</p>
+      <nav class="rail-toc" aria-label="文章目录">{{ $toc }}</nav>
+    </section>
+    {{ end }}
+  </aside>
+</div>
+{{ end }}

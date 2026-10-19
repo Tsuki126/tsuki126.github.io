@@ -1,0 +1,52 @@
+{{ define "main" }}
+{{ $recent := slice }}
+{{ range .Site.RegularPages }}
+  {{ if and (ne .RelPermalink $.RelPermalink) (eq .Section "daily") }}
+    {{ $recent = $recent | append . }}
+  {{ end }}
+{{ end }}
+{{ $recent = sort $recent "Date" "desc" }}
+
+<div class="doc-layout">
+  <article class="doc-main">
+    <nav class="crumbs" aria-label="面包屑">
+      <a href="{{ "" | relURL }}">首页</a> /
+      <a href="{{ "daily/" | relURL }}">日常</a>
+    </nav>
+    <h1 class="doc-title">{{ .Title }}</h1>
+    <p class="doc-meta">
+      <time datetime='{{ .Date.Format "2006-01-02" }}'>{{ .Date.Format "2006-01-02" }}</time>
+    </p>
+
+    <div class="doc">
+      {{ .Content }}
+    </div>
+
+    <div class="doc-foot">
+      {{ with .PrevInSection }}<a href="{{ .RelPermalink }}">← 上一篇：{{ .Title }}</a>{{ else }}<span class="off">← 没有更早的随笔</span>{{ end }}
+      {{ with .NextInSection }}<a href="{{ .RelPermalink }}">下一篇：{{ .Title }} →</a>{{ else }}<span class="off">已经是最近的随笔 →</span>{{ end }}
+    </div>
+  </article>
+
+  <aside class="rail rail-right">
+    <section class="rail-block" aria-label="最近随笔">
+      <p class="rail-title">最近随笔</p>
+      <p class="rail-sub">共 {{ add (len $recent) 1 }} 篇</p>
+      <ul class="rail-list">
+        {{ range first 5 $recent }}
+        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ else }}
+        <li class="rail-empty">还没有其他随笔</li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ $toc := .TableOfContents }}
+    {{ if and $toc (strings.Contains $toc "<a href") }}
+    <section class="rail-block" aria-label="本文目录">
+      <p class="rail-title">本文目录</p>
+      <nav class="rail-toc" aria-label="文章目录">{{ $toc }}</nav>
+    </section>
+    {{ end }}
+  </aside>
+</div>
+{{ end }}

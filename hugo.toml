@@ -6,31 +6,47 @@ languageCode = "zh-CN"
 
 enableRobotsTXT = true
 hasCJKLanguage = true
+enableGitInfo = true
 
 [permalinks]
-  notes = "/notes/:slug/"
-  blog = "/blog/:slug/"
+  professional = "/professional/:slug/"
+  life = "/life/:slug/"
+  daily = "/daily/:slug/"
   categories = "/categories/:slug/"
   tags = "/tags/:slug/"
+  directions = "/directions/:slug/"
+  tracks = "/tracks/:slug/"
+  life_series = "/life/series/:slug/"
+  stages = "/stages/:slug/"
 
 [taxonomies]
   category = "categories"
   tag = "tags"
+  direction = "directions"
+  track = "tracks"
+  stage = "stages"
+  series = "series"
+  life_series = "life_series"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
 
 [params]
-  description = "安全工程师的技术思考与实践笔记"
-  favicon = "images/avatar.png"
-  images = ["images/avatar.png"]
+  description = "安全工程师 · 企业安全体系 · AI 安全 · 云原生 · 数据安全"
+  favicon = "images/favicon.svg"
   title = "Tsuki126"
   dateFormat = "2006-01-02"
   hideMadeWithLine = true
   enablePostNavigator = true
+  motto = "探索未知，思考本质，实践真知"
+  identity = "安全工程师，记录企业安全体系建设实践"
+  focus = "最近在关注：AI 安全、使用 AI 推动企业安全体系建设，以及云安全与数据安全治理。"
 
 [markup]
   [markup.highlight]
     style = "monokai"
-    lineNos = true
-    lineNumbersInTable = false
+    noClasses = false
+    lineNos = false
     codeFences = true
   [markup.goldmark]
     [markup.goldmark.extensions]
@@ -47,19 +63,37 @@ hasCJKLanguage = true
   email = "tsukin126@gmail.com"
 
 [[menus.main]]
-  identifier = "notes"
-  name = "随笔"
-  url = "/notes/"
+  identifier = "home"
+  name = "首页"
+  url = "/"
+  weight = 1
+
+[[menus.main]]
+  identifier = "index"
+  name = "目录"
+  url = "/overview/"
   weight = 2
 
 [[menus.main]]
-  identifier = "blog"
-  name = "博客"
-  url = "/blog/"
+  identifier = "professional"
+  name = "专业"
+  url = "/professional/"
   weight = 3
+
+[[menus.main]]
+  identifier = "life"
+  name = "生活"
+  url = "/life/"
+  weight = 4
+
+[[menus.main]]
+  identifier = "daily"
+  name = "日常"
+  url = "/daily/"
+  weight = 5
 
 [[menus.main]]
   identifier = "about"
   name = "关于"
   url = "/about/"
-  weight = 4
+  weight = 6

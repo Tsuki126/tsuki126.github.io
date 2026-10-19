@@ -1,0 +1,89 @@
+{{/* 目录页：安全六分类 + 生活六主题，各 2×3 网格。
+     每格显示：分类名 / 篇数＋最近日期 / 最新一篇标题。 */}}
+{{ define "main" }}
+{{ $blogs := where .Site.RegularPages "Section" "professional" }}
+{{ $notes := where .Site.RegularPages "Section" "life" }}
+<div class="hub">
+  <div class="hub-head">
+    <h1>{{ .Title }}</h1>
+    <div class="hub-search">
+      <input type="search" placeholder="搜索标题、标签、分类…" aria-label="搜索文章与随笔" data-search>
+      <span class="kbd">⌘K</span>
+    </div>
+  </div>
+  <div data-search-results></div>
+
+  <div data-search-hide>
+    <div class="hub-label">
+      <span>专业</span>
+      <i>6 个分类 · {{ len $blogs }} 篇</i>
+    </div>
+    <div class="hub-grid">
+      {{ range hugo.Data.partitions.directions }}
+      {{ $slug := .slug }}{{ $name := .name }}
+      {{ $tax := index $.Site.Taxonomies.directions $slug }}
+      {{ $count := 0 }}{{ $latest := false }}
+      {{ with $tax }}
+        {{ $count = len . }}
+        {{ range . }}{{ if or (not $latest) (gt .Page.Date $latest.Date) }}{{ $latest = .Page }}{{ end }}{{ end }}
+      {{ end }}
+      {{ if $latest }}
+      <a class="hub-cell" href="{{ (printf "directions/%s/" $slug) | relURL }}">
+        <span class="hub-cell-h">
+          <span class="hub-n">{{ $name }}</span>
+          <span class="hub-c">{{ $count }} 篇 · {{ $latest.Date.Format "01.02" }}</span>
+        </span>
+        <span class="hub-t">{{ $latest.Title }}</span>
+      </a>
+      {{ else }}
+      <div class="hub-cell is-empty">
+        <span class="hub-cell-h">
+          <span class="hub-n">{{ $name }}</span>
+          <span class="hub-c">0 篇</span>
+        </span>
+        <span class="hub-t">还没开始写</span>
+      </div>
+      {{ end }}
+      {{ end }}
+    </div>
+
+    <div class="hub-label">
+      <span>生活</span>
+      <i>6 个主题 · {{ len $notes }} 篇</i>
+    </div>
+    <div class="hub-grid">
+      {{ range hugo.Data.partitions.tracks }}
+      {{ $slug := .slug }}{{ $name := .name }}
+      {{ $tax := index $.Site.Taxonomies.tracks $slug }}
+      {{ $count := 0 }}{{ $latest := false }}
+      {{ with $tax }}
+        {{ $count = len . }}
+        {{ range . }}{{ if or (not $latest) (gt .Page.Date $latest.Date) }}{{ $latest = .Page }}{{ end }}{{ end }}
+      {{ end }}
+      {{ if $latest }}
+      <a class="hub-cell" href="{{ (printf "tracks/%s/" $slug) | relURL }}">
+        <span class="hub-cell-h">
+          <span class="hub-n">{{ $name }}</span>
+          <span class="hub-c">{{ $count }} 篇 · {{ $latest.Date.Format "01.02" }}</span>
+        </span>
+        <span class="hub-t">{{ $latest.Title }}</span>
+      </a>
+      {{ else }}
+      <div class="hub-cell is-empty">
+        <span class="hub-cell-h">
+          <span class="hub-n">{{ $name }}</span>
+          <span class="hub-c">0 篇</span>
+        </span>
+        <span class="hub-t">还没开始写</span>
+      </div>
+      {{ end }}
+      {{ end }}
+    </div>
+  </div>
+
+  <div class="foot" data-search-hide>
+    <div class="foot-tags">{{ range first 6 .Site.Taxonomies.tags.ByCount }}<a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>{{ end }}</div>
+    <a class="foot-more" href="{{ "tags/" | relURL }}">全部 {{ len .Site.Taxonomies.tags }} 个 →</a>
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,17 @@
+{{- $series := .series -}}
+{{- $pages := .pages -}}
+{{- $showTrack := .showTrack | default false -}}
+{{- $seriesPages := where $pages "Params.life_series" $series.slug -}}
+{{- $seriesPages = sort $seriesPages "Date" "desc" -}}
+{{- if $seriesPages -}}
+  {{- $latest := index $seriesPages 0 -}}
+  {{- $trackMeta := partial "partition.html" (dict "plural" "tracks" "slug" $series.track) -}}
+  {{- $searchTerms := printf "%s %s %s" $series.name $series.description $trackMeta.name -}}
+  <a class="serie life-serie" href="{{ printf "life/series/%s/" $series.slug | relURL }}" data-search-terms="{{ $searchTerms }}">
+    <span class="serie-h">
+      <span class="serie-n">{{ $series.name }}</span>
+      <span class="serie-meta">{{ len $seriesPages }} 篇 · {{ $latest.Date.Format "2006.01.02" }}</span>
+    </span>
+    <span class="serie-t">{{ $series.description }}</span>
+  </a>
+{{- end -}}

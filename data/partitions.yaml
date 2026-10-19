@@ -1,0 +1,62 @@
+# 分区定义：slug 用于 front matter 与 URL，name/desc 用于页面显示
+# 安全分六类：三个技术域（基础/应用/数据）+ 三个职能（运营/攻防/体系）
+directions:
+  - slug: base-security
+    name: 基础安全
+    desc: 云平台、主机、网络与容器
+  - slug: application-security
+    name: 应用安全
+    desc: SDL、代码审计与漏洞治理
+  - slug: data-security
+    name: 数据安全
+    desc: 分类分级、加密脱敏与数据流转
+  - slug: security-operations
+    name: 安全运营
+    desc: 检测、研判、响应与告警治理
+  - slug: security-offense-defense
+    name: 安全攻防
+    desc: 红蓝对抗、漏洞挖掘与实战检验
+  - slug: security-system
+    name: 安全体系
+    desc: 架构、治理、度量与组织
+
+tracks:
+  - slug: reading
+    name: 读书思考
+    desc: 读书笔记与延伸思考
+  - slug: investing
+    name: 理财投资
+    desc: 投资理念与规则复盘
+  - slug: health
+    name: 健康管理
+    desc: 身体状态的长期记录
+  - slug: language
+    name: 外语能力
+    desc: 语言学习与技术写作
+  - slug: exploring
+    name: 无限探索
+    desc: 主题研究与动手实验
+  - slug: life
+    name: 幸福生活
+    desc: 生活与关系的长期记录
+
+note_types:
+  - slug: daily
+    name: 日记
+    desc: 当日记录、状态与即时想法
+  - slug: essay
+    name: 随笔
+    desc: 围绕某个主题的整理与思考
+  - slug: review
+    name: 复盘
+    desc: 对一段经历或行动的回顾
+
+stages:
+  - slug: learning
+    name: 学习
+  - slug: thinking
+    name: 思考
+  - slug: practice
+    name: 实践
+  - slug: output
+    name: 输出

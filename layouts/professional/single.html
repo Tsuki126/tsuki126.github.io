@@ -1,0 +1,84 @@
+{{ define "main" }}
+{{ $dirs := .Params.directions }}
+{{ $seriesName := "" }}{{ with .Params.series }}{{ $seriesName = . }}{{ end }}
+{{ $seriesPages := slice }}
+{{ if $seriesName }}
+  {{ $seriesPages = where .Site.RegularPages "Params.series" $seriesName }}
+  {{ $seriesPages = sort $seriesPages "Params.series_order" }}
+{{ end }}
+{{ $related := slice }}
+{{ range .Site.RegularPages }}
+  {{ if ne .RelPermalink $.RelPermalink }}
+    {{ $same := false }}
+    {{ if and $dirs .Params.directions }}{{ with intersect .Params.directions $dirs }}{{ $same = true }}{{ end }}{{ end }}
+    {{ if $same }}{{ $related = $related | append . }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ $dirName := "同方向" }}
+{{ with $dirs }}{{ $m := partial "partition.html" (dict "plural" "directions" "slug" (index . 0)) }}{{ $dirName = $m.name }}{{ end }}
+<div class="doc-layout">
+  <article class="doc-main">
+    <nav class="crumbs" aria-label="面包屑">
+      <a href="{{ "" | relURL }}">首页</a> /
+      <a href="{{ "professional/" | relURL }}">专业</a>{{ with $dirs }} /
+      {{ $m := partial "partition.html" (dict "plural" "directions" "slug" (index . 0)) }}<span>{{ $m.name }}</span>{{ end }}
+    </nav>
+    <h1 class="doc-title">{{ .Title }}</h1>
+    <p class="doc-meta">
+      <time datetime='{{ .Date.Format "2006-01-02" }}'>{{ .Date.Format "2006-01-02" }}</time>
+      {{ with $dirs }}{{ $m := partial "partition.html" (dict "plural" "directions" "slug" (index . 0)) }}<span>{{ $m.name }}</span>{{ end }}
+      {{ range .Params.stages }}{{ $m := partial "partition.html" (dict "plural" "stages" "slug" .) }}<span>{{ $m.name }}</span>{{ end }}
+      <span>{{ .ReadingTime }} 分钟</span>
+      {{ if and .Lastmod (ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02")) }}<span>更新于 {{ .Lastmod.Format "2006-01-02" }}</span>{{ end }}
+    </p>
+
+    <div class="doc">
+      {{ .Content }}
+    </div>
+
+    <div class="doc-foot">
+      {{ with .PrevInSection }}<a href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ else }}<span class="off">← 已是第一篇</span>{{ end }}
+      {{ with .NextInSection }}<a href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ else }}<span class="off">已是最后一篇 →</span>{{ end }}
+    </div>
+
+    {{ with .GetTerms "tags" }}
+    <div class="post-tags">
+      <span class="post-tags-label">标签</span>
+      {{ range . }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
+    </div>
+    {{ end }}
+  </article>
+
+  <aside class="rail rail-right">
+    {{ if $seriesPages }}
+    <section class="rail-block" aria-label="系列文章">
+      <p class="rail-title">系列文章</p>
+      <p class="rail-sub">{{ $seriesName }} · {{ len $seriesPages }} 篇</p>
+      <ul class="rail-list">
+        {{ range $seriesPages }}
+        <li><a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $.RelPermalink }} class="is-current"{{ end }}>{{ .Title }}</a></li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ else }}
+    <section class="rail-block" aria-label="{{ $dirName }}">
+      <p class="rail-title">{{ $dirName }}</p>
+      <ul class="rail-list">
+        {{ range first 12 $related }}
+        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ else }}
+        <li class="rail-empty">还没有同方向的其他文章</li>
+        {{ end }}
+      </ul>
+    </section>
+    {{ end }}
+    {{ $toc := .TableOfContents }}
+    {{ if and $toc (strings.Contains $toc "<a href") }}
+    <section class="rail-block" aria-label="本文目录">
+      <p class="rail-title">本文目录</p>
+      <nav class="rail-toc" aria-label="文章目录">{{ $toc }}</nav>
+    </section>
+    {{ end }}
+  </aside>
+</div>
+{{ end }}

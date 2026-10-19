@@ -1,0 +1,11 @@
+{{- $summary := .Description -}}
+{{- if not $summary -}}
+  {{- $summary = .Summary | plainify | htmlUnescape | strings.TrimSpace | strings.TrimPrefix "见闻 " | truncate 110 -}}
+{{- end -}}
+<a class="article-card" href="{{ .RelPermalink }}">
+  <span class="article-card-head">
+    <span class="article-card-title">{{ .Title }}</span>
+    <time class="article-card-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+  </span>
+  {{ with $summary }}<span class="article-card-summary">{{ . }}</span>{{ end }}
+</a>

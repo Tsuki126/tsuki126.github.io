@@ -1,0 +1,20 @@
+{{- /* 返回某个分类值的显示名与描述：dict "plural" "directions" "slug" "ai-security" */ -}}
+{{- $plural := .plural -}}
+{{- $slug := .slug -}}
+{{- $name := $slug -}}
+{{- $desc := "" -}}
+{{- with index hugo.Data.partitions $plural -}}
+  {{- range . -}}
+    {{- if eq .slug $slug -}}
+      {{- $name = .name -}}
+      {{- with .desc }}{{ $desc = . }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if eq $name $slug -}}
+  {{- with site.GetPage (printf "/%s/%s" $plural $slug) -}}
+    {{- $name = .Title -}}
+    {{- with .Description }}{{ $desc = . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- return (dict "name" $name "desc" $desc) -}}

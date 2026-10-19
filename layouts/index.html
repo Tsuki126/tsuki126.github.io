@@ -1,0 +1,58 @@
+{{ define "main" }}
+<div class="home">
+  <section class="hero">
+    <h1 class="wordmark">{{ .Site.Title }}</h1>
+    <div class="rule"></div>
+    <p class="hero-motto">{{ .Site.Params.motto }}</p>
+    <p class="hero-identity">{{ .Site.Params.identity }}</p>
+  </section>
+
+  {{ partial "security-graph.html" . }}
+
+  {{ $recent := (where .Site.RegularPages "Section" "in" (slice "professional" "life" "daily")).ByDate.Reverse }}
+  {{ $blog := where .Site.RegularPages "Section" "professional" }}
+  {{ $series := slice }}
+  {{ range hugo.Data.professional_series }}
+    {{ $name := .name }}
+    {{ $pages := sort (where $blog "Params.series" $name) "Date" "desc" }}
+    {{ with index $pages 0 }}
+      {{ $latest := . }}
+      {{ $seriesPage := site.GetPage (printf "/series/%s" $name) }}
+      {{ $seriesURL := printf "series/%s/" ($name | urlize) | relURL }}
+      {{ with $seriesPage }}{{ $seriesURL = .RelPermalink }}{{ end }}
+      {{ $series = $series | append (dict "name" $name "count" (len $pages) "latest" $latest "url" $seriesURL "sortDate" $latest.Date.Unix) }}
+    {{ end }}
+  {{ end }}
+  {{ $series = sort $series "sortDate" "desc" }}
+
+  <section class="home-block">
+    <div class="hb-col">
+      <h2 class="sec-head">最近更新 <a href="{{ "overview/" | relURL }}">全部 →</a></h2>
+      <ul class="recent">
+        {{ range first 3 $recent }}
+        <li><a href="{{ .RelPermalink }}">
+          <span class="r-title">{{ .Title }}</span>
+          <span class="r-meta">{{ if eq .Section "professional" }}专业{{ else if eq .Section "life" }}生活{{ else }}日常{{ end }} · {{ .Date.Format "2006.01.02" }}</span>
+        </a></li>
+        {{ else }}
+        <li class="empty">还没有内容</li>
+        {{ end }}
+      </ul>
+    </div>
+
+    <div class="hb-col">
+      <h2 class="sec-head">专题文章 <a href="{{ "professional/?view=series" | relURL }}">全部 →</a></h2>
+      <ul class="series-list">
+        {{ range first 3 $series }}
+        <li><a href="{{ .url }}">
+          <span class="sl-name">{{ .name }}</span>
+          <span class="sl-sub">{{ .count }} 篇 · {{ .latest.Date.Format "2006.01.02" }}</span>
+        </a></li>
+        {{ else }}
+        <li class="empty">还没有专题</li>
+        {{ end }}
+      </ul>
+    </div>
+  </section>
+</div>
+{{ end }}
