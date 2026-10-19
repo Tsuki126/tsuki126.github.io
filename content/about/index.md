@@ -9,7 +9,7 @@ description = "经历覆盖应用、主机、云原生与数据安全，目前�
       <p class="about-kicker">关于</p>
       <h1>Tsuki126</h1>
       <p class="about-profile-role">安全工程师 · 北京</p>
-      <p class="about-profile-intro">记录技术、治理与组织中的安全实践。</p>
+      <p class="about-profile-intro">围绕技术、工程与组织，推动安全体系落地。</p>
       <div class="about-profile-meta">
         <div class="about-profile-focus">
           <p class="about-profile-label">当前方向</p>
@@ -57,11 +57,7 @@ description = "经历覆盖应用、主机、云原生与数据安全，目前�
       </section>
       <section class="about-section">
         <h2>精选文章</h2>
-        <ul class="about-featured">
-          <li><a href="/professional/llm-lifecycle-overview/"><span>生命周期全景——从数据到对话</span><small>专业文章</small></a></li>
-          <li><a href="/professional/llm-core-principles/"><span>大模型核心原理——从神经网络到在线推理</span><small>专业文章</small></a></li>
-          <li><a href="/overview/"><span>目录：按分区浏览全部内容</span><small>目录</small></a></li>
-        </ul>
+        <p class="about-empty">还没有内容</p>
       </section>
     </article>
   </div>
