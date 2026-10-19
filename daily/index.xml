@@ -14,7 +14,7 @@
 		
 			<atom:link href="https://tsuki126.github.io/daily/index.xml" rel="self" type="application/rss+xml" />
 			<item>
-				<title>漏洞复核之后，我看见更深的缺口</title>
+				<title>从 ARTEX 扫描说起：应用安全还有多远</title>
 				<link>https://tsuki126.github.io/daily/vulnerability-review-and-application-security-gap/</link>
 				<pubDate>Mon, 19 Oct 2026 00:00:00 +0000</pubDate>
 				<guid>https://tsuki126.github.io/daily/vulnerability-review-and-application-security-gap/</guid>
