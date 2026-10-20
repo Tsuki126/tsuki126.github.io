@@ -14,6 +14,13 @@
 		
 			<atom:link href="https://tsuki126.github.io/daily/index.xml" rel="self" type="application/rss+xml" />
 			<item>
+				<title>计划留在博客里，今天先好好吃顿早餐</title>
+				<link>https://tsuki126.github.io/daily/planning-breakfast-and-long-term-living/</link>
+				<pubDate>Tue, 20 Oct 2026 00:00:00 +0000</pubDate>
+				<guid>https://tsuki126.github.io/daily/planning-breakfast-and-long-term-living/</guid>
+				<description>&lt;p&gt;我是一个 INTJ，很喜欢做规划，甚至希望把时间精确到每一个小时。7:00–8:00 学英语，8:00–9:00 研究最新技术，类似这样密不透风的时间表，我以前做过很多次。&lt;/p&gt;</description>
+			</item>
+			<item>
 				<title>从 ARTEX 扫描说起：应用安全还有多远</title>
 				<link>https://tsuki126.github.io/daily/vulnerability-review-and-application-security-gap/</link>
 				<pubDate>Mon, 19 Oct 2026 00:00:00 +0000</pubDate>
