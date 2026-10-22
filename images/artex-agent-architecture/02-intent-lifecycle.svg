@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">ARTEX Intent 生命周期</title>
+  <desc id="desc">图示 Intent 从待领取经 CAS 进入执行中，正常完成、暂停、阻塞、预算耗尽或停止分别成为显式状态，可恢复异常能够重新打开。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#53616d"/></marker>
+    <marker id="arrow-dash" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a6845"/></marker>
+    <style>
+      .bg{fill:#fbfbfa}.zone{fill:#f6f7f8;stroke:#dfe3e7;stroke-width:1}
+      .zoneLabel{font:600 13px "PingFang SC","Noto Sans CJK SC",sans-serif;fill:#6f7a84;letter-spacing:1.1px}
+      .state{fill:#e9f2ee;stroke:#4e7667;stroke-width:1.2;rx:8}
+      .terminal{fill:#eef0f2;stroke:#7a848e;stroke-width:1.2;rx:8}
+      .recover{fill:#f7f0e7;stroke:#91693f;stroke-width:1.2;rx:8}
+      .gate{fill:#eaf0f6;stroke:#55708c;stroke-width:1.2;rx:7}
+      .text{font:500 18px "PingFang SC","Noto Sans CJK SC",sans-serif;fill:#17202a}
+      .small{font:400 15px "PingFang SC","Noto Sans CJK SC",sans-serif;fill:#66717c}
+      .label{font:500 14px "PingFang SC","Noto Sans CJK SC",sans-serif;fill:#5d6974}
+      .line{fill:none;stroke:#53616d;stroke-width:1.45;marker-end:url(#arrow)}
+      .dash{fill:none;stroke:#8a6845;stroke-width:1.45;stroke-dasharray:7 5;marker-end:url(#arrow-dash)}
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="720"/>
+
+  <text class="zoneLabel" x="54" y="46">ARTEX Intent 生命周期</text>
+  <g transform="translate(822 34)">
+    <rect x="0" y="-8" width="14" height="14" rx="2" fill="#e9f2ee" stroke="#4e7667"/>
+    <text class="label" x="22" y="5">可执行状态</text>
+    <rect x="132" y="-8" width="14" height="14" rx="2" fill="#f7f0e7" stroke="#91693f"/>
+    <text class="label" x="154" y="5">可恢复异常</text>
+    <rect x="270" y="-8" width="14" height="14" rx="2" fill="#eef0f2" stroke="#7a848e"/>
+    <text class="label" x="292" y="5">终止状态</text>
+  </g>
+  <rect class="zone" x="44" y="66" width="1112" height="574" rx="8"/>
+
+  <rect class="state" x="70" y="150" width="170" height="78"/>
+  <text class="text" x="155" y="184" text-anchor="middle">open</text>
+  <text class="small" x="155" y="209" text-anchor="middle">待领取</text>
+  <rect class="gate" x="300" y="160" width="172" height="58"/>
+  <text class="text" x="386" y="185" text-anchor="middle">CAS 领取</text>
+  <text class="small" x="386" y="208" text-anchor="middle">只能一个赢家</text>
+  <rect class="state" x="532" y="150" width="170" height="78"/>
+  <text class="text" x="617" y="184" text-anchor="middle">running</text>
+  <text class="small" x="617" y="209" text-anchor="middle">执行中</text>
+  <rect class="terminal" x="872" y="150" width="182" height="78"/>
+  <text class="text" x="963" y="184" text-anchor="middle">done</text>
+  <text class="small" x="963" y="209" text-anchor="middle">正常完成</text>
+  <path class="line" d="M240 189 H300"/>
+  <path class="line" d="M472 189 H532"/>
+  <path class="line" d="M702 189 H872"/>
+  <text class="label" x="270" y="175" text-anchor="middle">领取</text>
+  <text class="label" x="502" y="175" text-anchor="middle">进入执行</text>
+  <text class="label" x="787" y="175" text-anchor="middle">正常返回</text>
+
+  <rect class="state" x="780" y="288" width="182" height="76"/>
+  <text class="text" x="871" y="321" text-anchor="middle">paused</text>
+  <text class="small" x="871" y="346" text-anchor="middle">人工暂停</text>
+  <path class="line" d="M690 228 V288 H780"/>
+  <path class="dash" d="M780 322 H740 V228 H702"/>
+  <text class="label" x="725" y="270" text-anchor="middle">暂停</text>
+  <text class="label" x="755" y="342" text-anchor="middle">恢复</text>
+
+  <path class="line" d="M617 228 V382"/>
+  <path class="line" d="M617 382 H302 V430"/>
+  <path class="line" d="M617 382 V430"/>
+  <path class="line" d="M617 382 H798 V430"/>
+  <text class="label" x="650" y="372">不同退出原因</text>
+  <rect class="recover" x="208" y="430" width="188" height="76"/>
+  <text class="text" x="302" y="463" text-anchor="middle">blocked</text>
+  <text class="small" x="302" y="488" text-anchor="middle">模型或工具错误</text>
+  <rect class="recover" x="522" y="430" width="190" height="76"/>
+  <text class="text" x="617" y="463" text-anchor="middle">exhausted</text>
+  <text class="small" x="617" y="488" text-anchor="middle">轮次或时间耗尽</text>
+  <rect class="recover" x="798" y="430" width="188" height="76"/>
+  <text class="text" x="892" y="463" text-anchor="middle">stopped</text>
+  <text class="small" x="892" y="488" text-anchor="middle">终止或目标完成</text>
+
+  <rect class="gate" x="208" y="548" width="778" height="50"/>
+  <text class="text" x="597" y="580" text-anchor="middle">显式重新打开：retry / continue / rerun</text>
+  <path class="dash" d="M302 506 V548"/>
+  <path class="dash" d="M617 506 V548"/>
+  <path class="dash" d="M892 506 V548"/>
+  <path class="dash" d="M208 573 H52 V189 H70"/>
+
+  <rect class="zone" x="44" y="658" width="1112" height="40" rx="6"/>
+  <text class="small" x="600" y="684" text-anchor="middle">失败不是统一异常；控制流恢复仍不等于外部副作用只执行一次。</text>
+</svg>

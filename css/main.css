@@ -19,6 +19,7 @@
   --kai: "Kaiti SC", "STKaiti", "KaiTi", "BiauKai", serif;
   --mono: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   --measure: 720px;
+  --doc-measure: 760px;
   --container: 1160px;
 }
 
@@ -585,10 +586,10 @@ body:has(.hub) footer { margin-top: 20px; }
 /* ===== 文章页 ===== */
 .doc-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 200px;
-  gap: 48px;
+  grid-template-columns: minmax(0, 1fr) 180px;
+  gap: 32px;
   align-items: start;
-  max-width: 1040px;
+  max-width: var(--container);
   margin: 0 auto;
   padding-top: 36px;
 }
@@ -618,6 +619,7 @@ body:has(.hub) footer { margin-top: 20px; }
 
 /* 正文排版：宋体 + 大留白 + 标题编号 */
 .doc { font-family: var(--serif); font-size: 1.05rem; counter-reset: doc-h2; }
+.doc > p, .doc > ul, .doc > ol, .doc > blockquote, .doc > table { max-width: var(--doc-measure); }
 .doc p { margin: 0 0 1.8rem; line-height: 1.85; }
 .doc strong, .doc b { font-weight: 700; }
 .doc h2 { counter-increment: doc-h2; counter-reset: doc-h3; font-size: 1.38rem; margin: 2.4rem 0 .8rem; }
@@ -635,6 +637,21 @@ body:has(.hub) footer { margin-top: 20px; }
 .doc pre code { background: transparent; border: none; padding: 0; font-size: .8rem; white-space: pre; }
 .doc figure { margin: 1.8rem 0; text-align: center; }
 .doc figure img, .doc img { display: block; margin: 1.6rem auto; max-width: 100%; height: auto; border: 1px solid var(--border); }
+.doc figure.technical-figure {
+  width: min(100%, var(--doc-measure));
+  max-width: none;
+  margin: 2.2rem auto 2.2rem 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.doc figure.technical-figure img {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  margin: 0 auto 0.7rem;
+  border: 1px solid #cfd5dc;
+  box-shadow: none;
+}
 .doc figcaption { margin-top: .6rem; font-family: var(--sans); font-size: .82rem; color: var(--ink-3); text-align: center; }
 .doc table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .88rem; margin: 0 0 1.8rem; }
 .doc th { text-align: left; font-weight: 700; padding: 8px 12px; border-bottom: 1px solid var(--border-strong); background: var(--surface); }
@@ -777,7 +794,7 @@ body:has(.hub) footer { margin-top: 20px; }
 
 /* ===== 响应式 ===== */
 @media (max-width: 1059px) {
-  .doc-layout { grid-template-columns: minmax(0, 1fr) 200px; gap: 34px; }
+  .doc-layout { grid-template-columns: minmax(0, 1fr) 180px; gap: 28px; }
   .series-grid, .article-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 859px) {
@@ -807,6 +824,8 @@ body:has(.hub) footer { margin-top: 20px; }
   .hero { padding-top: 34px; }
   .hero h1 { font-size: 1.7rem; }
   .doc-title { font-size: 1.55rem; }
+  .doc figure.technical-figure img { width: 760px; max-width: none; }
+  .doc figure.technical-figure figcaption { position: sticky; left: 0; }
   .about-hero h1 { font-size: 1.7rem; }
   .about-timeline li { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 14px; }
   .about-period { grid-column: 1 / -1; }

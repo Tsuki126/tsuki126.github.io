@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">ARTEX 证据链</title>
+  <desc id="desc">图示工具执行结果经过流量记录形成证据快照，正文按 SHA-256 内容寻址保存，并与 Finding、证据版本和报告绑定。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#53616d"/></marker>
+    <marker id="arrow-dash" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a6845"/></marker>
+    <style>
+      .bg{fill:#fbfbfa}.zone{fill:#f6f7f8;stroke:#dfe3e7;stroke-width:1}
+      .zoneLabel{font:600 13px "PingFang SC","Noto Sans CJK SC",sans-serif;fill:#6f7a84;letter-spacing:1.1px}
+      .transient{fill:#eef1f3;stroke:#78838d;stroke-width:1.2;rx:8}
+      .evidence{fill:#f7f0e7;stroke:#91693f;stroke-width:1.2;rx:8}
+      .finding{fill:#e9f2ee;stroke:#4e7667;stroke-width:1.2;rx:8}
+      .text{font:500 18px "PingFang SC","Noto Sans CJK SC",sans-serif;fill:#17202a}
+      .small{font:400 15px "PingFang SC","Noto Sans CJK SC",sans-serif;fill:#66717c}
+      .label{font:500 14px "PingFang SC","Noto Sans CJK SC",sans-serif;fill:#5d6974}
+      .line{fill:none;stroke:#53616d;stroke-width:1.45;marker-end:url(#arrow)}
+      .dash{fill:none;stroke:#8a6845;stroke-width:1.45;stroke-dasharray:7 5;marker-end:url(#arrow-dash)}
+      .boundary{stroke:#91693f;stroke-width:1.2;stroke-dasharray:7 6}
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="720"/>
+  <text class="zoneLabel" x="54" y="46">ARTEX 证据链</text>
+  <g transform="translate(786 34)">
+    <line x1="0" y1="0" x2="30" y2="0" stroke="#53616d" stroke-width="1.4" marker-end="url(#arrow)"/>
+    <text class="label" x="40" y="5">数据流转</text>
+    <line x1="140" y1="0" x2="170" y2="0" stroke="#8a6845" stroke-width="1.4" stroke-dasharray="7 5" marker-end="url(#arrow-dash)"/>
+    <text class="label" x="180" y="5">持久化边界</text>
+  </g>
+
+  <rect class="zone" x="44" y="66" width="1112" height="548" rx="8"/>
+  <text class="zoneLabel" x="70" y="96">一次执行如何变成可复核结论</text>
+
+  <rect class="transient" x="72" y="144" width="188" height="92"/>
+  <text class="text" x="166" y="177" text-anchor="middle">工具执行</text>
+  <text class="small" x="166" y="204" text-anchor="middle">请求与响应</text>
+  <text class="small" x="166" y="225" text-anchor="middle">原始执行结果</text>
+  <rect class="transient" x="324" y="144" width="188" height="92"/>
+  <text class="text" x="418" y="177" text-anchor="middle">流量记录</text>
+  <text class="small" x="418" y="204" text-anchor="middle">方法、URL、状态</text>
+  <text class="small" x="418" y="225" text-anchor="middle">头、时间与长度</text>
+  <rect class="evidence" x="576" y="144" width="204" height="92"/>
+  <text class="text" x="678" y="177" text-anchor="middle">证据快照</text>
+  <text class="small" x="678" y="204" text-anchor="middle">正文、元数据与快照 ID</text>
+  <text class="small" x="678" y="225" text-anchor="middle">独立于工作会话</text>
+  <rect class="evidence" x="844" y="144" width="260" height="92"/>
+  <text class="text" x="974" y="177" text-anchor="middle">内容寻址 Blob</text>
+  <text class="small" x="974" y="204" text-anchor="middle">SHA-256 生成存储路径</text>
+  <text class="small" x="974" y="225" text-anchor="middle">读取时校验长度与哈希</text>
+  <path class="line" d="M260 190 H324"/>
+  <path class="dash" d="M512 190 H576"/>
+  <path class="dash" d="M780 190 H844"/>
+  <text class="label" x="292" y="175" text-anchor="middle">捕获</text>
+  <text class="label" x="544" y="175" text-anchor="middle">固化</text>
+  <text class="label" x="812" y="175" text-anchor="middle">哈希</text>
+
+  <line class="boundary" x1="552" y1="110" x2="552" y2="292"/>
+  <text class="small" x="552" y="112" text-anchor="middle">临时执行区</text>
+  <text class="small" x="790" y="286" text-anchor="middle">持久证据区</text>
+
+  <rect class="finding" x="104" y="336" width="220" height="92"/>
+  <text class="text" x="214" y="369" text-anchor="middle">Finding</text>
+  <text class="small" x="214" y="396" text-anchor="middle">风险结论与影响范围</text>
+  <rect class="evidence" x="424" y="336" width="260" height="92"/>
+  <text class="text" x="554" y="369" text-anchor="middle">Finding ↔ Evidence</text>
+  <text class="small" x="554" y="396" text-anchor="middle">证据绑定与版本号</text>
+  <rect class="finding" x="784" y="336" width="224" height="92"/>
+  <text class="text" x="896" y="369" text-anchor="middle">报告 / 导出</text>
+  <text class="small" x="896" y="396" text-anchor="middle">检测证据版本变化</text>
+  <path class="line" d="M324 382 H424"/>
+  <path class="line" d="M684 382 H784"/>
+  <path class="line" d="M974 236 V302 H554 V336"/>
+  <text class="label" x="784" y="322" text-anchor="middle">引用证据快照</text>
+
+  <rect class="transient" x="356" y="480" width="488" height="90"/>
+  <text class="text" x="600" y="512" text-anchor="middle">并发写入与版本一致性</text>
+  <text class="small" x="600" y="538" text-anchor="middle">事务锁避免证据关系被并发覆盖</text>
+  <text class="small" x="600" y="558" text-anchor="middle">版本字段让报告识别证据是否发生变化</text>
+  <path class="dash" d="M554 428 V480"/>
+
+  <rect class="zone" x="44" y="642" width="1112" height="56" rx="8"/>
+  <text class="text" x="600" y="669" text-anchor="middle">证据可独立存在；模型描述不能替代原始材料。</text>
+  <text class="small" x="600" y="690" text-anchor="middle">企业部署仍需加密、脱敏、访问控制、保留期和导出审批。</text>
+</svg>

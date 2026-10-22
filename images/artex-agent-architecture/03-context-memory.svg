@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">ARTEX 上下文装配</title>
+  <desc id="desc">图示规划器与执行器只接收按角色装配的上下文，计划、探索图、轨迹、摘要和原始证据保持独立存储。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#53616d"/></marker>
+    <marker id="arrow-dash" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8a6845"/></marker>
+    <style>
+      .bg{fill:#fbfbfa}.zone{fill:#f6f7f8;stroke:#dfe3e7;stroke-width:1}
+      .zoneLabel{font:600 13px "PingFang SC","Noto Sans CJK SC",sans-serif;fill:#6f7a84;letter-spacing:1.1px}
+      .context{fill:#eaf0f6;stroke:#55708c;stroke-width:1.2;rx:8}
+      .memory{fill:#e9f2ee;stroke:#4e7667;stroke-width:1.2;rx:8}
+      .evidence{fill:#f7f0e7;stroke:#91693f;stroke-width:1.2;rx:8}
+      .text{font:500 18px "PingFang SC","Noto Sans CJK SC",sans-serif;fill:#17202a}
+      .small{font:400 15px "PingFang SC","Noto Sans CJK SC",sans-serif;fill:#66717c}
+      .label{font:500 14px "PingFang SC","Noto Sans CJK SC",sans-serif;fill:#5d6974}
+      .line{fill:none;stroke:#53616d;stroke-width:1.4;marker-end:url(#arrow)}
+      .dash{fill:none;stroke:#8a6845;stroke-width:1.4;stroke-dasharray:7 5;marker-end:url(#arrow-dash)}
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="720"/>
+
+  <text class="zoneLabel" x="54" y="46">ARTEX 上下文装配</text>
+  <g transform="translate(800 34)">
+    <line x1="0" y1="0" x2="30" y2="0" stroke="#53616d" stroke-width="1.4" marker-end="url(#arrow)"/>
+    <text class="label" x="40" y="5">装配 / 检索</text>
+    <line x1="148" y1="0" x2="178" y2="0" stroke="#8a6845" stroke-width="1.4" stroke-dasharray="7 5" marker-end="url(#arrow-dash)"/>
+    <text class="label" x="188" y="5">核验 / 展开</text>
+  </g>
+
+  <rect class="zone" x="44" y="66" width="1112" height="608" rx="8"/>
+  <text class="zoneLabel" x="70" y="96">模型实际接收的上下文</text>
+  <rect class="context" x="70" y="132" width="318" height="156"/>
+  <text class="text" x="229" y="169" text-anchor="middle">Planner 上下文</text>
+  <text class="small" x="229" y="199" text-anchor="middle">稳定规划规则与系统边界</text>
+  <text class="small" x="229" y="226" text-anchor="middle">最新事件 · 活跃图态势</text>
+  <text class="small" x="229" y="253" text-anchor="middle">未完成 Todo · 开放问题</text>
+
+  <rect class="context" x="70" y="348" width="318" height="156"/>
+  <text class="text" x="229" y="385" text-anchor="middle">Worker 上下文</text>
+  <text class="small" x="229" y="415" text-anchor="middle">当前 Intent 与操作约束</text>
+  <text class="small" x="229" y="442" text-anchor="middle">目标资产 · 已完成步骤</text>
+  <text class="small" x="229" y="469" text-anchor="middle">当前任务的过程轨迹</text>
+
+  <rect class="context" x="470" y="214" width="202" height="232"/>
+  <text class="text" x="571" y="250" text-anchor="middle">Context Builder</text>
+  <text class="small" x="571" y="282" text-anchor="middle">按角色选择信息</text>
+  <text class="small" x="571" y="309" text-anchor="middle">按预算压缩</text>
+  <text class="small" x="571" y="336" text-anchor="middle">按缺口检索</text>
+  <text class="small" x="571" y="363" text-anchor="middle">需要时展开</text>
+  <text class="small" x="571" y="390" text-anchor="middle">版本变化时失效</text>
+  <text class="small" x="571" y="421" text-anchor="middle">不是长期存储</text>
+
+  <path class="line" d="M470 288 H388"/>
+  <path class="line" d="M470 392 H388"/>
+  <text class="label" x="429" y="272" text-anchor="middle">规划视图</text>
+  <text class="label" x="429" y="376" text-anchor="middle">执行视图</text>
+
+  <text class="zoneLabel" x="814" y="96">模型之外的持久层</text>
+  <rect class="memory" x="764" y="126" width="326" height="66"/>
+  <text class="text" x="927" y="152" text-anchor="middle">跨轮计划</text>
+  <text class="small" x="927" y="176" text-anchor="middle">步骤、依赖与完成状态</text>
+  <rect class="memory" x="764" y="212" width="326" height="66"/>
+  <text class="text" x="927" y="238" text-anchor="middle">探索图</text>
+  <text class="small" x="927" y="262" text-anchor="middle">目标、意图、事实、发现与血缘</text>
+  <rect class="memory" x="764" y="298" width="326" height="66"/>
+  <text class="text" x="927" y="324" text-anchor="middle">执行轨迹</text>
+  <text class="small" x="927" y="348" text-anchor="middle">工具步骤、输出、失败与取消原因</text>
+  <rect class="evidence" x="764" y="384" width="326" height="66"/>
+  <text class="text" x="927" y="410" text-anchor="middle">冷区摘要</text>
+  <text class="small" x="927" y="434" text-anchor="middle">压缩索引与可展开成员</text>
+  <rect class="evidence" x="764" y="470" width="326" height="66"/>
+  <text class="text" x="927" y="496" text-anchor="middle">原始证据</text>
+  <text class="small" x="927" y="520" text-anchor="middle">快照、哈希、时间与版本</text>
+
+  <path class="line" d="M764 159 H722 V260 H672"/>
+  <path class="line" d="M764 245 H722 V300 H672"/>
+  <path class="line" d="M764 331 H722 V340 H672"/>
+  <path class="dash" d="M764 417 H722 V380 H672"/>
+  <path class="dash" d="M764 503 H710 V420 H672"/>
+  <text class="label" x="742" y="146" text-anchor="end">计划</text>
+  <text class="label" x="742" y="232" text-anchor="end">事实</text>
+  <text class="label" x="742" y="318" text-anchor="end">过程</text>
+  <text class="label" x="742" y="404" text-anchor="end">摘要</text>
+  <text class="label" x="742" y="490" text-anchor="end">核验</text>
+
+  <rect class="zone" x="70" y="574" width="1020" height="58" rx="6"/>
+  <text class="text" x="580" y="598" text-anchor="middle">上下文窗口是装配视图；记忆、摘要和证据位于窗口之外。</text>
+  <text class="small" x="580" y="621" text-anchor="middle">当前 Todo 仍保存在 Planner 实例内，不能等同于跨实例持久计划。</text>
+</svg>
