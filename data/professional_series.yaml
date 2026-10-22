@@ -1,1 +1,7 @@
 # 专业专题线：direction 表示所属安全分类，name 对应文章 front matter 的 series
+
+- name: Agent 工程研究
+  slug: agent-engineering-research
+  direction: security-system
+  status: ongoing
+  description: 从真实项目源码研究 Agent 的运行时、状态、记忆、安全控制与评测。
