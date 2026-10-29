@@ -14,6 +14,13 @@
 		
 			<atom:link href="https://tsuki126.github.io/index.xml" rel="self" type="application/rss+xml" />
 			<item>
+				<title>云凭证 AKSK 背后的风险</title>
+				<link>https://tsuki126.github.io/daily/cloud-credential-aksk-risks/</link>
+				<pubDate>Fri, 30 Oct 2026 00:00:00 +0800</pubDate>
+				<guid>https://tsuki126.github.io/daily/cloud-credential-aksk-risks/</guid>
+				<description>&lt;p&gt;今天早上只吃了一个前几天在盒马买的苹果，之后的大部分时间都花在云上历史 AKSK 的安全治理上。&lt;/p&gt;&#xA;&lt;p&gt;从公有云责任共担模型来看，厂商负责“云本身的安全”，企业则要对自己放在云上的身份、配置和数据负责。AKSK 是云账号的持久化访问凭证，也应当成为企业自己守住的第一道边界。&lt;/p&gt;</description>
+			</item>
+			<item>
 				<title>立水桥出发，想起来时路</title>
 				<link>https://tsuki126.github.io/daily/from-lishuiqiao-memories-of-the-way-here/</link>
 				<pubDate>Thu, 29 Oct 2026 00:00:00 +0800</pubDate>
