@@ -1,5 +1,5 @@
 +++
-title = "计划留在博客里，今天先好好吃顿早餐"
+title = "先把早餐吃好，再谈长期主义"
 slug = "planning-breakfast-and-long-term-living"
 description = "关于计划内耗、博客记录，以及从一顿早餐开始的长期主义。"
 date = 2026-10-20
