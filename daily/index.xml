@@ -14,14 +14,35 @@
 		
 			<atom:link href="https://tsuki126.github.io/daily/index.xml" rel="self" type="application/rss+xml" />
 			<item>
-				<title>计划留在博客里，今天先好好吃顿早餐</title>
+				<title>立水桥出发，想起来时路</title>
+				<link>https://tsuki126.github.io/daily/from-lishuiqiao-memories-of-the-way-here/</link>
+				<pubDate>Thu, 29 Oct 2026 00:00:00 +0800</pubDate>
+				<guid>https://tsuki126.github.io/daily/from-lishuiqiao-memories-of-the-way-here/</guid>
+				<description>&lt;p&gt;上周六早上起床，左脚微微发酸，一挤压就疼。我的老毛病痛风又犯了，回想起来，可能是周五晚上那份带汤汁的盖饭吃出来的。&lt;/p&gt;&#xA;&lt;p&gt;这次我吸取了以前的教训，穿了宽松的袜子和鞋，在发作初期就吃了止痛、抗炎的药。效果还不错，病情没有加重，平时走路也没有太大问题。但为了稳妥，这几天上班我都打车。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>PHP2Shell 和 API 安全</title>
+				<link>https://tsuki126.github.io/daily/vulnerability-beyond-php-to-api-security/</link>
+				<pubDate>Thu, 22 Oct 2026 00:00:00 +0000</pubDate>
+				<guid>https://tsuki126.github.io/daily/vulnerability-beyond-php-to-api-security/</guid>
+				<description>&lt;p&gt;今天早上吃的是胡辣汤，配了油饼和水煎包，别有一番滋味。来北京之前我从没喝过胡辣汤，现在倒也慢慢习惯了。&lt;/p&gt;&#xA;&lt;p&gt;早上还找回了我失散多年的 HackerOne 账号，想着用 ARTEX 自动渗透测试系统“大干一场”。结果拖拖拉拉地又耗到九点二十左右才出门，九点二十九赶上了最后一班能保证不迟到的地铁。好在今天地铁比较空旷，至少没有出现人挤人的情况。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>吃完吐司，回去继续查漏洞</title>
+				<link>https://tsuki126.github.io/daily/last-slice-and-vulnerability-review/</link>
+				<pubDate>Wed, 21 Oct 2026 00:00:00 +0000</pubDate>
+				<guid>https://tsuki126.github.io/daily/last-slice-and-vulnerability-review/</guid>
+				<description>&lt;p&gt;今天早上吃的是盒马的北海道吐司。奶香味很足，口感也不错，干净卫生，准备起来也方便。一袋有六七片，等我反应过来，只剩最后一片了。&lt;/p&gt;&#xA;&lt;p&gt;早餐后按计划研究 ARTEX 工程架构。这次全程借助 AI 做源码分析和资料整理，我重点看工程上的设计。按 AI 的分析，ARTEX 主要维护两张图：资产图和探索图。运行时采用 Planner + Worker 架构，由单一 Planner 持续根据目标拆解意图；Worker 领取意图、完成单次任务，产出发现、事实和证据，再把结果补回两张图。&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>先把早餐吃好，再谈长期主义</title>
 				<link>https://tsuki126.github.io/daily/planning-breakfast-and-long-term-living/</link>
 				<pubDate>Tue, 20 Oct 2026 00:00:00 +0000</pubDate>
 				<guid>https://tsuki126.github.io/daily/planning-breakfast-and-long-term-living/</guid>
 				<description>&lt;p&gt;我是一个 INTJ，很喜欢做规划，甚至希望把时间精确到每一个小时。7:00–8:00 学英语，8:00–9:00 研究最新技术，类似这样密不透风的时间表，我以前做过很多次。&lt;/p&gt;</description>
 			</item>
 			<item>
-				<title>从 ARTEX 扫描说起：应用安全还有多远</title>
+				<title>让我担心的不是这些漏洞</title>
 				<link>https://tsuki126.github.io/daily/vulnerability-review-and-application-security-gap/</link>
 				<pubDate>Mon, 19 Oct 2026 00:00:00 +0000</pubDate>
 				<guid>https://tsuki126.github.io/daily/vulnerability-review-and-application-security-gap/</guid>
